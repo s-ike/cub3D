@@ -1,0 +1,34 @@
+NAME		= cub3D
+
+SRC			= main.c
+OBJ			= $(SRC:.c=.o)
+
+ifeq ($(shell uname),Linux)
+MLX_DIR		= ./minilibx-linux
+MLX_PATH	= $(MLX_DIR)/libmlx.a
+MLX_FLAGS	= -lmlx -lXext -lX11 -lm
+CFLAGS		= -Wall -Wextra -Werror -D LINUX
+else
+MLX_DIR		= ./newmlx
+MLX_PATH	= $(MLX_DIR)/libmlx.dylib
+MLX_FLAGS	= -lmlx -framework OpenGL -framework AppKit -lz
+CFLAGS		= -Wall -Wextra -Werror
+endif
+
+CC			= gcc
+
+all:		$(NAME)
+
+$(NAME):	$(OBJ) $(MLX_PATH)
+			cp $(MLX_PATH) .
+			$(CC) $(CFLAGS) -L. $(MLX_FLAGS) $(OBJ) -o $(NAME)
+
+clean:
+			$(RM) $(OBJ)
+
+fclean:		clean
+			$(RM) $(NAME)
+
+re:			fclean $(NAME)
+
+.PHONY:		clean fclean re
