@@ -5,15 +5,16 @@ OBJ			= $(SRC:.c=.o)
 
 ifeq ($(shell uname),Linux)
 MLX_DIR		= ./minilibx-linux
-MLX_PATH	= $(MLX_DIR)/libmlx.a
+MLX_NAME	= libmlx.a
 MLX_FLAGS	= -lmlx -lXext -lX11 -lm
 CFLAGS		= -Wall -Wextra -Werror -D LINUX
 else
 MLX_DIR		= ./newmlx
-MLX_PATH	= $(MLX_DIR)/libmlx.dylib
+MLX_NAME	= libmlx.dylib
 MLX_FLAGS	= -lmlx -framework OpenGL -framework AppKit -lz
 CFLAGS		= -Wall -Wextra -Werror
 endif
+MLX_PATH	= $(MLX_DIR)/$(MLX_NAME)
 
 CC			= gcc
 
@@ -27,8 +28,9 @@ clean:
 			$(RM) $(OBJ)
 
 fclean:		clean
+			$(RM) $(MLX_NAME)
 			$(RM) $(NAME)
 
 re:			fclean $(NAME)
 
-.PHONY:		clean fclean re
+.PHONY:		all clean fclean re
