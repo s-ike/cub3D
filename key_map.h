@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 23:40:07 by sikeda            #+#    #+#             */
-/*   Updated: 2021/01/19 23:40:08 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/01/19 23:59:48 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,69 +41,40 @@
 /*
 ** X11 EVENTS
 */
-# define KeyPress				2
-# define KeyRelease				3
-# define ButtonPress			4
-# define ButtonRelease			5
-# define MotionNotify			6
-# define EnterNotify			7
-# define LeaveNotify			8
-# define FocusIn				9
-# define FocusOut				10
-# define KeymapNotify			11
-# define Expose					12
-# define GraphicsExpose			13
-# define NoExpose				14
-# define VisibilityNotify		15
-# define CreateNotify			16
-# define DestroyNotify			17
-# define UnmapNotify			18
-# define MapNotify				19
-# define MapRequest				20
-# define ReparentNotify			21
-# define ConfigureNotify		22
-# define ConfigureRequest		23
-# define GravityNotify			24
-# define ResizeRequest			25
-# define CirculateNotify		26
-# define CirculateRequest		27
-# define PropertyNotify			28
-# define SelectionClear			29
-# define SelectionRequest		30
-# define SelectionNotify		31
-# define ColormapNotify			32
-# define ClientMessage			33
-# define MappingNotify			34
-# define GenericEvent			35
-# define LASTEvent				36
+# define KEY_PRESS				2
+# define KEY_RELEASE			3
+# define BTN_PRESS				4
+# define BTN_RELEASE			5
+# define MOTION__NOTIFY			6
+# define ENTER__NOTIFY			7
+# define LEAVE_NOTIFY			8
+# define FOCUS_IN				9
+# define FOCUS_OUT				10
+# define KEYMAP_NOTIFY			11
+# define EXPOSE					12
+# define GRAPHICS_EXPOSE		13
+# define NO_EXPOSE				14
+# define VISIBILITY_NOTIFY		15
+# define CREATE_NOTIFY			16
+# define DESTROY_NOTIFY			17
+# define UNMAP_NOTIFY			18
+# define MAP_NOTIFY				19
+# define MAP_REQUEST			20
+# define REPARENT_NOTIFY		21
+# define CONFIGURE_NOTIFY		22
+# define CONFIGURE_REQUEST		23
+# define GRAVITY_NOTIFY			24
+# define RESIZE_REQUEST			25
+# define CIRCULATE_NOTIFY		26
+# define CIRCULATE_REQUEST		27
+# define PROPERTY_NOTIFY		28
+# define SELECTION_CLEAR		29
+# define SELECTION_REQUEST		30
+# define SELECTION_NOTIFY		31
+# define COLORMAP_NOTIFY		32
+# define CLIENT_MESSAGE			33
+# define MAPPING_NOTIFY			34
+# define GENERIC_EVENT			35
+# define LAST_EVENT				36
 
-/*
-** X11 MASKS
-*/
-# define MASK_NOEVENT			0L
-# define MASK_KEYPRESS			1L<<0
-# define MASK_KEYRELEASE		1L<<1
-# define MASK_BUTTONPRESS		1L<<2
-# define MASK_BUTTONRELEASE 	1L<<3
-# define MASK_ENTERWINDOW		1L<<4
-# define MASK_LEAVEWINDOW		1L<<5
-# define MASK_POINTERMOTION		1L<<6
-# define MASK_POINTERMOTIONHINT	1L<<7
-# define MASK_BUTTON1MOTION		1L<<8
-# define MASK_BUTTON2MOTION		1L<<9
-# define MASK_BUTTON3MOTION		1L<<10
-# define MASK_BUTTON4MOTION		1L<<11
-# define MASK_BUTTON5MOTION		1L<<12
-# define MASK_BUTTONMOTION		1L<<13
-# define MASK_KEYMAPSTATE		1L<<14
-# define MASK_EXPOSURE			1L<<15
-# define MASK_VISIBILITYCHANGE	1L<<16
-# define MASK_STRUCTURENOTIFY	1L<<17
-# define MASK_RESIZEREDIRECT	1L<<18
-# define MASK_SUBSTRUCTNOTIFY	1L<<19
-# define MASK_SUBSTRUCTREDIRECT	1L<<20
-# define MASK_FOCUSCHANGE		1L<<21
-# define MASK_PROPERTYCHANGE	1L<<22
-# define MASK_COLORMAPCHANGE	1L<<23
-# define MASK_OWNERGRABBUTTON	1L<<24
 #endif
