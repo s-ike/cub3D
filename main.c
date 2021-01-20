@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 23:40:15 by sikeda            #+#    #+#             */
-/*   Updated: 2021/01/19 23:40:16 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/01/20 14:47:14 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,9 @@
 #define TEX_W 64
 #define TEX_H 64
 #define	NUM_SPRITES 19
+
+int	g_floor = 0x00FF0000;
+int	g_ceile = 0x0000FF00;
 
 int	g_map[MAP_W][MAP_H] =
 {
@@ -186,71 +189,14 @@ void	draw(t_info *info)
 void	calc(t_info *info)
 {
 	//FLOOR CASTING
-	// TODO:マンダトリーパートでは天井と床にテクスチャを貼らないので簡略化できる（けどボーナスやるなら初めからあった方が楽かも）
-	for (int y = 0; y < SCREEN_H; y++)
+	int	y = -1;
+	while (++y < SCREEN_H)
 	{
-		// rayDir for leftmost ray (x = 0) and rightmost ray (x = w)
-		// 左端の光線（x = 0）と右端の光線（x = w）のrayDir
-		float rayDirX0 = info->dirX - info->planeX;	// dirX:-1, planeX:0
-		float rayDirY0 = info->dirY - info->planeY;	// dirY:0, planeY:0.66
-		float rayDirX1 = info->dirX + info->planeX;	// dirX:-1, planeX:0
-		float rayDirY1 = info->dirY + info->planeY;	// dirY:0, planeY:0.66
-
-		// Current y position compared to the center of the screen (the horizon)
-		// 画面の中心（地平線）と比較した現在のy位置
-		int p = y - SCREEN_H / 2;	// 画面の最下部からスタート
-
-		// Vertical position of the camera.
-		// カメラの垂直位置
-		float posZ = 0.5 * SCREEN_H;	// スクリーンの真ん中
-
-		// Horizontal distance from the camera to the floor for the current row.
-		// 0.5 is the z position exactly in the middle between floor and ceiling.
-		// 現在の行のカメラから床までの水平距離。
-		// 0.5は、床と天井のちょうど真ん中のz位置です。
-		float rowDistance = posZ / p;	//初期-1, 次-1.00418413
-
-		// calculate the real world step vector we have to add for each x (parallel to camera plane)
-		// adding step by step avoids multiplications with a weight in the inner loop
-		// 各x（カメラ平面に平行）に追加する必要のある実世界のステップベクトルを計算します。
-		// ステップバイステップで追加すると、内部ループでの重みによる乗算が回避されます。
-		float floorStepX = rowDistance * (rayDirX1 - rayDirX0) / SCREEN_W;	//初期-0
-		float floorStepY = rowDistance * (rayDirY1 - rayDirY0) / SCREEN_W;	//初期-0.00206249999
-
-		// real world coordinates of the leftmost column. This will be updated as we step to the right.
-		// 左端の列の実世界の座標。 これは、右に進むにつれて更新されます。
-		float floorX = info->posX + rowDistance * rayDirX0;	//初期23, 次23.0041847
-		float floorY = info->posY + rowDistance * rayDirY0;	//初期12.15..., 次12.1627617
-
-		for (int x = 0; x < SCREEN_W; x++)
+		int	x = -1;
+		while (++x < SCREEN_W)
 		{
-			// the cell coord is simply got from the integer parts of floorX and floorY
-			// セル座標はfloorXとfloorYの整数部分から単純に取得されます
-			int cellX = (int)floorX;	//初期23
-			int cellY = (int)floorY;	//初期12
-
-			// get the texture coordinate from the fractional part
-			// 小数部分からテクスチャ座標を取得します
-			int tx = (int)(TEX_W * (floorX - cellX)) & (TEX_W - 1);	//初期0
-			int ty = (int)(TEX_H * (floorY - cellY)) & (TEX_H - 1);	//初期10
-
-			floorX += floorStepX;
-			floorY += floorStepY;
-
-			// choose texture and draw the pixel
-			int floorTexture = 3;
-			int ceilingTexture = 6;
-			int color;
-
-			// floor
-			color = info->texture[floorTexture][TEX_W * ty + tx];
-			color = (color >> 1) & 8355711; // make a bit darker
-			info->buf[y][x] = color;
-
-			// ceiling (symmetrical, at screenHeight - y - 1 instead of y)
-			color = info->texture[ceilingTexture][TEX_W * ty + tx];
-			color = (color >> 1) & 8355711; // make a bit darker
-			info->buf[SCREEN_H - y - 1][x] = color;
+			info->buf[y][x] = g_floor;
+			info->buf[SCREEN_H - y - 1][x] = g_ceile;
 		}
 	}
 	// WALL CASTING
