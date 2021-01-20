@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 23:40:15 by sikeda            #+#    #+#             */
-/*   Updated: 2021/01/20 14:47:14 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/01/20 17:03:29 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,35 +26,43 @@
 #define TEX_H 64
 #define	NUM_SPRITES 19
 
+enum	e_texdir
+{
+	TEX_NORTH,
+	TEX_SOUTH,
+	TEX_EAST,
+	TEX_WEST
+};
+
 int	g_floor = 0x00FF0000;
 int	g_ceile = 0x0000FF00;
 
 int	g_map[MAP_W][MAP_H] =
 {
-	{8,8,8,8,8,8,8,8,8,8,8,4,4,6,4,4,6,4,6,4,4,4,6,4},
-	{8,0,0,0,0,0,0,0,0,0,8,4,0,0,0,0,0,0,0,0,0,0,0,4},
-	{8,0,3,3,0,0,0,0,0,8,8,4,0,0,0,0,0,0,0,0,0,0,0,6},
-	{8,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6},
-	{8,0,3,3,0,0,0,0,0,8,8,4,0,0,0,0,0,0,0,0,0,0,0,4},
-	{8,0,0,0,0,0,0,0,0,0,8,4,0,0,0,0,0,6,6,6,0,6,4,6},
-	{8,8,8,8,0,8,8,8,8,8,8,4,4,4,4,4,4,6,0,0,0,0,0,6},
-	{7,7,7,7,0,7,7,7,7,0,8,0,8,0,8,0,8,4,0,4,0,6,0,6},
-	{7,7,0,0,0,0,0,0,7,8,0,8,0,8,0,8,8,6,0,0,0,0,0,6},
-	{7,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8,6,0,0,0,0,0,4},
-	{7,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8,6,0,6,0,6,0,6},
-	{7,7,0,0,0,0,0,0,7,8,0,8,0,8,0,8,8,6,4,6,0,6,6,6},
-	{7,7,7,7,0,7,7,7,7,8,8,4,0,6,8,4,8,3,3,3,0,3,3,3},
-	{2,2,2,2,0,2,2,2,2,4,6,4,0,0,6,0,6,3,0,0,0,0,0,3},
-	{2,2,0,0,0,0,0,2,2,4,0,0,0,0,0,0,4,3,0,0,0,0,0,3},
-	{2,0,0,0,0,0,0,0,2,4,0,0,0,0,0,0,4,3,0,0,0,0,0,3},
-	{1,0,0,0,0,0,0,0,1,4,4,4,4,4,6,0,6,3,3,0,0,0,3,3},
-	{2,0,0,0,0,0,0,0,2,2,2,1,2,2,2,6,6,0,0,5,0,5,0,5},
-	{2,2,0,0,0,0,0,2,2,2,0,0,0,2,2,0,5,0,5,0,0,0,5,5},
-	{2,0,0,0,0,0,0,0,2,0,0,0,0,0,2,5,0,5,0,5,0,5,0,5},
-	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5},
-	{2,0,0,0,0,0,0,0,2,0,0,0,0,0,2,5,0,5,0,5,0,5,0,5},
-	{2,2,0,0,0,0,0,2,2,2,0,0,0,2,2,0,5,0,5,0,0,0,5,5},
-	{2,2,2,2,1,2,2,2,2,2,2,1,2,2,2,5,5,5,5,5,5,5,5,5}
+	{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+	{1,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,1},
+	{1,0,1,1,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,1},
+	{1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+	{1,0,1,1,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,1},
+	{1,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,1,1,1,0,1,1,1},
+	{1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,1},
+	{1,1,1,1,0,1,1,1,1,0,1,0,1,0,1,0,1,1,0,1,0,1,0,1},
+	{1,1,0,0,0,0,0,0,1,1,0,1,0,1,0,1,1,1,0,0,0,0,0,1},
+	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,1},
+	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,1,0,1,0,1},
+	{1,1,0,0,0,0,0,0,1,1,0,1,0,1,0,1,1,1,1,1,0,1,1,1},
+	{1,1,1,1,0,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,0,1,1,1},
+	{1,1,1,1,0,1,1,1,1,1,1,1,0,0,1,0,1,1,0,0,0,0,0,1},
+	{1,1,0,0,0,0,0,1,1,1,0,0,0,0,0,0,1,1,0,0,0,0,0,1},
+	{1,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,1,1,0,0,0,0,0,1},
+	{1,0,0,0,0,0,0,0,1,1,1,1,1,1,1,0,1,1,1,0,0,0,1,1},
+	{1,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,0,0,1,0,1,0,1},
+	{1,1,0,0,0,0,0,1,1,1,0,0,0,1,1,0,1,0,1,0,0,0,1,1},
+	{1,0,0,0,0,0,0,0,1,0,0,0,0,0,1,1,0,1,0,1,0,1,0,1},
+	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+	{1,0,0,0,0,0,0,0,1,0,0,0,0,0,1,1,0,1,0,1,0,1,0,1},
+	{1,1,0,0,0,0,0,1,1,1,0,0,0,1,1,0,1,0,1,0,0,0,1,1},
+	{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
 };
 
 struct	s_sprite
@@ -66,30 +74,30 @@ struct	s_sprite
 
 struct s_sprite	g_sprite[NUM_SPRITES] =
 {
-	{20.5, 11.5, 10}, //green light in front of playerstart
+	{20.5, 11.5, 6}, //green light in front of playerstart
 	//green lights in every room
-	{18.5,4.5, 10},
-	{10.0,4.5, 10},
-	{10.0,12.5,10},
-	{3.5, 6.5, 10},
-	{3.5, 20.5,10},
-	{3.5, 14.5,10},
-	{14.5,20.5,10},
+	{18.5,4.5, 6},
+	{10.0,4.5, 6},
+	{10.0,12.5,6},
+	{3.5, 6.5, 6},
+	{3.5, 20.5,6},
+	{3.5, 14.5,6},
+	{14.5,20.5,6},
 
 	//row of pillars in front of wall: fisheye test
-	{18.5, 10.5, 9},
-	{18.5, 11.5, 9},
-	{18.5, 12.5, 9},
+	{18.5, 10.5, 5},
+	{18.5, 11.5, 5},
+	{18.5, 12.5, 5},
 
 	//some barrels around the map
-	{21.5, 1.5, 8},
-	{15.5, 1.5, 8},
-	{16.0, 1.8, 8},
-	{16.2, 1.2, 8},
-	{3.5,  2.5, 8},
-	{9.5, 15.5, 8},
-	{10.0, 15.1,8},
-	{10.5, 15.8,8},
+	{21.5, 1.5, 4},
+	{15.5, 1.5, 4},
+	{16.0, 1.8, 4},
+	{16.2, 1.2, 4},
+	{3.5,  2.5, 4},
+	{9.5, 15.5, 4},
+	{10.0, 15.1,4},
+	{10.5, 15.8,4},
 };
 
 //arrays used to sort the sprites
@@ -135,21 +143,27 @@ typedef struct	s_pair
 void	sort_order(t_pair *orders, int amount)
 {
 	t_pair	tmp;
+	int		i;
+	int		last;
 
-	for (int i = 0; i < amount; i++)
+	i = 0;
+	while (i < amount - 1)
 	{
-		for (int j = 0; j < amount - 1; j++)
+		last = amount - 1;
+		for (int j = amount - 1; i < j; j--)
 		{
-			if (orders[j].first > orders[j + 1].first)
+			if (orders[j].first < orders[j - 1].first)
 			{
 				tmp.first = orders[j].first;
 				tmp.second = orders[j].second;
-				orders[j].first = orders[j + 1].first;
-				orders[j].second = orders[j + 1].second;
-				orders[j + 1].first = tmp.first;
-				orders[j + 1].second = tmp.second;
+				orders[j].first = orders[j - 1].first;
+				orders[j].second = orders[j - 1].second;
+				orders[j - 1].first = tmp.first;
+				orders[j - 1].second = tmp.second;
+				last = j;
 			}
 		}
+		i = last;
 	}
 }
 
@@ -295,8 +309,11 @@ void	calc(t_info *info)
 		if (drawEnd >= SCREEN_H)
 			drawEnd = SCREEN_H - 1;
 
-		//texturing calculations
-		int texNum = g_map[mapX][mapY] - 1;
+		int	texNum;
+		if (side)
+			texNum = rayDirY < 0 ? TEX_EAST : TEX_WEST;
+		else
+			texNum = rayDirX < 0 ? TEX_NORTH : TEX_SOUTH;
 
 		//calculate value of wallX
 		double wallX; //where exactly the wall was hit	//壁が正確に当たった場所
@@ -327,10 +344,6 @@ void	calc(t_info *info)
 			int	texY = (int)texPos & (TEX_H - 1);
 			texPos += step;
 			int	color = info->texture[texNum][TEX_H * texY + texX];
-			//make color darker for y-sides: R, G and B byte each divided through two with a "shift" and an "and"
-			//y-sideの色を暗く（側面と正面とで色を変えている）
-			if (side == 1)
-				color = (color >> 1) & 8355711;	//8355711->0x7F7F7F
 			info->buf[y][x] = color;
 		}
 
@@ -484,13 +497,9 @@ void	load_texture(t_info *info)
 	load_image(info, info->texture[1], "textures/redbrick.xpm", &img);
 	load_image(info, info->texture[2], "textures/purplestone.xpm", &img);
 	load_image(info, info->texture[3], "textures/greystone.xpm", &img);
-	load_image(info, info->texture[4], "textures/bluestone.xpm", &img);
-	load_image(info, info->texture[5], "textures/mossy.xpm", &img);
-	load_image(info, info->texture[6], "textures/wood.xpm", &img);
-	load_image(info, info->texture[7], "textures/colorstone.xpm", &img);
-	load_image(info, info->texture[8], "textures/barrel.xpm", &img);
-	load_image(info, info->texture[9], "textures/pillar.xpm", &img);
-	load_image(info, info->texture[10], "textures/greenlight.xpm", &img);
+	load_image(info, info->texture[4], "textures/barrel.xpm", &img);
+	load_image(info, info->texture[5], "textures/pillar.xpm", &img);
+	load_image(info, info->texture[6], "textures/greenlight.xpm", &img);
 }
 
 int	main()
@@ -509,12 +518,12 @@ int	main()
 		for (int j = 0; j < SCREEN_W; j++)
 			info.buf[i][j] = 0;
 
-	if (!(info.texture = (int **)malloc(sizeof(int *) * 11)))
+	if (!(info.texture = (int **)malloc(sizeof(int *) * 7)))
 		return (-1);
-	for (int i = 0; i < 11; i++)
+	for (int i = 0; i < 7; i++)
 		if (!(info.texture[i] = (int *)malloc(sizeof(int) * (TEX_H * TEX_W))))
 			return (-1);
-	for (int i = 0; i < 11; i++)
+	for (int i = 0; i < 7; i++)
 		for (int j = 0; j < TEX_H * TEX_W; j++)
 			info.texture[i][j] = 0;
 
