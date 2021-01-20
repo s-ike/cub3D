@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 23:40:15 by sikeda            #+#    #+#             */
-/*   Updated: 2021/01/21 01:53:32 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/01/21 02:02:21 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -468,22 +468,21 @@ int	key_press(int key, t_info *info)
 		i = 0.01;
 		while (i <= info->moveSpeed)
 		{
-			if (g_map[(int)info->posX][(int)(info->posY - info->dirY * i)] == 1)
-				break ;
-			i += 0.1;
-		}
-		if (!g_map[(int)info->posX][(int)(info->posY - info->dirY * i)])
-			info->posY -= info->dirY * i;
-
-		i = 0.01;
-		while (i <= info->moveSpeed)
-		{
 			if (g_map[(int)(info->posX - info->dirX * i)][(int)info->posY] == 1)
 				break ;
 			i += 0.1;
 		}
 		if (!g_map[(int)(info->posX - info->dirX * i)][(int)info->posY])
 			info->posX -= info->dirX * i;
+		i = 0.01;
+		while (i <= info->moveSpeed)
+		{
+			if (g_map[(int)info->posX][(int)(info->posY - info->dirY * i)] == 1)
+				break ;
+			i += 0.1;
+		}
+		if (!g_map[(int)info->posX][(int)(info->posY - info->dirY * i)])
+			info->posY -= info->dirY * i;
 	}
 	if (key == KEY_D)
 	{
