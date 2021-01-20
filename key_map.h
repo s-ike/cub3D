@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 23:40:07 by sikeda            #+#    #+#             */
-/*   Updated: 2021/01/19 23:59:48 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/01/20 14:35:49 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,5 +76,13 @@
 # define MAPPING_NOTIFY			34
 # define GENERIC_EVENT			35
 # define LAST_EVENT				36
+
+/*
+** X11 MASKS
+*/
+# define MASK_KEYPRESS			1L << 0
+# define MASK_KEYRELEASE		1L << 1
+# define MASK_STRUCTURENOTIFY	1L << 17
+# define MASK_FOCUSCHANGE		1L << 21`
 
 #endif
