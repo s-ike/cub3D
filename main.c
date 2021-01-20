@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 23:40:15 by sikeda            #+#    #+#             */
-/*   Updated: 2021/01/21 00:50:28 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/01/21 01:53:32 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@
 #include "key_map.h"
 #include "newmlx/mlx.h"
 
-// TODO: 初期位置からまっすぐ前に進むとかべにめり込む？
-// TODO: 後進の当たり判定が前身と違う
 // TODO: スプライトの当たり判定をなしにする場合は改修
 
 #define SCREEN_W 640
@@ -442,17 +440,50 @@ int	key_press(int key, t_info *info)
 {
 	if (key == KEY_W)
 	{
-		if (!g_map[(int)(info->posX + info->dirX * info->moveSpeed)][(int)info->posY])
-			info->posX += info->dirX * info->moveSpeed;
-		if (!g_map[(int)info->posX][(int)(info->posY + info->dirY * info->moveSpeed)])
-			info->posY += info->dirY * info->moveSpeed;
+		double	i;
+
+		i = 0.01;
+		while (i <= info->moveSpeed)
+		{
+			if (g_map[(int)(info->posX + info->dirX * i)][(int)info->posY] == 1)
+				break ;
+			i += 0.1;
+		}
+		if (!g_map[(int)(info->posX + info->dirX * i)][(int)info->posY])
+			info->posX += info->dirX * i;
+		i = 0.01;
+		while (i <= info->moveSpeed)
+		{
+			if (g_map[(int)info->posX][(int)(info->posY + info->dirY * i)] == 1)
+				break ;
+			i += 0.1;
+		}
+		if (!g_map[(int)info->posX][(int)(info->posY + info->dirY * i)])
+			info->posY += info->dirY * i;
 	}
 	if (key == KEY_S)
 	{
-		if (g_map[(int)(info->posX - info->dirX * info->moveSpeed)][(int)info->posY])
-			info->posX -= info->dirX * info->moveSpeed;
-		if (!g_map[(int)info->posX][(int)(info->posY - info->dirY * info->moveSpeed)])
-			info->posY -= info->dirY * info->moveSpeed;
+		double	i;
+
+		i = 0.01;
+		while (i <= info->moveSpeed)
+		{
+			if (g_map[(int)info->posX][(int)(info->posY - info->dirY * i)] == 1)
+				break ;
+			i += 0.1;
+		}
+		if (!g_map[(int)info->posX][(int)(info->posY - info->dirY * i)])
+			info->posY -= info->dirY * i;
+
+		i = 0.01;
+		while (i <= info->moveSpeed)
+		{
+			if (g_map[(int)(info->posX - info->dirX * i)][(int)info->posY] == 1)
+				break ;
+			i += 0.1;
+		}
+		if (!g_map[(int)(info->posX - info->dirX * i)][(int)info->posY])
+			info->posX -= info->dirX * i;
 	}
 	if (key == KEY_D)
 	{
