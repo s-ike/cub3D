@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 23:40:15 by sikeda            #+#    #+#             */
-/*   Updated: 2021/01/20 17:03:29 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/01/21 00:50:28 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,10 @@
 #include <errno.h>
 #include "key_map.h"
 #include "newmlx/mlx.h"
+
+// TODO: 初期位置からまっすぐ前に進むとかべにめり込む？
+// TODO: 後進の当たり判定が前身と違う
+// TODO: スプライトの当たり判定をなしにする場合は改修
 
 #define SCREEN_W 640
 #define SCREEN_H 480
@@ -31,7 +35,9 @@ enum	e_texdir
 	TEX_NORTH,
 	TEX_SOUTH,
 	TEX_EAST,
-	TEX_WEST
+	TEX_WEST,
+	TEX_SPRITE,
+	TEX_END,
 };
 
 int	g_floor = 0x00FF0000;
@@ -39,70 +45,64 @@ int	g_ceile = 0x0000FF00;
 
 int	g_map[MAP_W][MAP_H] =
 {
-	{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-	{1,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,1},
-	{1,0,1,1,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,1},
-	{1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{1,0,1,1,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,1},
-	{1,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,1,1,1,0,1,1,1},
-	{1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,1},
-	{1,1,1,1,0,1,1,1,1,0,1,0,1,0,1,0,1,1,0,1,0,1,0,1},
-	{1,1,0,0,0,0,0,0,1,1,0,1,0,1,0,1,1,1,0,0,0,0,0,1},
-	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,1},
-	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,1,0,1,0,1},
-	{1,1,0,0,0,0,0,0,1,1,0,1,0,1,0,1,1,1,1,1,0,1,1,1},
-	{1,1,1,1,0,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,0,1,1,1},
-	{1,1,1,1,0,1,1,1,1,1,1,1,0,0,1,0,1,1,0,0,0,0,0,1},
-	{1,1,0,0,0,0,0,1,1,1,0,0,0,0,0,0,1,1,0,0,0,0,0,1},
-	{1,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,1,1,0,0,0,0,0,1},
-	{1,0,0,0,0,0,0,0,1,1,1,1,1,1,1,0,1,1,1,0,0,0,1,1},
-	{1,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,0,0,1,0,1,0,1},
-	{1,1,0,0,0,0,0,1,1,1,0,0,0,1,1,0,1,0,1,0,0,0,1,1},
-	{1,0,0,0,0,0,0,0,1,0,0,0,0,0,1,1,0,1,0,1,0,1,0,1},
-	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{1,0,0,0,0,0,0,0,1,0,0,0,0,0,1,1,0,1,0,1,0,1,0,1},
-	{1,1,0,0,0,0,0,1,1,1,0,0,0,1,1,0,1,0,1,0,0,0,1,1},
-	{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
+	{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},	//0
+	{1,0,0,0,0,0,2,2,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,1},	//1
+	{1,0,1,1,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,1},	//2
+	{1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},	//3
+	{1,0,1,1,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,1},	//4
+	{1,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,1,1,1,0,1,1,1},	//5
+	{1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,1},	//6
+	{1,1,1,1,0,1,1,1,1,0,1,0,1,0,1,0,1,1,0,1,0,1,0,1},	//7
+	{1,1,0,0,0,0,0,0,1,1,0,1,0,1,0,1,1,1,0,0,0,0,0,1},	//8
+	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,1},	//9
+	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,1,0,1,0,1},	//10
+	{1,1,0,0,0,0,0,0,1,1,0,1,0,1,0,1,1,1,1,1,0,1,1,1},	//11
+	{1,1,1,1,0,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,0,1,1,1},	//12
+	{1,1,1,1,0,1,1,1,1,1,1,1,0,0,1,0,1,1,2,0,0,0,0,1},	//13
+	{1,1,0,0,0,0,0,1,1,1,0,0,0,0,0,0,1,1,2,0,0,0,0,1},	//14
+	{1,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,1,1,2,0,0,0,0,1},	//15
+	{1,0,0,0,0,0,0,0,1,1,1,1,1,1,1,0,1,1,1,0,0,0,1,1},	//16
+	{1,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,0,0,1,0,1,0,1},	//17
+	{1,1,0,0,0,0,0,1,1,1,2,0,2,1,1,0,1,0,1,0,0,0,1,1},	//18
+	{1,2,0,0,0,0,0,0,1,0,0,0,0,0,1,1,0,1,0,1,0,1,0,1},	//19
+	{1,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},	//20
+	{1,2,0,0,0,0,0,0,1,0,0,0,0,0,1,1,0,1,0,1,0,1,0,1},	//21
+	{1,1,0,0,0,0,0,1,1,1,0,0,0,1,1,0,1,0,1,0,0,0,1,1},	//22
+	{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}	//23
 };
 
 struct	s_sprite
 {
 	double	x;
 	double	y;
-	int		texture;
 };
 
 struct s_sprite	g_sprite[NUM_SPRITES] =
 {
-	{20.5, 11.5, 6}, //green light in front of playerstart
-	//green lights in every room
-	{18.5,4.5, 6},
-	{10.0,4.5, 6},
-	{10.0,12.5,6},
-	{3.5, 6.5, 6},
-	{3.5, 20.5,6},
-	{3.5, 14.5,6},
-	{14.5,20.5,6},
-
-	//row of pillars in front of wall: fisheye test
-	{18.5, 10.5, 5},
-	{18.5, 11.5, 5},
-	{18.5, 12.5, 5},
-
-	//some barrels around the map
-	{21.5, 1.5, 4},
-	{15.5, 1.5, 4},
-	{16.0, 1.8, 4},
-	{16.2, 1.2, 4},
-	{3.5,  2.5, 4},
-	{9.5, 15.5, 4},
-	{10.0, 15.1,4},
-	{10.5, 15.8,4},
+	{20.5, 11.5},
+	{18.5, 4.5},
+	{10.0, 4.5},
+	{10.0, 12.5},
+	{3.5, 6.5},
+	{3.5, 20.5},
+	{3.5, 14.5},
+	{14.5, 20.5},
+	{18.5, 10.5},
+	// {18.5, 11.5},	// TODO
+	{18.5, 12.5},
+	{21.5, 1.5},
+	{15.5, 1.5},
+	{16.0, 1.8},
+	{16.2, 1.2},
+	{3.5,  2.5},
+	{9.5, 15.5},
+	{10.0, 15.1},
+	{10.5, 15.8},
 };
 
 //arrays used to sort the sprites
-int		spriteOrder[NUM_SPRITES];
-double	spriteDistance[NUM_SPRITES];
+int		g_spriteOrder[NUM_SPRITES];
+double	g_spriteDistance[NUM_SPRITES];
 
 typedef struct	s_img
 {
@@ -285,7 +285,7 @@ void	calc(t_info *info)
 				side = 1;
 			}
 			//Check if ray has hit a wall
-			if (0 < g_map[mapX][mapY])	//初期[21][11]
+			if (g_map[mapX][mapY] == 1)	//初期[21][11]
 				hit = 1;
 		}
 
@@ -355,10 +355,10 @@ void	calc(t_info *info)
 	//sort sprites from far to close スプライトを遠いものから近いものに並べ替える
 	for (int i = 0; i < NUM_SPRITES; i++)
 	{
-		spriteOrder[i] = i;
-		spriteDistance[i] = ((info->posX - g_sprite[i].x) * (info->posX - g_sprite[i].x) + (info->posY - g_sprite[i].y) * (info->posY - g_sprite[i].y));	//sqrt not taken, unneeded 三角関数で現在位置とスプライト位置で作る三角形の斜辺を計算
+		g_spriteOrder[i] = i;
+		g_spriteDistance[i] = ((info->posX - g_sprite[i].x) * (info->posX - g_sprite[i].x) + (info->posY - g_sprite[i].y) * (info->posY - g_sprite[i].y));	//sqrt not taken, unneeded 三角関数で現在位置とスプライト位置で作る三角形の斜辺を計算
 	}
-	sortSprites(spriteOrder, spriteDistance, NUM_SPRITES);
+	sortSprites(g_spriteOrder, g_spriteDistance, NUM_SPRITES);
 
 	//after sorting the sprites, do the projection and draw them
 	//スプライトを並べ替えた後、投影を実行して描画します
@@ -366,8 +366,8 @@ void	calc(t_info *info)
 	{
 		//translate sprite position to relative to camera
 		//スプライトの位置をカメラの相対位置に変換します
-		double spriteX = g_sprite[spriteOrder[i]].x - info->posX;
-		double spriteY = g_sprite[spriteOrder[i]].y - info->posY;
+		double spriteX = g_sprite[g_spriteOrder[i]].x - info->posX;
+		double spriteY = g_sprite[g_spriteOrder[i]].y - info->posY;
 
 		//transform sprite with the inverse camera matrix
 		// [ planeX   dirX ] -1                                       [ dirY      -dirX ]
@@ -377,7 +377,7 @@ void	calc(t_info *info)
 		double invDet = 1.0 / (info->planeX * info->dirY - info->dirX * info->planeY);	//required for correct matrix multiplication 正しい行列乗算に必要
 
 		double transformX = invDet * (info->dirY * spriteX - info->dirX * spriteY);
-		double transformY = invDet * (-info->planeY * spriteX + info->planeX * spriteY); //this is actually the depth inside the screen, that what Z is in 3D, the distance of sprite to player, matching sqrt(spriteDistance[i])
+		double transformY = invDet * (-info->planeY * spriteX + info->planeX * spriteY); //this is actually the depth inside the screen, that what Z is in 3D, the distance of sprite to player, matching sqrt(g_spriteDistance[i])
 
 		int spriteScreenX = (int)((SCREEN_W / 2) * (1 + transformX / transformY));
 
@@ -397,7 +397,7 @@ void	calc(t_info *info)
 			drawStartY = 0;
 		int drawEndY = spriteHeight / 2 + SCREEN_H / 2 + vMoveScreen;
 		if (drawEndY >= SCREEN_H)
-			drawEndY = SCREEN_H - 1;
+			drawEndY = SCREEN_H;
 
 		//calculate width of the sprite
 		int spriteWidth = (int)fabs(SCREEN_H / transformY / uDiv);
@@ -406,11 +406,11 @@ void	calc(t_info *info)
 			drawStartX = 0;
 		int drawEndX = spriteWidth / 2 + spriteScreenX;
 		if (drawEndX >= SCREEN_W)
-			drawEndX = SCREEN_W - 1;
+			drawEndX = SCREEN_W;
 
 		//loop through every vertical stripe of the sprite on screen
 		//画面上のスプライトのすべての垂直ストライプをループします
-		for (int stripe = drawStartX; stripe < drawEndX; stripe++)
+		for (int stripe =  drawStartX; stripe < drawEndX; stripe++)
 		{
 			int texX = (int)(256 * (stripe - (-spriteWidth / 2 + spriteScreenX)) * TEX_W / spriteWidth) / 256;
 			//the conditions in the if are:
@@ -418,12 +418,12 @@ void	calc(t_info *info)
 			//2) it's on the screen (left)
 			//3) it's on the screen (right)
 			//4) ZBuffer, with perpendicular distance
-			if (transformY > 0 && stripe > 0 && stripe < SCREEN_W && transformY < info->zBuffer[stripe])
+			if (0 < transformY && 0 <= stripe && stripe <= SCREEN_W && transformY < info->zBuffer[stripe])
 				for (int y = drawStartY; y < drawEndY; y++) //for every pixel of the current stripe 現在のストライプのすべてのピクセルに対して
 				{
 					int d = (y-vMoveScreen) * 256 - SCREEN_H * 128 + spriteHeight * 128; //256 and 128 factors to avoid floats 浮動小数点数を回避するための256および128の係数
 					int texY = ((d * TEX_H) / spriteHeight) / 256;
-					int color = info->texture[g_sprite[spriteOrder[i]].texture][TEX_W * texY + texX]; //get current color from the texture
+					int color = info->texture[TEX_SPRITE][TEX_W * texY + texX]; //get current color from the texture
 					if ((color & 0x00FFFFFF) != 0)
 						info->buf[y][stripe] = color; //paint pixel if it isn't black, black is the invisible color ピクセルが黒でない場合はペイントし、黒は非表示の色です
 				}
@@ -493,54 +493,62 @@ void	load_texture(t_info *info)
 {
 	t_img	img;
 
-	load_image(info, info->texture[0], "textures/eagle.xpm", &img);
-	load_image(info, info->texture[1], "textures/redbrick.xpm", &img);
-	load_image(info, info->texture[2], "textures/purplestone.xpm", &img);
-	load_image(info, info->texture[3], "textures/greystone.xpm", &img);
-	load_image(info, info->texture[4], "textures/barrel.xpm", &img);
-	load_image(info, info->texture[5], "textures/pillar.xpm", &img);
-	load_image(info, info->texture[6], "textures/greenlight.xpm", &img);
+	load_image(info, info->texture[TEX_NORTH], "textures/eagle.xpm", &img);
+	load_image(info, info->texture[TEX_SOUTH], "textures/redbrick.xpm", &img);
+	load_image(info, info->texture[TEX_EAST], "textures/purplestone.xpm", &img);
+	load_image(info, info->texture[TEX_WEST], "textures/greystone.xpm", &img);
+	load_image(info, info->texture[TEX_SPRITE], "textures/barrel.xpm", &img);
+}
+
+int		set_info(t_info *info)
+{
+	int	i;
+	int	j;
+
+	info->mlx = mlx_init();
+	info->posX = 22.0;
+	info->posY = 11.5;
+	info->dirX = -1.0;
+	info->dirY = 0.0;
+	info->planeX = 0.0;
+	info->planeY = 0.66;
+	info->moveSpeed = 0.2;
+	info->rotSpeed = 0.2;
+	i = -1;
+	while (++i < SCREEN_H)
+	{
+		j = -1;
+		while (++j < SCREEN_W)
+			info->buf[i][j] = 0;
+	}
+	if (!(info->texture = (int **)malloc(sizeof(int *) * TEX_END)))
+		return (EXIT_FAILURE);
+	i = -1;
+	while (++i < TEX_END)
+		if (!(info->texture[i] = (int *)malloc(sizeof(int) * (TEX_H * TEX_W))))
+			return (EXIT_FAILURE);
+	i = -1;
+	while (++i < TEX_END)
+	{
+		j = -1;
+		while (++j < TEX_H * TEX_W)
+			info->texture[i][j] = 0;
+	}
+	load_texture(info);
+	info->win = mlx_new_window(info->mlx, SCREEN_W, SCREEN_H, "cub3D");
+	info->img.img = mlx_new_image(info->mlx, SCREEN_W, SCREEN_H);
+	info->img.data = (int *)mlx_get_data_addr(info->img.img, &info->img.bpp, &info->img.size_l, &info->img.endian);
+	return (EXIT_SUCCESS);
 }
 
 int	main()
 {
 	t_info	info;
 
-	info.mlx = mlx_init();
-	info.posX = 22.0;
-	info.posY = 11.5;
-	info.dirX = -1.0;
-	info.dirY = 0.0;
-	info.planeX = 0.0;
-	info.planeY = 0.66;
-
-	for (int i = 0; i < SCREEN_H; i++)
-		for (int j = 0; j < SCREEN_W; j++)
-			info.buf[i][j] = 0;
-
-	if (!(info.texture = (int **)malloc(sizeof(int *) * 7)))
-		return (-1);
-	for (int i = 0; i < 7; i++)
-		if (!(info.texture[i] = (int *)malloc(sizeof(int) * (TEX_H * TEX_W))))
-			return (-1);
-	for (int i = 0; i < 7; i++)
-		for (int j = 0; j < TEX_H * TEX_W; j++)
-			info.texture[i][j] = 0;
-
-	load_texture(&info);
-
-	info.moveSpeed = 0.2;
-	info.rotSpeed = 0.2;
-
-	info.win = mlx_new_window(info.mlx, SCREEN_W, SCREEN_H, "mlx");
-
-	info.img.img = mlx_new_image(info.mlx, SCREEN_W, SCREEN_H);
-	info.img.data = (int *)mlx_get_data_addr(info.img.img, &info.img.bpp, &info.img.size_l, &info.img.endian);
-
+	if (set_info(&info))
+		exit(EXIT_FAILURE);
 	mlx_loop_hook(info.mlx, main_loop, &info);
 	mlx_key_hook(info.win, key_press, &info);
-
 	mlx_loop(info.mlx);
-
 	return (0);
 }
