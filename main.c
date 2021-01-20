@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 23:40:15 by sikeda            #+#    #+#             */
-/*   Updated: 2021/01/21 02:02:21 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/01/21 02:09:07 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@
 #include <errno.h>
 #include "key_map.h"
 #include "newmlx/mlx.h"
-
-// TODO: スプライトの当たり判定をなしにする場合は改修
 
 #define SCREEN_W 640
 #define SCREEN_H 480
@@ -449,7 +447,7 @@ int	key_press(int key, t_info *info)
 				break ;
 			i += 0.1;
 		}
-		if (!g_map[(int)(info->posX + info->dirX * i)][(int)info->posY])
+		if (g_map[(int)(info->posX + info->dirX * i)][(int)info->posY] != 1)
 			info->posX += info->dirX * i;
 		i = 0.01;
 		while (i <= info->moveSpeed)
@@ -458,7 +456,7 @@ int	key_press(int key, t_info *info)
 				break ;
 			i += 0.1;
 		}
-		if (!g_map[(int)info->posX][(int)(info->posY + info->dirY * i)])
+		if (g_map[(int)info->posX][(int)(info->posY + info->dirY * i)] != 1)
 			info->posY += info->dirY * i;
 	}
 	if (key == KEY_S)
@@ -472,7 +470,7 @@ int	key_press(int key, t_info *info)
 				break ;
 			i += 0.1;
 		}
-		if (!g_map[(int)(info->posX - info->dirX * i)][(int)info->posY])
+		if (g_map[(int)(info->posX - info->dirX * i)][(int)info->posY] != 1)
 			info->posX -= info->dirX * i;
 		i = 0.01;
 		while (i <= info->moveSpeed)
@@ -481,7 +479,7 @@ int	key_press(int key, t_info *info)
 				break ;
 			i += 0.1;
 		}
-		if (!g_map[(int)info->posX][(int)(info->posY - info->dirY * i)])
+		if (g_map[(int)info->posX][(int)(info->posY - info->dirY * i)] != 1)
 			info->posY -= info->dirY * i;
 	}
 	if (key == KEY_D)
