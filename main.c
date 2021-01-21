@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 23:40:15 by sikeda            #+#    #+#             */
-/*   Updated: 2021/01/21 23:30:26 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/01/22 00:44:41 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -492,6 +492,52 @@ int	key_press(int key, t_info *info)
 	}
 	if (key == KEY_D)
 	{
+		double	i;
+
+		i = 0.01;
+		while (i <= info->moveSpeed)
+		{
+			if (g_map[(int)(info->posX + info->planeX * i)][(int)info->posY] == 1)
+				break ;
+			i += 0.1;
+		}
+		if (g_map[(int)(info->posX + info->planeX * i)][(int)info->posY] != 1)
+			info->posX += info->planeX * i;
+		i = 0.01;
+		while (i <= info->moveSpeed)
+		{
+			if (g_map[(int)info->posX][(int)(info->posY + info->planeY * i)] == 1)
+				break ;
+			i += 0.1;
+		}
+		if (g_map[(int)info->posX][(int)(info->posY + info->planeY * i)] != 1)
+			info->posY += info->planeY * i;
+	}
+	if (key == KEY_A)
+	{
+		double	i;
+
+		i = 0.01;
+		while (i <= info->moveSpeed)
+		{
+			if (g_map[(int)(info->posX - info->planeX * i)][(int)info->posY] == 1)
+				break ;
+			i += 0.1;
+		}
+		if (g_map[(int)(info->posX - info->planeX * i)][(int)info->posY] != 1)
+			info->posX -= info->planeX * i;
+		i = 0.01;
+		while (i <= info->moveSpeed)
+		{
+			if (g_map[(int)info->posX][(int)(info->posY - info->planeY * i)] == 1)
+				break ;
+			i += 0.1;
+		}
+		if (g_map[(int)info->posX][(int)(info->posY - info->planeY * i)] != 1)
+			info->posY -= info->planeY * i;
+	}
+	if (key == KEY_RIGHT)
+	{
 		//both camera direction and camera plane must be rotated
 		double oldDirX = info->dirX;
 		info->dirX = info->dirX * cos(-info->rotSpeed) - info->dirY * sin(-info->rotSpeed);
@@ -500,7 +546,7 @@ int	key_press(int key, t_info *info)
 		info->planeX = info->planeX * cos(-info->rotSpeed) - info->planeY * sin(-info->rotSpeed);
 		info->planeY = oldPlaneX * sin(-info->rotSpeed) + info->planeY * cos(-info->rotSpeed);
 	}
-	if (key == KEY_A)
+	if (key == KEY_LEFT)
 	{
 		//both camera direction and camera plane must be rotated
 		double oldDirX = info->dirX;
