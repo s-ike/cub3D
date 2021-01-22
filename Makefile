@@ -15,6 +15,7 @@ MLX_FLAGS	= -lmlx -framework OpenGL -framework AppKit -lz
 CFLAGS		= -Wall -Wextra -Werror
 endif
 MLX_PATH	= $(MLX_DIR)/$(MLX_NAME)
+DEBUG		= -g
 
 CC			= gcc
 
@@ -22,7 +23,7 @@ all:		$(NAME)
 
 $(NAME):	$(OBJ) $(MLX_PATH)
 			cp $(MLX_PATH) .
-			$(CC) $(CFLAGS) -L. $(MLX_FLAGS) $(OBJ) -o $(NAME)
+			$(CC) $(CFLAGS) $(DEBUG) -L. $(MLX_FLAGS) $(OBJ) -o $(NAME)
 
 clean:
 			$(RM) $(OBJ)

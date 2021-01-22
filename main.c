@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 23:40:15 by sikeda            #+#    #+#             */
-/*   Updated: 2021/01/22 01:43:27 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/01/22 23:58:43 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,34 +39,6 @@ enum	e_texdir
 int	g_floor = 0x00FF0000;
 int	g_ceile = 0x0000FF00;
 
-// int	g_map[MAP_W][MAP_H] =
-// {
-// 	{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0},	//0
-// 	{1,0,0,0,0,0,2,2,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0},	//1
-// 	{1,0,1,1,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0},	//2
-// 	{1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0},	//3
-// 	{1,0,1,1,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0},	//4
-// 	{1,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,1,1,1,0,1,1,1,0,0,0,0,0,0,0,0,0},	//5
-// 	{1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0},	//6
-// 	{1,1,1,1,0,1,1,1,1,0,1,0,1,0,1,0,1,1,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0},	//7
-// 	{1,1,0,0,0,0,0,0,1,1,0,1,0,1,0,1,1,1,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0},	//8
-// 	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0},	//9
-// 	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,1,0,1,0,1,0,0,0,1,0,0,0,0,0},	//10
-// 	{1,1,0,0,0,0,0,0,1,1,0,1,0,1,0,1,1,1,1,1,0,1,1,1,0,0,0,0,1,0,0,0,0},	//11
-// 	{1,1,1,1,0,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,0,1,1,1,0,0,0,0,0,1,0,0,0},	//12
-// 	{1,1,1,1,0,1,1,1,1,1,1,1,0,0,1,0,1,1,2,0,0,0,0,1,0,0,0,0,0,1,1,1,1},	//13
-// 	{1,1,0,0,0,0,0,1,1,1,0,0,0,0,0,0,1,1,2,0,0,0,0,1,0,0,0,0,0,0,0,0,1},	//14
-// 	{1,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,1,1,2,0,0,0,0,1,0,0,0,0,0,0,0,0,1},	//15
-// 	{1,0,0,0,0,0,0,0,1,1,1,1,1,1,1,0,1,1,1,0,0,0,1,1,0,0,0,0,0,0,0,0,1},	//16
-// 	{1,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,0,0,1,0,1,0,1,0,0,0,0,0,0,0,0,1},	//17
-// 	{1,1,0,0,0,0,0,1,1,1,2,2,2,1,1,0,1,0,1,0,0,0,1,1,0,0,0,0,0,0,0,0,1},	//18
-// 	{1,0,0,0,0,0,0,0,1,0,0,0,0,0,1,1,0,1,0,1,0,1,0,0,0,0,0,0,0,0,0,0,1},	//19
-// 	{1,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},	//20
-// 	{1,2,0,0,0,0,0,0,1,0,0,0,0,0,1,1,0,1,0,1,0,1,0,0,0,0,0,0,0,0,0,0,1},	//21
-// 	{1,1,0,0,0,0,0,1,1,1,0,0,0,1,1,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1},	//22
-// 	{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}		//23
-// };
-
 int	g_map[MAP_W][MAP_H] =
 {
 	{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0},	//0
@@ -80,15 +52,15 @@ int	g_map[MAP_W][MAP_H] =
 	{1,1,0,0,0,0,0,0,1,1,0,1,0,1,0,1,1,1,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0},	//8
 	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0},	//9
 	{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0},	//10
-	{1,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0},
-	{1,0,1,1,0,0,0,0,0,1,1,1,0,0,0,0,0,0,2,0,0,0,0,0,1,0,0,0,0,0,0,0,0},
-	{1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0},
+	{1,0,0,0,0,0,0,0,0,0,1,1,2,2,2,2,2,2,2,2,2,2,2,2,1,0,0,0,0,0,0,0,0},
+	{1,0,1,1,0,0,0,0,0,1,1,1,0,0,2,2,2,2,2,2,2,2,2,2,1,0,0,0,0,0,0,0,0},
+	{1,0,0,1,0,0,0,0,0,0,0,0,0,0,2,2,2,2,2,2,2,2,2,2,1,0,0,0,0,0,0,0,0},
 	{1,1,1,1,1,1,1,1,1,0,1,1,0,0,0,0,0,1,1,1,0,0,0,0,1,0,0,0,0,0,0,0,1},
 	{1,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1},	//15
 	{1,1,1,1,0,1,1,1,1,1,1,1,1,1,0,1,1,1,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0},
 	{1,1,1,1,0,1,1,1,1,1,1,1,1,1,0,1,1,1,0,1,0,1,0,0,1,0,0,0,1,0,0,0,0},
-	{1,1,0,0,0,0,0,0,1,1,0,1,0,1,0,1,1,1,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0},
-	{1,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0},
+	{1,1,0,0,0,2,0,0,1,1,2,1,2,1,2,1,1,1,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0},
+	{1,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0},
 	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,1,0,1,0,0,1,0,0,0,1,0,0,0,0},	//20
 	{1,1,0,0,0,0,0,1,1,1,0,1,0,1,0,1,1,1,1,1,0,1,1,1,1,0,'N',0,1,1,1,0},
 	{1,1,1,1,0,1,1,1,' ',1,1,1,0,1,0,1,' ',1,0,1,1,1,1,0,1,0,0,0,1,0,0},
@@ -99,38 +71,111 @@ int	g_spmap[MAP_W][MAP_H] = {0};
 
 typedef struct	s_splist
 {
-	double	x;
-	double	y;
+	int				x;
+	int				y;
+	double			distance;
+	struct s_splist	*next;
 }				t_splist;
 
-struct	s_sprite
+t_splist	*splst_new(int x, int y)
 {
-	int	x;
-	int	y;
-};
+	t_splist	*list;
 
-struct s_sprite	g_sprite[NUM_SPRITES] =
+	if (!(list = (t_splist *)malloc(sizeof(t_splist))))
+		return (NULL);
+	list->x = x;
+	list->y = y;
+	list->distance = 0.0;
+	list->next = NULL;
+	return (list);
+}
+
+void	splist_add_front(t_splist **list, t_splist *new)
 {
-	{20, 11},
-	{18, 4},
-	{10, 4},
-	{10, 12},
-	{3, 6},
-	{3, 20},
-	{3, 14},
-	{14, 20},
-	{18, 10},
-	{18, 11},
-	{18, 12},
-	{21, 1},
-	{15, 1},
-	{16, 2},
-	{16, 1},
-	{3, 2},
-	{9, 15},
-	{10, 15},
-	{10, 16},
-};
+	if (!list || !new)
+		return ;
+	new->next = *list;
+	*list = new;
+}
+
+void	*ft_memset(void *b, int c, size_t len)
+{
+	unsigned char	*ptr;
+
+	ptr = (unsigned char *)b;
+	while (0 < len--)
+		*ptr++ = c;
+	return (b);
+}
+
+void	ft_bzero(void *s, size_t n)
+{
+	ft_memset(s, 0, n);
+}
+
+static t_splist	*splist_merge(t_splist *list1, t_splist *list2)
+{
+	t_splist	tmp;
+	t_splist	*p;
+
+	ft_bzero(&tmp, sizeof(t_splist));
+	p = &tmp;
+	while (list1 && list2)
+	{
+		if (list1->distance <= list2->distance)
+		{
+			p->next = list2;
+			p = list2;
+			list2 = list2->next;
+		} else {
+			p->next = list1;
+			p = list1;
+			list1 = list1->next;
+		}
+	}
+	if (!list1)
+		p->next = list2;
+	else
+		p->next = list1;
+	return (tmp.next);
+}
+
+t_splist	*splist_sort(t_splist *head)
+{
+	t_splist	*partition;
+	t_splist	*prev;
+	t_splist	*back;
+
+	if (!head || !head->next)
+		return (head);
+	prev = head;
+	back = head->next;
+	if (back)
+		back = back->next;
+	while (back && back->next)
+	{
+		prev = prev->next;
+		back = back->next->next;
+	}
+	partition = prev->next;
+	prev->next = NULL;
+	return (splist_merge(splist_sort(head), splist_sort(partition)));
+}
+
+void	splist_clear(t_splist **list)
+{
+	t_splist	*tmp;
+
+	if (!list)
+		return ;
+	while (*list)
+	{
+		tmp = *list;
+		*list = (*list)->next;
+		free(tmp);
+		tmp = NULL;
+	}
+}
 
 //arrays used to sort the sprites
 int		g_spriteOrder[NUM_SPRITES];
@@ -161,6 +206,7 @@ typedef struct	s_info
 	t_img	img;
 	int		buf[SCREEN_H][SCREEN_W];
 	double	zBuffer[SCREEN_W];
+	t_splist	*splist;
 	int		**texture;
 	double	moveSpeed;
 	double	rotSpeed;
@@ -302,6 +348,8 @@ void	calc(t_info *info)
 		//perform DDA
 		while (hit == 0)
 		{
+			t_splist	*new;
+
 			//jump to next map square, OR in x-direction, OR in y-direction
 			//次のマップの正方形にジャンプ、OR x方向、OR y方向
 			if (sideDistX < sideDistY)	//ループ1
@@ -317,6 +365,16 @@ void	calc(t_info *info)
 				side = 1;
 			}
 			//Check if ray has hit a wall
+			if (g_map[mapX][mapY] == 2 && !g_spmap[mapX][mapY])
+			{
+				g_spmap[mapX][mapY] = 1;
+				if (!(new = splst_new(mapX, mapY)))
+				{
+					splist_clear(&info->splist);
+					exit(EXIT_FAILURE);
+				}
+				splist_add_front(&info->splist, new);
+			}
 			if (g_map[mapX][mapY] == 1)	//初期[21][11]
 				hit = 1;
 		}
@@ -385,21 +443,33 @@ void	calc(t_info *info)
 
 	//SPRITE CASTING
 	//sort sprites from far to close スプライトを遠いものから近いものに並べ替える
-	for (int i = 0; i < NUM_SPRITES; i++)
+	t_splist	*sp_head;
+	sp_head = info->splist;
+	// for (int i = 0; i < NUM_SPRITES; i++)
+	// {
+	// 	g_spriteOrder[i] = i;
+	// 	g_spriteDistance[i] = ((info->posX - g_sprite[i].x) * (info->posX - g_sprite[i].x) + (info->posY - g_sprite[i].y) * (info->posY - g_sprite[i].y));	//sqrt not taken, unneeded 三角関数で現在位置とスプライト位置で作る三角形の斜辺を計算
+	// }
+	// sortSprites(g_spriteOrder, g_spriteDistance, NUM_SPRITES);
+	while (sp_head)
 	{
-		g_spriteOrder[i] = i;
-		g_spriteDistance[i] = ((info->posX - g_sprite[i].x) * (info->posX - g_sprite[i].x) + (info->posY - g_sprite[i].y) * (info->posY - g_sprite[i].y));	//sqrt not taken, unneeded 三角関数で現在位置とスプライト位置で作る三角形の斜辺を計算
+		sp_head->distance = ((info->posX - sp_head->x) * (info->posX - sp_head->x) + (info->posY - sp_head->y) * (info->posY - sp_head->y));	//sqrt not taken, unneeded 三角関数で現在位置とスプライト位置で作る三角形の斜辺を計算
+		sp_head = sp_head->next;
 	}
-	sortSprites(g_spriteOrder, g_spriteDistance, NUM_SPRITES);
+	info->splist = splist_sort(info->splist);
 
 	//after sorting the sprites, do the projection and draw them
 	//スプライトを並べ替えた後、投影を実行して描画します
-	for (int i = 0; i < NUM_SPRITES; i++)
+	// for (int i = 0; i < NUM_SPRITES; i++)
+	sp_head = info->splist;
+	while (sp_head)
 	{
 		//translate sprite position to relative to camera
 		//スプライトの位置をカメラの相対位置に変換します
-		double spriteX = g_sprite[g_spriteOrder[i]].x + 0.5 - info->posX;
-		double spriteY = g_sprite[g_spriteOrder[i]].y + 0.5 - info->posY;
+		// double spriteX = g_sprite[g_spriteOrder[i]].x + 0.5 - info->posX;
+		// double spriteY = g_sprite[g_spriteOrder[i]].y + 0.5 - info->posY;
+		double spriteX = sp_head->x + 0.5 - info->posX;
+		double spriteY = sp_head->y + 0.5 - info->posY;
 
 		//transform sprite with the inverse camera matrix
 		// [ planeX   dirX ] -1                                       [ dirY      -dirX ]
@@ -460,6 +530,7 @@ void	calc(t_info *info)
 						info->buf[y][stripe] = color; //paint pixel if it isn't black, black is the invisible color ピクセルが黒でない場合はペイントし、黒は非表示の色です
 				}
 		}
+		sp_head = sp_head->next;
 	}
 }
 
@@ -585,7 +656,10 @@ int	key_press(int key, t_info *info)
 		info->planeY = oldPlaneX * sin(info->rotSpeed) + info->planeY * cos(info->rotSpeed);
 	}
 	if (key == KEY_ESC)
+	{
+		// TODO; free() if want
 		exit(0);
+	}
 	return (0);
 }
 
@@ -626,6 +700,7 @@ int		set_info(t_info *info)
 	info->planeY = 0.66;
 	info->moveSpeed = 0.2;
 	info->rotSpeed = 0.2;
+	info->splist = NULL;
 	i = -1;
 	while (++i < SCREEN_H)
 	{
