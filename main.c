@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 23:40:15 by sikeda            #+#    #+#             */
-/*   Updated: 2021/01/23 22:38:39 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/01/23 23:21:36 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,6 +207,12 @@ typedef struct	s_info
 	double planeY;
 	void	*mlx;
 	void	*win;
+	int		key_w;
+	int		key_s;
+	int		key_a;
+	int		key_d;
+	int		key_right;
+	int		key_left;
 	t_img	img;
 	int		buf[SCREEN_H][SCREEN_W];
 	double	zBuffer[SCREEN_W];
@@ -538,13 +544,6 @@ void	calc(t_info *info)
 	}
 }
 
-int		main_loop(t_info *info)
-{
-	calc(info);
-	draw(info);
-	return (0);
-}
-
 int	x_close(t_info *info)
 {
 	(void)info;
@@ -553,101 +552,37 @@ int	x_close(t_info *info)
 	return (0);
 }
 
-int	key_press(int key, t_info *info)
+int	key_update(t_info *info)
 {
-	if (key == KEY_W)
+	if (info->key_w)
 	{
-		double	i;
-
-		i = 0.01;
-		while (i <= info->moveSpeed)
-		{
-			if (g_map[(int)(info->posX + info->dirX * i)][(int)info->posY] == 1)
-				break ;
-			i += 0.1;
-		}
-		if (g_map[(int)(info->posX + info->dirX * i)][(int)info->posY] != 1)
-			info->posX += info->dirX * i;
-		i = 0.01;
-		while (i <= info->moveSpeed)
-		{
-			if (g_map[(int)info->posX][(int)(info->posY + info->dirY * i)] == 1)
-				break ;
-			i += 0.1;
-		}
-		if (g_map[(int)info->posX][(int)(info->posY + info->dirY * i)] != 1)
-			info->posY += info->dirY * i;
+		if (g_map[(int)(info->posX + info->dirX * info->moveSpeed)][(int)info->posY] != 1)
+			info->posX += info->dirX * info->moveSpeed;
+		if (g_map[(int)info->posX][(int)(info->posY + info->dirY * info->moveSpeed)] != 1)
+			info->posY += info->dirY * info->moveSpeed;
 	}
-	if (key == KEY_S)
+	if (info->key_s)
 	{
-		double	i;
-
-		i = 0.01;
-		while (i <= info->moveSpeed)
-		{
-			if (g_map[(int)(info->posX - info->dirX * i)][(int)info->posY] == 1)
-				break ;
-			i += 0.1;
-		}
-		if (g_map[(int)(info->posX - info->dirX * i)][(int)info->posY] != 1)
-			info->posX -= info->dirX * i;
-		i = 0.01;
-		while (i <= info->moveSpeed)
-		{
-			if (g_map[(int)info->posX][(int)(info->posY - info->dirY * i)] == 1)
-				break ;
-			i += 0.1;
-		}
-		if (g_map[(int)info->posX][(int)(info->posY - info->dirY * i)] != 1)
-			info->posY -= info->dirY * i;
+		if (g_map[(int)(info->posX - info->dirX * info->moveSpeed)][(int)info->posY] != 1)
+			info->posX -= info->dirX * info->moveSpeed;
+		if (g_map[(int)info->posX][(int)(info->posY - info->dirY * info->moveSpeed)] != 1)
+			info->posY -= info->dirY * info->moveSpeed;
 	}
-	if (key == KEY_D)
+	if (info->key_d)
 	{
-		double	i;
-
-		i = 0.01;
-		while (i <= info->moveSpeed)
-		{
-			if (g_map[(int)(info->posX + info->planeX * i)][(int)info->posY] == 1)
-				break ;
-			i += 0.1;
-		}
-		if (g_map[(int)(info->posX + info->planeX * i)][(int)info->posY] != 1)
-			info->posX += info->planeX * i;
-		i = 0.01;
-		while (i <= info->moveSpeed)
-		{
-			if (g_map[(int)info->posX][(int)(info->posY + info->planeY * i)] == 1)
-				break ;
-			i += 0.1;
-		}
-		if (g_map[(int)info->posX][(int)(info->posY + info->planeY * i)] != 1)
-			info->posY += info->planeY * i;
+		if (g_map[(int)(info->posX + info->planeX * info->moveSpeed)][(int)info->posY] != 1)
+			info->posX += info->planeX * info->moveSpeed;
+		if (g_map[(int)info->posX][(int)(info->posY + info->planeY * info->moveSpeed)] != 1)
+			info->posY += info->planeY * info->moveSpeed;
 	}
-	if (key == KEY_A)
+	if (info->key_a)
 	{
-		double	i;
-
-		i = 0.01;
-		while (i <= info->moveSpeed)
-		{
-			if (g_map[(int)(info->posX - info->planeX * i)][(int)info->posY] == 1)
-				break ;
-			i += 0.1;
-		}
-		if (g_map[(int)(info->posX - info->planeX * i)][(int)info->posY] != 1)
-			info->posX -= info->planeX * i;
-		i = 0.01;
-		while (i <= info->moveSpeed)
-		{
-			if (g_map[(int)info->posX][(int)(info->posY - info->planeY * i)] == 1)
-				break ;
-			i += 0.1;
-		}
-		if (g_map[(int)info->posX][(int)(info->posY - info->planeY * i)] != 1)
-			info->posY -= info->planeY * i;
+		if (g_map[(int)(info->posX - info->planeX * info->moveSpeed)][(int)info->posY] != 1)
+			info->posX -= info->planeX * info->moveSpeed;
+		if (g_map[(int)info->posX][(int)(info->posY - info->planeY * info->moveSpeed)] != 1)
+			info->posY -= info->planeY * info->moveSpeed;
 	}
-	if (key == KEY_RIGHT)
+	if (info->key_right)
 	{
 		//both camera direction and camera plane must be rotated
 		double oldDirX = info->dirX;
@@ -657,7 +592,7 @@ int	key_press(int key, t_info *info)
 		info->planeX = info->planeX * cos(-info->rotSpeed) - info->planeY * sin(-info->rotSpeed);
 		info->planeY = oldPlaneX * sin(-info->rotSpeed) + info->planeY * cos(-info->rotSpeed);
 	}
-	if (key == KEY_LEFT)
+	if (info->key_left)
 	{
 		//both camera direction and camera plane must be rotated
 		double oldDirX = info->dirX;
@@ -667,8 +602,52 @@ int	key_press(int key, t_info *info)
 		info->planeX = info->planeX * cos(info->rotSpeed) - info->planeY * sin(info->rotSpeed);
 		info->planeY = oldPlaneX * sin(info->rotSpeed) + info->planeY * cos(info->rotSpeed);
 	}
+	return (0);
+}
+
+int		main_loop(t_info *info)
+{
+	calc(info);
+	draw(info);
+	key_update(info);
+	return (0);
+}
+
+int	key_press(int key, t_info *info)
+{
 	if (key == KEY_ESC)
 		x_close(info);
+	else if (key == KEY_W)
+		info->key_w = 1;
+	else if (key == KEY_S)
+		info->key_s = 1;
+	else if (key == KEY_A)
+		info->key_a = 1;
+	else if (key == KEY_D)
+		info->key_d = 1;
+	else if (key == KEY_LEFT)
+		info->key_left = 1;
+	else if (key == KEY_RIGHT)
+		info->key_right = 1;
+	return (0);
+}
+
+int	key_release(int key, t_info *info)
+{
+	if (key == KEY_ESC)
+		x_close(info);
+	else if (key == KEY_W)
+		info->key_w = 0;
+	else if (key == KEY_S)
+		info->key_s = 0;
+	else if (key == KEY_A)
+		info->key_a = 0;
+	else if (key == KEY_D)
+		info->key_d = 0;
+	else if (key == KEY_LEFT)
+		info->key_left = 0;
+	else if (key == KEY_RIGHT)
+		info->key_right = 0;
 	return (0);
 }
 
@@ -699,16 +678,20 @@ int		set_info(t_info *info)
 	int	j;
 
 	info->mlx = mlx_init();
-	// info->posX = 22.0;
-	// info->posY = 11.5;
 	info->posX = 22.0;
 	info->posY = 5.5;
 	info->dirX = -1.0;
 	info->dirY = 0.0;
 	info->planeX = 0.0;
 	info->planeY = 0.66;
-	info->moveSpeed = 0.2;
-	info->rotSpeed = 0.2;
+	info->key_w = 0;
+	info->key_s = 0;
+	info->key_a = 0;
+	info->key_d = 0;
+	info->key_left = 0;
+	info->key_right = 0;
+	info->moveSpeed = 0.05;
+	info->rotSpeed = 0.05;
 	info->splist = NULL;
 	i = -1;
 	while (++i < SCREEN_H)
@@ -746,6 +729,7 @@ int	main()
 	mlx_loop_hook(info.mlx, main_loop, &info);
 	// mlx_key_hook(info.win, key_press, &info);
 	mlx_hook(info.win, KEY_PRESS, 1L<<0, key_press, &info);
+	mlx_hook(info.win, KEY_RELEASE, 1L<<0, key_release, &info);
 	mlx_hook(info.win, EVENT_X_BTN, 1L<<17, x_close, &info);
 	mlx_loop(info.mlx);
 	return (0);
