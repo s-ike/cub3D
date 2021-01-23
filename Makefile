@@ -2,6 +2,7 @@ NAME		= cub3D
 
 SRCDIR		= ./srcs/
 SRC			= main.c \
+				$(SRCDIR)key.c \
 				$(SRCDIR)sprite_list.c
 OBJ			= $(SRC:.c=.o)
 

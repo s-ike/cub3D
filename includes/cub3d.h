@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/24 00:39:58 by sikeda            #+#    #+#             */
-/*   Updated: 2021/01/24 01:41:30 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/01/24 02:04:20 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,5 +82,13 @@ typedef struct	s_info
 	double		move_speed;
 	double		rot_speed;
 }				t_info;
+
+/*
+** key.c
+*/
+int				x_close(t_info *info);
+int				key_update(t_info *info);
+int				key_press(int key, t_info *info);
+int				key_release(int key, t_info *info);
 
 #endif
