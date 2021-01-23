@@ -24,7 +24,7 @@ all:		$(NAME)
 $(NAME):	$(OBJ)
 			cp $(MLX_PATH) .
 			$(CC) $(CFLAGS) $(OBJ) $(DEBUG) -L. $(MLX_FLAGS) -o $(NAME)
-			@echo "\x1b[32m[=== Make Done ===]"
+			@echo "\e[32m[=== Make Done ===]"
 
 clean:
 			$(RM) $(OBJ)

@@ -16,7 +16,11 @@
 #include <string.h>
 #include <errno.h>
 #include "key_map.h"
-#include "newmlx/mlx.h"
+#ifdef LINUX
+# include "minilibx-linux/mlx.h"
+#else
+# include "newmlx/mlx.h"
+#endif
 
 #define SCREEN_W 640
 #define SCREEN_H 480
@@ -541,9 +545,8 @@ int		main_loop(t_info *info)
 	return (0);
 }
 
-int	x_close(int key, t_info *info)
+int	x_close(t_info *info)
 {
-	(void)key;
 	(void)info;
 	// TODO; free() if want
 	exit(EXIT_SUCCESS);
@@ -665,7 +668,7 @@ int	key_press(int key, t_info *info)
 		info->planeY = oldPlaneX * sin(info->rotSpeed) + info->planeY * cos(info->rotSpeed);
 	}
 	if (key == KEY_ESC)
-		x_close(key, info);
+		x_close(info);
 	return (0);
 }
 
@@ -743,7 +746,7 @@ int	main()
 	mlx_loop_hook(info.mlx, main_loop, &info);
 	// mlx_key_hook(info.win, key_press, &info);
 	mlx_hook(info.win, KEY_PRESS, 1L<<0, key_press, &info);
-	mlx_hook(info.win, DESTROY_NOTIFY, 1L<<17, x_close, &info);
+	mlx_hook(info.win, 33, 1L<<17, x_close, &info);
 	mlx_loop(info.mlx);
 	return (0);
 }
