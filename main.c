@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 23:40:15 by sikeda            #+#    #+#             */
-/*   Updated: 2021/01/22 23:58:43 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/01/23 15:48:44 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -541,6 +541,15 @@ int		main_loop(t_info *info)
 	return (0);
 }
 
+int	x_close(int key, t_info *info)
+{
+	(void)key;
+	(void)info;
+	// TODO; free() if want
+	exit(EXIT_SUCCESS);
+	return (0);
+}
+
 int	key_press(int key, t_info *info)
 {
 	if (key == KEY_W)
@@ -656,10 +665,7 @@ int	key_press(int key, t_info *info)
 		info->planeY = oldPlaneX * sin(info->rotSpeed) + info->planeY * cos(info->rotSpeed);
 	}
 	if (key == KEY_ESC)
-	{
-		// TODO; free() if want
-		exit(0);
-	}
+		x_close(key, info);
 	return (0);
 }
 
@@ -735,7 +741,9 @@ int	main()
 	if (set_info(&info))
 		exit(EXIT_FAILURE);
 	mlx_loop_hook(info.mlx, main_loop, &info);
-	mlx_key_hook(info.win, key_press, &info);
+	// mlx_key_hook(info.win, key_press, &info);
+	mlx_hook(info.win, KEY_PRESS, 1L<<0, key_press, &info);
+	mlx_hook(info.win, DESTROY_NOTIFY, 1L<<17, x_close, &info);
 	mlx_loop(info.mlx);
 	return (0);
 }
