@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 23:40:15 by sikeda            #+#    #+#             */
-/*   Updated: 2021/01/23 18:38:57 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/01/23 22:38:39 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -457,7 +457,7 @@ void	calc(t_info *info)
 	// sortSprites(g_spriteOrder, g_spriteDistance, NUM_SPRITES);
 	while (sp_head)
 	{
-		sp_head->distance = ((info->posX - sp_head->x) * (info->posX - sp_head->x) + (info->posY - sp_head->y) * (info->posY - sp_head->y));	//sqrt not taken, unneeded 三角関数で現在位置とスプライト位置で作る三角形の斜辺を計算
+		sp_head->distance = ((info->posX - (sp_head->x + 0.5)) * (info->posX - (sp_head->x + 0.5)) + (info->posY - (sp_head->y + 0.5)) * (info->posY - (sp_head->y + 0.5)));	//sqrt not taken, unneeded 三角関数で現在位置とスプライト位置で作る三角形の斜辺を計算
 		sp_head = sp_head->next;
 	}
 	info->splist = splist_sort(info->splist);
