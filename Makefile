@@ -21,9 +21,9 @@ CC			= gcc
 
 all:		$(NAME)
 
-$(NAME):	$(OBJ) $(MLX_PATH)
+$(NAME):	$(OBJ)
 			cp $(MLX_PATH) .
-			$(CC) $(CFLAGS) $(DEBUG) -L. $(MLX_FLAGS) $(OBJ) -o $(NAME)
+			$(CC) $(CFLAGS) $(OBJ) $(DEBUG) -L. $(MLX_FLAGS) -o $(NAME)
 
 clean:
 			$(RM) $(OBJ)
