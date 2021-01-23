@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/24 00:39:58 by sikeda            #+#    #+#             */
-/*   Updated: 2021/01/24 00:39:59 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/01/24 01:03:56 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 #  include "newmlx/mlx.h"
 # endif
 
+# define PRG_NAME "cub3D"
 # define SCREEN_W 640
 # define SCREEN_H 480
 # define MAP_W 24
@@ -62,6 +63,16 @@ typedef struct	s_img
 	int		img_height;
 }				t_img;
 
+typedef struct	s_keys
+{
+	int	w;
+	int	s;
+	int	a;
+	int	d;
+	int	right;
+	int	left;
+}				t_keys;
+
 typedef struct	s_info
 {
 	double		pos_x;
@@ -72,12 +83,7 @@ typedef struct	s_info
 	double		plane_y;
 	void		*mlx;
 	void		*win;
-	int			key_w;
-	int			key_s;
-	int			key_a;
-	int			key_d;
-	int			key_right;
-	int			key_left;
+	t_keys		keys;
 	t_img		img;
 	int			buf[SCREEN_H][SCREEN_W];
 	double		z_buffer[SCREEN_W];

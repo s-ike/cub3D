@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 23:40:15 by sikeda            #+#    #+#             */
-/*   Updated: 2021/01/24 00:37:13 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/01/24 01:04:05 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -423,35 +423,35 @@ int	x_close(t_info *info)
 
 int	key_update(t_info *info)
 {
-	if (info->key_w)
+	if (info->keys.w)
 	{
 		if (g_map[(int)(info->pos_x + info->dir_x * info->move_speed)][(int)info->pos_y] != 1)
 			info->pos_x += info->dir_x * info->move_speed;
 		if (g_map[(int)info->pos_x][(int)(info->pos_y + info->dir_y * info->move_speed)] != 1)
 			info->pos_y += info->dir_y * info->move_speed;
 	}
-	if (info->key_s)
+	if (info->keys.s)
 	{
 		if (g_map[(int)(info->pos_x - info->dir_x * info->move_speed)][(int)info->pos_y] != 1)
 			info->pos_x -= info->dir_x * info->move_speed;
 		if (g_map[(int)info->pos_x][(int)(info->pos_y - info->dir_y * info->move_speed)] != 1)
 			info->pos_y -= info->dir_y * info->move_speed;
 	}
-	if (info->key_d)
+	if (info->keys.d)
 	{
 		if (g_map[(int)(info->pos_x + info->plane_x * info->move_speed)][(int)info->pos_y] != 1)
 			info->pos_x += info->plane_x * info->move_speed;
 		if (g_map[(int)info->pos_x][(int)(info->pos_y + info->plane_y * info->move_speed)] != 1)
 			info->pos_y += info->plane_y * info->move_speed;
 	}
-	if (info->key_a)
+	if (info->keys.a)
 	{
 		if (g_map[(int)(info->pos_x - info->plane_x * info->move_speed)][(int)info->pos_y] != 1)
 			info->pos_x -= info->plane_x * info->move_speed;
 		if (g_map[(int)info->pos_x][(int)(info->pos_y - info->plane_y * info->move_speed)] != 1)
 			info->pos_y -= info->plane_y * info->move_speed;
 	}
-	if (info->key_right)
+	if (info->keys.right)
 	{
 		//both camera direction and camera plane must be rotated
 		double oldDirX = info->dir_x;
@@ -461,7 +461,7 @@ int	key_update(t_info *info)
 		info->plane_x = info->plane_x * cos(-info->rot_speed) - info->plane_y * sin(-info->rot_speed);
 		info->plane_y = oldPlaneX * sin(-info->rot_speed) + info->plane_y * cos(-info->rot_speed);
 	}
-	if (info->key_left)
+	if (info->keys.left)
 	{
 		//both camera direction and camera plane must be rotated
 		double oldDirX = info->dir_x;
@@ -487,17 +487,17 @@ int	key_press(int key, t_info *info)
 	if (key == KEY_ESC)
 		x_close(info);
 	else if (key == KEY_W)
-		info->key_w = 1;
+		info->keys.w = 1;
 	else if (key == KEY_S)
-		info->key_s = 1;
+		info->keys.s = 1;
 	else if (key == KEY_A)
-		info->key_a = 1;
+		info->keys.a = 1;
 	else if (key == KEY_D)
-		info->key_d = 1;
+		info->keys.d = 1;
 	else if (key == KEY_LEFT)
-		info->key_left = 1;
+		info->keys.left = 1;
 	else if (key == KEY_RIGHT)
-		info->key_right = 1;
+		info->keys.right = 1;
 	return (0);
 }
 
@@ -506,17 +506,17 @@ int	key_release(int key, t_info *info)
 	if (key == KEY_ESC)
 		x_close(info);
 	else if (key == KEY_W)
-		info->key_w = 0;
+		info->keys.w = 0;
 	else if (key == KEY_S)
-		info->key_s = 0;
+		info->keys.s = 0;
 	else if (key == KEY_A)
-		info->key_a = 0;
+		info->keys.a = 0;
 	else if (key == KEY_D)
-		info->key_d = 0;
+		info->keys.d = 0;
 	else if (key == KEY_LEFT)
-		info->key_left = 0;
+		info->keys.left = 0;
 	else if (key == KEY_RIGHT)
-		info->key_right = 0;
+		info->keys.right = 0;
 	return (0);
 }
 
@@ -553,12 +553,7 @@ int		set_info(t_info *info)
 	info->dir_y = 0.0;
 	info->plane_x = 0.0;
 	info->plane_y = 0.66;
-	info->key_w = 0;
-	info->key_s = 0;
-	info->key_a = 0;
-	info->key_d = 0;
-	info->key_left = 0;
-	info->key_right = 0;
+	ft_bzero(&info->keys, sizeof(t_keys));
 	info->move_speed = 0.05;
 	info->rot_speed = 0.05;
 	info->splist = NULL;
@@ -583,7 +578,7 @@ int		set_info(t_info *info)
 			info->texture[i][j] = 0;
 	}
 	load_texture(info);
-	info->win = mlx_new_window(info->mlx, SCREEN_W, SCREEN_H, "cub3D");
+	info->win = mlx_new_window(info->mlx, SCREEN_W, SCREEN_H, PRG_NAME);
 	info->img.img = mlx_new_image(info->mlx, SCREEN_W, SCREEN_H);
 	info->img.data = (int *)mlx_get_data_addr(info->img.img, &info->img.bpp, &info->img.size_l, &info->img.endian);
 	return (EXIT_SUCCESS);
@@ -596,7 +591,6 @@ int	main()
 	if (set_info(&info))
 		exit(EXIT_FAILURE);
 	mlx_loop_hook(info.mlx, main_loop, &info);
-	// mlx_key_hook(info.win, key_press, &info);
 	mlx_hook(info.win, KEY_PRESS, 1L<<0, key_press, &info);
 	mlx_hook(info.win, KEY_RELEASE, 1L<<0, key_release, &info);
 	mlx_hook(info.win, EVENT_X_BTN, 1L<<17, x_close, &info);
