@@ -1,7 +1,15 @@
 NAME		= cub3D
 
-SRC			= main.c
+SRCDIR		= ./srcs/
+SRC			= main.c \
+				$(SRCDIR)sprite_list.c
 OBJ			= $(SRC:.c=.o)
+
+INCLUDE 	= -I./includes/ \
+				-I./libft/
+
+LIBDIR		= ./libft
+LIBPATH		= $(LIBDIR)/libft.a
 
 ifeq ($(shell uname),Linux)
 MLX_DIR		= ./minilibx-linux
@@ -17,21 +25,30 @@ CFLAGS		= -Wall -Wextra -Werror
 C_GREEN		= "\x1b[32m"
 endif
 MLX_PATH	= $(MLX_DIR)/$(MLX_NAME)
-DEBUG		= -g
+INCLUDE		+= -I$(MLX_DIR)
 
+DEBUG		= -g
 CC			= gcc
+
+.c.o:
+			$(CC) $(CFLAGS) $(DEBUG) $(INCLUDE) -c $< -o $@
 
 all:		$(NAME)
 
-$(NAME):	$(OBJ)
+$(NAME):	$(OBJ) $(LIBPATH)
 			cp $(MLX_PATH) .
-			$(CC) $(CFLAGS) $(OBJ) $(DEBUG) -L. $(MLX_FLAGS) -o $(NAME)
+			$(CC) $(CFLAGS) $(OBJ) $(DEBUG) -L. $(MLX_FLAGS) $(LIBPATH) -o $(NAME)
 			@echo $(C_GREEN)"=== Make Done ==="
 
+$(LIBPATH):
+			$(MAKE) -C $(LIBDIR)
+
 clean:
+			$(MAKE) clean -C $(LIBDIR)
 			$(RM) $(OBJ)
 
 fclean:		clean
+			$(MAKE) fclean -C $(LIBDIR)
 			$(RM) $(MLX_NAME)
 			$(RM) $(NAME)
 
