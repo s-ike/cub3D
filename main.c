@@ -6,39 +6,11 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 23:40:15 by sikeda            #+#    #+#             */
-/*   Updated: 2021/01/23 23:21:36 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/01/24 00:37:13 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <math.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <string.h>
-#include <errno.h>
-#include "key_map.h"
-#ifdef LINUX
-# include "minilibx-linux/mlx.h"
-#else
-# include "newmlx/mlx.h"
-#endif
-
-#define SCREEN_W 640
-#define SCREEN_H 480
-#define MAP_W 24
-#define MAP_H 33
-#define TEX_W 64
-#define TEX_H 64
-#define	NUM_SPRITES 19
-
-enum	e_texdir
-{
-	TEX_NORTH,
-	TEX_SOUTH,
-	TEX_EAST,
-	TEX_WEST,
-	TEX_SPRITE,
-	TEX_END,
-};
+#include "cub3d.h"
 
 int	g_floor = 0x00FF0000;
 int	g_ceile = 0x0000FF00;
@@ -72,14 +44,6 @@ int	g_map[MAP_W][MAP_H] =
 };
 
 int	g_spmap[MAP_W][MAP_H] = {0};
-
-typedef struct	s_splist
-{
-	int				x;
-	int				y;
-	double			distance;
-	struct s_splist	*next;
-}				t_splist;
 
 t_splist	*splst_new(int x, int y)
 {
@@ -181,101 +145,6 @@ void	splist_clear(t_splist **list)
 	}
 }
 
-//arrays used to sort the sprites
-int		g_spriteOrder[NUM_SPRITES];
-double	g_spriteDistance[NUM_SPRITES];
-
-typedef struct	s_img
-{
-	void	*img;
-	int		*data;
-
-	int		size_l;
-	int		bpp;
-	int		endian;
-	int		img_width;
-	int		img_height;
-}				t_img;
-
-typedef struct	s_info
-{
-	double posX;
-	double posY;
-	double dirX;
-	double dirY;
-	double planeX;
-	double planeY;
-	void	*mlx;
-	void	*win;
-	int		key_w;
-	int		key_s;
-	int		key_a;
-	int		key_d;
-	int		key_right;
-	int		key_left;
-	t_img	img;
-	int		buf[SCREEN_H][SCREEN_W];
-	double	zBuffer[SCREEN_W];
-	t_splist	*splist;
-	int		**texture;
-	double	moveSpeed;
-	double	rotSpeed;
-}				t_info;
-
-typedef struct	s_pair
-{
-	double	first;
-	int		second;
-}				t_pair;
-
-void	sort_order(t_pair *orders, int amount)
-{
-	t_pair	tmp;
-	int		i;
-	int		last;
-
-	i = 0;
-	while (i < amount - 1)
-	{
-		last = amount - 1;
-		for (int j = amount - 1; i < j; j--)
-		{
-			if (orders[j].first < orders[j - 1].first)
-			{
-				tmp.first = orders[j].first;
-				tmp.second = orders[j].second;
-				orders[j].first = orders[j - 1].first;
-				orders[j].second = orders[j - 1].second;
-				orders[j - 1].first = tmp.first;
-				orders[j - 1].second = tmp.second;
-				last = j;
-			}
-		}
-		i = last;
-	}
-}
-
-void	sortSprites(int *order, double *dist, int amount)
-{
-	t_pair	*sprites;
-
-	//std::vector<std::pair<double, int>> sprites(amount);
-	sprites = (t_pair *)malloc(sizeof(t_pair) * amount);
-	for (int i = 0; i < amount; i++)
-	{
-		sprites[i].first = dist[i];
-		sprites[i].second = order[i];
-	}
-	sort_order(sprites, amount);	//大きい順にする
-	//std::sort(sprites.begin(), sprites.end());
-	for (int i = 0; i < amount; i++)
-	{
-		dist[i] = sprites[amount - i - 1].first;
-		order[i] = sprites[amount - i - 1].second;
-	}
-	free(sprites);
-}
-
 void	draw(t_info *info)
 {
 	for (int y = 0; y < SCREEN_H; y++)
@@ -307,13 +176,13 @@ void	calc(t_info *info)
 		//calculate ray position and direction
 		//光線の位置と方向を計算します
 		double	cameraX	= 2 * x / (double)SCREEN_W - 1;	//カメラ空間のx座標	//初期-1
-		double	rayDirX = info->dirX + info->planeX * cameraX;	//初期-1
-		double	rayDirY = info->dirY + info->planeY * cameraX;	//初期-0.66000
+		double	rayDirX = info->dir_x + info->plane_x * cameraX;	//初期-1
+		double	rayDirY = info->dir_y + info->plane_y * cameraX;	//初期-0.66000
 
 		//which box of the map we're in
 		 //マップのどのボックスにいるのか
-		int	mapX = (int)info->posX;	//初期22
-		int	mapY = (int)info->posY;	//初期11
+		int	mapX = (int)info->pos_x;	//初期22
+		int	mapY = (int)info->pos_y;	//初期11
 
 		//length of ray from current position to next x or y-side
 		//現在の位置から次のxまたはy側までの光線の長さ
@@ -337,22 +206,22 @@ void	calc(t_info *info)
 		if (rayDirX < 0)
 		{
 			stepX = -1;
-			sideDistX = (info->posX - mapX) * deltaDistX;	//初期0
+			sideDistX = (info->pos_x - mapX) * deltaDistX;	//初期0
 		}
 		else
 		{
 			stepX = 1;
-			sideDistX = (mapX + 1.0 - info->posX) * deltaDistX;
+			sideDistX = (mapX + 1.0 - info->pos_x) * deltaDistX;
 		}
 		if (rayDirY < 0)
 		{
 			stepY = -1;
-			sideDistY = (info->posY - mapY) * deltaDistY;	//初期0.757575
+			sideDistY = (info->pos_y - mapY) * deltaDistY;	//初期0.757575
 		}
 		else
 		{
 			stepY = 1;
-			sideDistY = (mapY + 1.0 - info->posY) * deltaDistY;
+			sideDistY = (mapY + 1.0 - info->pos_y) * deltaDistY;
 		}
 
 		//perform DDA
@@ -392,9 +261,9 @@ void	calc(t_info *info)
 		//Calculate distance of perpendicular ray (Euclidean distance will give fisheye effect!)
 		//垂直光線の距離を計算します（ユークリッド距離は魚眼効果を与えます！）
 		if (side == 0)
-			perpWallDist = (mapX - info->posX + (1 - stepX) / 2) / rayDirX;	//初期(mapX(18)-posX(22)+(1-stepX(-1))/2)/rayDirX(-1) = 3
+			perpWallDist = (mapX - info->pos_x + (1 - stepX) / 2) / rayDirX;	//初期(mapX(18)-pos_x(22)+(1-stepX(-1))/2)/rayDirX(-1) = 3
 		else
-			perpWallDist = (mapY - info->posY + (1 - stepY) / 2) / rayDirY;
+			perpWallDist = (mapY - info->pos_y + (1 - stepY) / 2) / rayDirY;
 
 		//Calculate height of line to draw on screen
 		//画面に描画する線の高さを計算します
@@ -418,9 +287,9 @@ void	calc(t_info *info)
 		//calculate value of wallX
 		double wallX; //where exactly the wall was hit	//壁が正確に当たった場所
 		if (side == 0)
-			wallX = info->posY + perpWallDist * rayDirY;	//初期9.519999
+			wallX = info->pos_y + perpWallDist * rayDirY;	//初期9.519999
 		else
-			wallX = info->posX + perpWallDist * rayDirX;
+			wallX = info->pos_x + perpWallDist * rayDirX;
 		wallX -= floor(wallX);	// floor(): 小数点以下の切り捨て -=しているので小数部分を取り出している
 
 		//x coordinate on the texture
@@ -448,7 +317,7 @@ void	calc(t_info *info)
 		}
 
 		//SET THE ZBUFFER FOR THE SPRITE CASTING
-		info->zBuffer[x] = perpWallDist;	//perpendicular distance is used 垂直距離が使用されます
+		info->z_buffer[x] = perpWallDist;	//perpendicular distance is used 垂直距離が使用されます
 	}
 
 	//SPRITE CASTING
@@ -458,12 +327,12 @@ void	calc(t_info *info)
 	// for (int i = 0; i < NUM_SPRITES; i++)
 	// {
 	// 	g_spriteOrder[i] = i;
-	// 	g_spriteDistance[i] = ((info->posX - g_sprite[i].x) * (info->posX - g_sprite[i].x) + (info->posY - g_sprite[i].y) * (info->posY - g_sprite[i].y));	//sqrt not taken, unneeded 三角関数で現在位置とスプライト位置で作る三角形の斜辺を計算
+	// 	g_spriteDistance[i] = ((info->pos_x - g_sprite[i].x) * (info->pos_x - g_sprite[i].x) + (info->pos_y - g_sprite[i].y) * (info->pos_y - g_sprite[i].y));	//sqrt not taken, unneeded 三角関数で現在位置とスプライト位置で作る三角形の斜辺を計算
 	// }
 	// sortSprites(g_spriteOrder, g_spriteDistance, NUM_SPRITES);
 	while (sp_head)
 	{
-		sp_head->distance = ((info->posX - (sp_head->x + 0.5)) * (info->posX - (sp_head->x + 0.5)) + (info->posY - (sp_head->y + 0.5)) * (info->posY - (sp_head->y + 0.5)));	//sqrt not taken, unneeded 三角関数で現在位置とスプライト位置で作る三角形の斜辺を計算
+		sp_head->distance = ((info->pos_x - (sp_head->x + 0.5)) * (info->pos_x - (sp_head->x + 0.5)) + (info->pos_y - (sp_head->y + 0.5)) * (info->pos_y - (sp_head->y + 0.5)));	//sqrt not taken, unneeded 三角関数で現在位置とスプライト位置で作る三角形の斜辺を計算
 		sp_head = sp_head->next;
 	}
 	info->splist = splist_sort(info->splist);
@@ -476,20 +345,20 @@ void	calc(t_info *info)
 	{
 		//translate sprite position to relative to camera
 		//スプライトの位置をカメラの相対位置に変換します
-		// double spriteX = g_sprite[g_spriteOrder[i]].x + 0.5 - info->posX;
-		// double spriteY = g_sprite[g_spriteOrder[i]].y + 0.5 - info->posY;
-		double spriteX = sp_head->x + 0.5 - info->posX;
-		double spriteY = sp_head->y + 0.5 - info->posY;
+		// double spriteX = g_sprite[g_spriteOrder[i]].x + 0.5 - info->pos_x;
+		// double spriteY = g_sprite[g_spriteOrder[i]].y + 0.5 - info->pos_y;
+		double spriteX = sp_head->x + 0.5 - info->pos_x;
+		double spriteY = sp_head->y + 0.5 - info->pos_y;
 
 		//transform sprite with the inverse camera matrix
-		// [ planeX   dirX ] -1                                       [ dirY      -dirX ]
-		// [               ]       =  1/(planeX*dirY-dirX*planeY) *   [                 ]
-		// [ planeY   dirY ]                                          [ -planeY  planeX ]
+		// [ plane_x   dir_x ] -1                                       [ dir_y      -dir_x ]
+		// [               ]       =  1/(plane_x*dir_y-dir_x*plane_y) *   [                 ]
+		// [ plane_y   dir_y ]                                          [ -plane_y  plane_x ]
 
-		double invDet = 1.0 / (info->planeX * info->dirY - info->dirX * info->planeY);	//required for correct matrix multiplication 正しい行列乗算に必要
+		double invDet = 1.0 / (info->plane_x * info->dir_y - info->dir_x * info->plane_y);	//required for correct matrix multiplication 正しい行列乗算に必要
 
-		double transformX = invDet * (info->dirY * spriteX - info->dirX * spriteY);
-		double transformY = invDet * (-info->planeY * spriteX + info->planeX * spriteY); //this is actually the depth inside the screen, that what Z is in 3D, the distance of sprite to player, matching sqrt(g_spriteDistance[i])
+		double transformX = invDet * (info->dir_y * spriteX - info->dir_x * spriteY);
+		double transformY = invDet * (-info->plane_y * spriteX + info->plane_x * spriteY); //this is actually the depth inside the screen, that what Z is in 3D, the distance of sprite to player, matching sqrt(g_spriteDistance[i])
 
 		int spriteScreenX = (int)((SCREEN_W / 2) * (1 + transformX / transformY));
 
@@ -530,7 +399,7 @@ void	calc(t_info *info)
 			//2) it's on the screen (left)
 			//3) it's on the screen (right)
 			//4) ZBuffer, with perpendicular distance
-			if (0 < transformY && 0 <= stripe && stripe <= SCREEN_W && transformY < info->zBuffer[stripe])
+			if (0 < transformY && 0 <= stripe && stripe <= SCREEN_W && transformY < info->z_buffer[stripe])
 				for (int y = drawStartY; y < drawEndY; y++) //for every pixel of the current stripe 現在のストライプのすべてのピクセルに対して
 				{
 					int d = (y-vMoveScreen) * 256 - SCREEN_H * 128 + spriteHeight * 128; //256 and 128 factors to avoid floats 浮動小数点数を回避するための256および128の係数
@@ -556,51 +425,51 @@ int	key_update(t_info *info)
 {
 	if (info->key_w)
 	{
-		if (g_map[(int)(info->posX + info->dirX * info->moveSpeed)][(int)info->posY] != 1)
-			info->posX += info->dirX * info->moveSpeed;
-		if (g_map[(int)info->posX][(int)(info->posY + info->dirY * info->moveSpeed)] != 1)
-			info->posY += info->dirY * info->moveSpeed;
+		if (g_map[(int)(info->pos_x + info->dir_x * info->move_speed)][(int)info->pos_y] != 1)
+			info->pos_x += info->dir_x * info->move_speed;
+		if (g_map[(int)info->pos_x][(int)(info->pos_y + info->dir_y * info->move_speed)] != 1)
+			info->pos_y += info->dir_y * info->move_speed;
 	}
 	if (info->key_s)
 	{
-		if (g_map[(int)(info->posX - info->dirX * info->moveSpeed)][(int)info->posY] != 1)
-			info->posX -= info->dirX * info->moveSpeed;
-		if (g_map[(int)info->posX][(int)(info->posY - info->dirY * info->moveSpeed)] != 1)
-			info->posY -= info->dirY * info->moveSpeed;
+		if (g_map[(int)(info->pos_x - info->dir_x * info->move_speed)][(int)info->pos_y] != 1)
+			info->pos_x -= info->dir_x * info->move_speed;
+		if (g_map[(int)info->pos_x][(int)(info->pos_y - info->dir_y * info->move_speed)] != 1)
+			info->pos_y -= info->dir_y * info->move_speed;
 	}
 	if (info->key_d)
 	{
-		if (g_map[(int)(info->posX + info->planeX * info->moveSpeed)][(int)info->posY] != 1)
-			info->posX += info->planeX * info->moveSpeed;
-		if (g_map[(int)info->posX][(int)(info->posY + info->planeY * info->moveSpeed)] != 1)
-			info->posY += info->planeY * info->moveSpeed;
+		if (g_map[(int)(info->pos_x + info->plane_x * info->move_speed)][(int)info->pos_y] != 1)
+			info->pos_x += info->plane_x * info->move_speed;
+		if (g_map[(int)info->pos_x][(int)(info->pos_y + info->plane_y * info->move_speed)] != 1)
+			info->pos_y += info->plane_y * info->move_speed;
 	}
 	if (info->key_a)
 	{
-		if (g_map[(int)(info->posX - info->planeX * info->moveSpeed)][(int)info->posY] != 1)
-			info->posX -= info->planeX * info->moveSpeed;
-		if (g_map[(int)info->posX][(int)(info->posY - info->planeY * info->moveSpeed)] != 1)
-			info->posY -= info->planeY * info->moveSpeed;
+		if (g_map[(int)(info->pos_x - info->plane_x * info->move_speed)][(int)info->pos_y] != 1)
+			info->pos_x -= info->plane_x * info->move_speed;
+		if (g_map[(int)info->pos_x][(int)(info->pos_y - info->plane_y * info->move_speed)] != 1)
+			info->pos_y -= info->plane_y * info->move_speed;
 	}
 	if (info->key_right)
 	{
 		//both camera direction and camera plane must be rotated
-		double oldDirX = info->dirX;
-		info->dirX = info->dirX * cos(-info->rotSpeed) - info->dirY * sin(-info->rotSpeed);
-		info->dirY = oldDirX * sin(-info->rotSpeed) + info->dirY * cos(-info->rotSpeed);
-		double oldPlaneX = info->planeX;
-		info->planeX = info->planeX * cos(-info->rotSpeed) - info->planeY * sin(-info->rotSpeed);
-		info->planeY = oldPlaneX * sin(-info->rotSpeed) + info->planeY * cos(-info->rotSpeed);
+		double oldDirX = info->dir_x;
+		info->dir_x = info->dir_x * cos(-info->rot_speed) - info->dir_y * sin(-info->rot_speed);
+		info->dir_y = oldDirX * sin(-info->rot_speed) + info->dir_y * cos(-info->rot_speed);
+		double oldPlaneX = info->plane_x;
+		info->plane_x = info->plane_x * cos(-info->rot_speed) - info->plane_y * sin(-info->rot_speed);
+		info->plane_y = oldPlaneX * sin(-info->rot_speed) + info->plane_y * cos(-info->rot_speed);
 	}
 	if (info->key_left)
 	{
 		//both camera direction and camera plane must be rotated
-		double oldDirX = info->dirX;
-		info->dirX = info->dirX * cos(info->rotSpeed) - info->dirY * sin(info->rotSpeed);
-		info->dirY = oldDirX * sin(info->rotSpeed) + info->dirY * cos(info->rotSpeed);
-		double oldPlaneX = info->planeX;
-		info->planeX = info->planeX * cos(info->rotSpeed) - info->planeY * sin(info->rotSpeed);
-		info->planeY = oldPlaneX * sin(info->rotSpeed) + info->planeY * cos(info->rotSpeed);
+		double oldDirX = info->dir_x;
+		info->dir_x = info->dir_x * cos(info->rot_speed) - info->dir_y * sin(info->rot_speed);
+		info->dir_y = oldDirX * sin(info->rot_speed) + info->dir_y * cos(info->rot_speed);
+		double oldPlaneX = info->plane_x;
+		info->plane_x = info->plane_x * cos(info->rot_speed) - info->plane_y * sin(info->rot_speed);
+		info->plane_y = oldPlaneX * sin(info->rot_speed) + info->plane_y * cos(info->rot_speed);
 	}
 	return (0);
 }
@@ -678,20 +547,20 @@ int		set_info(t_info *info)
 	int	j;
 
 	info->mlx = mlx_init();
-	info->posX = 22.0;
-	info->posY = 5.5;
-	info->dirX = -1.0;
-	info->dirY = 0.0;
-	info->planeX = 0.0;
-	info->planeY = 0.66;
+	info->pos_x = 22.0;
+	info->pos_y = 5.5;
+	info->dir_x = -1.0;
+	info->dir_y = 0.0;
+	info->plane_x = 0.0;
+	info->plane_y = 0.66;
 	info->key_w = 0;
 	info->key_s = 0;
 	info->key_a = 0;
 	info->key_d = 0;
 	info->key_left = 0;
 	info->key_right = 0;
-	info->moveSpeed = 0.05;
-	info->rotSpeed = 0.05;
+	info->move_speed = 0.05;
+	info->rot_speed = 0.05;
 	info->splist = NULL;
 	i = -1;
 	while (++i < SCREEN_H)
