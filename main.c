@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 23:40:15 by sikeda            #+#    #+#             */
-/*   Updated: 2021/01/23 15:48:44 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/01/23 18:38:57 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -746,7 +746,7 @@ int	main()
 	mlx_loop_hook(info.mlx, main_loop, &info);
 	// mlx_key_hook(info.win, key_press, &info);
 	mlx_hook(info.win, KEY_PRESS, 1L<<0, key_press, &info);
-	mlx_hook(info.win, 33, 1L<<17, x_close, &info);
+	mlx_hook(info.win, EVENT_X_BTN, 1L<<17, x_close, &info);
 	mlx_loop(info.mlx);
 	return (0);
 }

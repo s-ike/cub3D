@@ -8,11 +8,13 @@ MLX_DIR		= ./minilibx-linux
 MLX_NAME	= libmlx.a
 MLX_FLAGS	= -lmlx -lXext -lX11 -lm
 CFLAGS		= -Wall -Wextra -Werror -D LINUX
+C_GREEN		= "\e[32m"
 else
 MLX_DIR		= ./newmlx
 MLX_NAME	= libmlx.dylib
 MLX_FLAGS	= -lmlx -framework OpenGL -framework AppKit -lz
 CFLAGS		= -Wall -Wextra -Werror
+C_GREEN		= "\x1b[32m"
 endif
 MLX_PATH	= $(MLX_DIR)/$(MLX_NAME)
 DEBUG		= -g
@@ -24,7 +26,7 @@ all:		$(NAME)
 $(NAME):	$(OBJ)
 			cp $(MLX_PATH) .
 			$(CC) $(CFLAGS) $(OBJ) $(DEBUG) -L. $(MLX_FLAGS) -o $(NAME)
-			@echo "\e[32m[=== Make Done ===]"
+			@echo $(C_GREEN)"=== Make Done ==="
 
 clean:
 			$(RM) $(OBJ)
