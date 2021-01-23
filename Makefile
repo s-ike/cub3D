@@ -3,7 +3,9 @@ NAME		= cub3D
 SRCDIR		= ./srcs/
 SRC			= main.c \
 				$(SRCDIR)key.c \
-				$(SRCDIR)sprite_list.c
+				$(SRCDIR)sprite_list.c \
+				$(SRCDIR)utils/get_line.c \
+				$(SRCDIR)utils/util.c
 OBJ			= $(SRC:.c=.o)
 
 INCLUDE 	= -I./includes/ \
