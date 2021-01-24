@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/24 02:21:49 by sikeda            #+#    #+#             */
-/*   Updated: 2021/01/24 02:21:59 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/01/24 19:00:41 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	safe_free(char **ptr)
 {
-	free(*ptr);
+	if (*ptr)
+		free(*ptr);
 	*ptr = NULL;
 }
