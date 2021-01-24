@@ -41,6 +41,7 @@ SRCS	=	ft_memset.c \
 			ft_putnbr_fd.c \
 			ft_isinf.c \
 			ft_isnega.c \
+			ft_strcmp.c \
 			ft_atol.c \
 			ft_ltoa.c \
 			ft_ulltoa.c \
