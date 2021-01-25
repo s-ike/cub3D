@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 23:40:15 by sikeda            #+#    #+#             */
-/*   Updated: 2021/01/25 18:04:06 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/01/25 18:20:15 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	g_map[MAP_W][MAP_H] =
 
 int	g_spmap[MAP_W][MAP_H] = {0};
 
-void	exit_with_errmsg(char *msg)
+void	exit_with_errmsg(t_errmsg msg)
 {
 	ft_putstr_fd(C_RED, STDERR_FILENO);
 	ft_putendl_fd(ERR_MSG, STDERR_FILENO);
@@ -401,7 +401,7 @@ void	set_info(t_info *info)
 	info->img.data = (int *)mlx_get_data_addr(info->img.img, &info->img.bpp, &info->img.size_l, &info->img.endian);
 }
 
-char	*validate_filename(char *filename, char *type)
+t_errmsg	validate_filename(char *filename, char *type)
 {
 	char	*extension;
 
@@ -415,7 +415,7 @@ char	*validate_filename(char *filename, char *type)
 	return (ERR_CUBFILE_EXT);
 }
 
-char	*validate_readable_file(char *filename, t_info *info)
+t_errmsg	validate_readable_file(char *filename, t_info *info)
 {
 	char	buf;
 
@@ -426,7 +426,7 @@ char	*validate_readable_file(char *filename, t_info *info)
 	return (NULL);
 }
 
-char	*get_resolution(t_info *info, int *settings, char **split)
+t_errmsg	get_resolution(t_info *info, int *settings, char **split)
 {
 	if (!split[1] || !split[2] || split[3] || *settings & (1 << SETTING_R))
 		return (ERR_CUBFILE_R);
@@ -441,7 +441,7 @@ char	*get_resolution(t_info *info, int *settings, char **split)
 	return (NULL);
 }
 
-static int	validate_texture(int *settings, char **split, int flg)
+static t_bool	validate_texture(int *settings, char **split, int flg)
 {
 	int	fd;
 
@@ -455,7 +455,7 @@ static int	validate_texture(int *settings, char **split, int flg)
 	return (TRUE);
 }
 
-char	*get_no_texture(t_info *info, int *settings, char **split)
+t_errmsg	get_no_texture(t_info *info, int *settings, char **split)
 {
 	if (validate_texture(settings, split, SETTING_NO) == FALSE)
 		return (ERR_CUBFILE_NO);
@@ -464,7 +464,7 @@ char	*get_no_texture(t_info *info, int *settings, char **split)
 	return (NULL);
 }
 
-char	*get_so_texture(t_info *info, int *settings, char **split)
+t_errmsg	get_so_texture(t_info *info, int *settings, char **split)
 {
 	if (validate_texture(settings, split, SETTING_SO) == FALSE)
 		return (ERR_CUBFILE_SO);
@@ -473,7 +473,7 @@ char	*get_so_texture(t_info *info, int *settings, char **split)
 	return (NULL);
 }
 
-char	*get_we_texture(t_info *info, int *settings, char **split)
+t_errmsg	get_we_texture(t_info *info, int *settings, char **split)
 {
 	if (validate_texture(settings, split, SETTING_WE) == FALSE)
 		return (ERR_CUBFILE_WE);
@@ -482,7 +482,7 @@ char	*get_we_texture(t_info *info, int *settings, char **split)
 	return (NULL);
 }
 
-char	*get_ea_texture(t_info *info, int *settings, char **split)
+t_errmsg	get_ea_texture(t_info *info, int *settings, char **split)
 {
 	if (validate_texture(settings, split, SETTING_EA) == FALSE)
 		return (ERR_CUBFILE_EA);
@@ -491,7 +491,7 @@ char	*get_ea_texture(t_info *info, int *settings, char **split)
 	return (NULL);
 }
 
-char	*get_sprite_texture(t_info *info, int *settings, char **split)
+t_errmsg	get_sprite_texture(t_info *info, int *settings, char **split)
 {
 	if (validate_texture(settings, split, SETTING_S) == FALSE)
 		return (ERR_CUBFILE_S);
@@ -576,7 +576,7 @@ t_bool	get_color(t_info *info, char **split, int flg)
 	return (ret);
 }
 
-char	*get_floor_color(t_info *info, int *settings, char **split)
+t_errmsg	get_floor_color(t_info *info, int *settings, char **split)
 {
 	if (*settings & (1 << SETTING_F))
 		return (ERR_CUBFILE_F);
@@ -586,7 +586,7 @@ char	*get_floor_color(t_info *info, int *settings, char **split)
 	return (NULL);
 }
 
-char	*get_ceilling_color(t_info *info, int *settings, char **split)
+t_errmsg	get_ceilling_color(t_info *info, int *settings, char **split)
 {
 	if (*settings & (1 << SETTING_C))
 		return (ERR_CUBFILE_C);
@@ -597,7 +597,7 @@ char	*get_ceilling_color(t_info *info, int *settings, char **split)
 }
 
 // split[0] = "R", split[1] = "1920", split[2] = "1080", split[3] = NULL
-char	*get_setting_val(t_info *info, int *settings, char **split)
+t_errmsg	get_setting_val(t_info *info, int *settings, char **split)
 {
 	if (ft_strcmp(split[0], "R") == 0)
 		return (get_resolution(info, settings, split));
@@ -618,7 +618,7 @@ char	*get_setting_val(t_info *info, int *settings, char **split)
 	return (ERR_CUBFILE);
 }
 
-char	*parse_line(t_info *info, int *settings, char *line)
+t_errmsg	parse_line(t_info *info, int *settings, char *line)
 {
 	char	**split;
 	char	*msg;
@@ -646,7 +646,7 @@ char	*parse_line(t_info *info, int *settings, char *line)
 	return (msg);
 }
 
-char	*parse_file(t_info *info)
+t_errmsg	parse_file(t_info *info)
 {
 	char	*msg;
 	char	*line;
@@ -672,7 +672,7 @@ char	*parse_file(t_info *info)
 	return (msg);
 }
 
-char	*parse_arg(int argc, char **argv, t_info *info)
+t_errmsg	parse_arg(int argc, char **argv, t_info *info)
 {
 	char	*msg;
 	int		mode;
@@ -715,9 +715,9 @@ int	main(int argc, char **argv)
 		exit_with_errmsg(msg);
 	set_info(&info);
 	mlx_loop_hook(info.mlx, main_loop, &info);
-	mlx_hook(info.win, KEY_PRESS, 1L<<0, key_press, &info);
-	mlx_hook(info.win, KEY_RELEASE, 1L<<1, key_release, &info);
-	mlx_hook(info.win, EVENT_X_BTN, 1L<<17, x_close, &info);
+	mlx_hook(info.win, KEY_PRESS, 1L << KEY_PRESS_MASK, key_press, &info);
+	mlx_hook(info.win, KEY_RELEASE, 1L << KEY_RELEASE_MASK, key_release, &info);
+	mlx_hook(info.win, BTN_X, 1L << STRUCTURE_NOTIFY_MASK, x_close, &info);
 	mlx_loop(info.mlx);
 	return (0);
 }

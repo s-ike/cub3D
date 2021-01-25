@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/24 00:39:58 by sikeda            #+#    #+#             */
-/*   Updated: 2021/01/25 17:55:10 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/01/25 18:08:38 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,8 @@ typedef enum	s_bool
 	FALSE,
 	TRUE,
 }				t_bool;
+
+typedef	char*	t_errmsg;
 
 typedef struct	s_img
 {

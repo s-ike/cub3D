@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 23:40:07 by sikeda            #+#    #+#             */
-/*   Updated: 2021/01/23 18:43:16 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/01/25 18:20:08 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,9 +78,15 @@
 # define LAST_EVENT			36
 
 # ifdef LINUX
-#  define EVENT_X_BTN	CLIENT_MESSAGE
+#  define BTN_X	CLIENT_MESSAGE
 # else
-#  define EVENT_X_BTN	DESTROY_NOTIFY
+#  define BTN_X	DESTROY_NOTIFY
 # endif
 
+/*
+** X11 MASKS
+*/
+# define KEY_PRESS_MASK			0
+# define KEY_RELEASE_MASK		1
+# define STRUCTURE_NOTIFY_MASK	17
 #endif
