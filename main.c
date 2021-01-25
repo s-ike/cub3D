@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 23:40:15 by sikeda            #+#    #+#             */
-/*   Updated: 2021/01/25 16:08:24 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/01/25 16:25:00 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,8 @@ void	draw(t_info *info)
 void	calc(t_info *info)
 {
 	//FLOOR CASTING
-	int	y = -1;
-	while (++y < info->screen_h)
+	int	y = info->screen_h / 2 + 1;
+	while (y < info->screen_h)
 	{
 		int	x = -1;
 		while (++x < info->screen_w)
@@ -75,6 +75,7 @@ void	calc(t_info *info)
 			info->buf[y][x] = info->floor_color;
 			info->buf[info->screen_h - y - 1][x] = info->ceilling_color;
 		}
+		y++;
 	}
 	// WALL CASTING
 	for (int x = 0; x < info->screen_w; x++)
