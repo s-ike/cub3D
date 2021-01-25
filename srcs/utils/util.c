@@ -35,7 +35,7 @@ int		chrcount(const char *s, char c)
 	ret = 0;
 	uc = (unsigned)c;
 	while (*s)
-		if (*s++ == c)
+		if (*s++ == uc)
 			ret++;
 	return (ret);
 }
