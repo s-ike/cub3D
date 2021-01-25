@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/24 01:48:12 by sikeda            #+#    #+#             */
-/*   Updated: 2021/01/24 01:48:13 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/01/25 15:34:36 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,9 @@ static t_splist	*splist_merge(t_splist *list1, t_splist *list2)
 			p->next = list2;
 			p = list2;
 			list2 = list2->next;
-		} else {
+		}
+		else
+		{
 			p->next = list1;
 			p = list1;
 			list1 = list1->next;
