@@ -379,8 +379,8 @@ void	set_info(t_info *info)
 	info->plane_x = 0.0;
 	info->plane_y = 0.66;
 	ft_bzero(&info->keys, sizeof(t_keys));
-	info->move_speed = 0.05;
-	info->rot_speed = 0.05;
+	info->move_speed = 0.01;
+	info->rot_speed = 0.01;
 	info->splist = NULL;
 	if (!(info->z_buffer = (double *)malloc(info->screen_w * sizeof(double))))
 		return (exit_with_errmsg(strerror(errno)));
@@ -720,7 +720,7 @@ int	main(int argc, char **argv)
 	set_info(&info);
 	mlx_loop_hook(info.mlx, main_loop, &info);
 	mlx_hook(info.win, KEY_PRESS, 1L<<0, key_press, &info);
-	mlx_hook(info.win, KEY_RELEASE, 1L<<0, key_release, &info);
+	mlx_hook(info.win, KEY_RELEASE, 1L<<1, key_release, &info);
 	mlx_hook(info.win, EVENT_X_BTN, 1L<<17, x_close, &info);
 	mlx_loop(info.mlx);
 	return (0);
