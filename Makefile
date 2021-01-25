@@ -21,8 +21,8 @@ MLX_FLAGS	= -lmlx -lXext -lX11 -lm
 CFLAGS		= -Wall -Wextra -Werror -D LINUX
 C_GREEN		= "\e[32m"
 else
-MLX_DIR		= ./newmlx
-MLX_NAME	= libmlx.dylib
+MLX_DIR		= ./mlx
+MLX_NAME	= libmlx.a
 MLX_FLAGS	= -lmlx -framework OpenGL -framework AppKit -lz
 CFLAGS		= -Wall -Wextra -Werror
 C_GREEN		= "\x1b[32m"
