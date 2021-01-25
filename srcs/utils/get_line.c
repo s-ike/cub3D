@@ -72,7 +72,7 @@ int				get_next_line(int fd, char **line)
 
 	if (line)
 		*line = NULL;
-	if (BUFFER_SIZE <= 0 || SIZE_MAX == BUFFER_SIZE || fd < 0 || MAX_FD <= fd)
+	if (BUFFER_SIZE <= 0 || fd < 0 || MAX_FD <= fd)
 		return (GNL_ERROR);
 	buff = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (!line || !buff || read(fd, buff, 0) < 0)

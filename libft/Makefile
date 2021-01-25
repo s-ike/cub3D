@@ -4,7 +4,7 @@ CFLAGS	= -Wall -Wextra -Werror
 AR		= ar
 ARFLAGS	= rc
 
-INCLUDE	= -I libft.h
+INCLUDE	= -I. libft.h
 SRCS	=	ft_memset.c \
 			ft_bzero.c \
 			ft_memcpy.c \
@@ -62,9 +62,6 @@ RM		= rm -f
 NAME	= libft.a
 
 all:		$(NAME)
-
-.c.o:
-			$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
 
 $(NAME):	bonus
 
