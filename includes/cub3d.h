@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/24 00:39:58 by sikeda            #+#    #+#             */
-/*   Updated: 2021/01/24 02:04:20 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/01/25 10:22:27 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,47 @@
 
 # include <math.h>
 # include <unistd.h>
+# include <fcntl.h>
 # include <stdlib.h>
 # include <string.h>
 # include <errno.h>
 # include "libft.h"
 # include "key_map.h"
 # include "sprite_list.h"
+# include "utils.h"
+# include "cub3d_error.h"
 # include "mlx.h"
 
 # define PRG_NAME "cub3D"
-# define SCREEN_W 640
-# define SCREEN_H 480
+# define CUBFILE_EXT ".cub"
+# define XPM_EXT ".xpm"
+# ifdef LINUX
+#  define C_RED "\e[31m"
+#  define C_DEF "\e[0m"
+# else
+#  define C_RED "\x1b[31m"
+#  define C_DEF "\x1b[0m"
+# endif
+# define GAMEMODE 2
+# define SAVEMODE 3
+# define TRUE 1
+# define FALSE 0
 # define MAP_W 24
 # define MAP_H 33
 # define TEX_W 64
 # define TEX_H 64
+
+enum			e_settings
+{
+	SETTING_R,
+	SETTING_NO,
+	SETTING_SO,
+	SETTING_WE,
+	SETTING_EA,
+	SETTING_S,
+	SETTING_F,
+	SETTING_C,
+};
 
 enum			e_texdir
 {
@@ -65,6 +91,8 @@ typedef struct	s_keys
 
 typedef struct	s_info
 {
+	int			screen_w;
+	int			screen_h;
 	double		pos_x;
 	double		pos_y;
 	double		dir_x;
@@ -75,12 +103,15 @@ typedef struct	s_info
 	void		*win;
 	t_keys		keys;
 	t_img		img;
-	int			buf[SCREEN_H][SCREEN_W];
-	double		z_buffer[SCREEN_W];
+	int			**buf;
+	double		*z_buffer;
 	t_splist	*splist;
 	int			**texture;
+	uint32_t	floor_color;
+	uint32_t	ceilling_color;
 	double		move_speed;
 	double		rot_speed;
+	int			fd;
 }				t_info;
 
 /*

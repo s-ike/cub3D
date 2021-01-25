@@ -18,6 +18,7 @@
 ** util.c
 */
 void	safe_free(char **ptr);
+int		str_isdigit(const char *s);
 /*
 ** get_line.c
 */
