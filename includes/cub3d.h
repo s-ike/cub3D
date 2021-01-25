@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/24 00:39:58 by sikeda            #+#    #+#             */
-/*   Updated: 2021/01/25 23:21:33 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/01/26 00:14:04 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,7 @@ typedef struct	s_info
 ** info.c
 */
 void			set_info(t_info *info);
+void			set_camera(t_info *info);
 void			set_buffer(t_info *info);
 void			set_window(t_info *info);
 /*

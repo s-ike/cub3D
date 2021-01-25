@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 23:14:08 by sikeda            #+#    #+#             */
-/*   Updated: 2021/01/25 23:22:36 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/01/26 00:28:35 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,16 @@ void		set_info(t_info *info)
 	info->pos_y = 5.5;
 	info->dir_x = -1.0;
 	info->dir_y = 0.0;
-	info->plane_x = 0.0;
-	info->plane_y = 0.66;
 	ft_bzero(&info->keys, sizeof(t_keys));
 	info->splist = NULL;
 	info->map_line_num = 0;
 	allocate_textures_buf(info);
+}
+
+void		set_camera(t_info *info)
+{
+	info->plane_x = 0.0;
+	info->plane_y = (double)info->screen_w / (double)info->screen_h / 2.0;
 }
 
 void		set_buffer(t_info *info)

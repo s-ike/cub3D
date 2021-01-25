@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 23:40:15 by sikeda            #+#    #+#             */
-/*   Updated: 2021/01/25 23:22:09 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/01/26 00:12:19 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -666,6 +666,7 @@ int	main(int argc, char **argv)
 	set_info(&info);
 	if ((msg = parse_arg(argc, argv, &info)))
 		exit_with_errmsg(msg);
+	set_camera(&info);
 	set_buffer(&info);
 	set_window(&info);
 	mlx_loop_hook(info.mlx, main_loop, &info);
