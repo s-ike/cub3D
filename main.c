@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 23:40:15 by sikeda            #+#    #+#             */
-/*   Updated: 2021/01/25 18:34:56 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/01/25 21:37:22 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -525,28 +525,22 @@ int	is_uint8_range(int n)
 	return (0 <= n && n <= 0xff);
 }
 
-t_bool	set_floor_color(t_info *info, int r, int g, int b)
+void	set_floor_color(t_info *info, int r, int g, int b)
 {
-	if (!is_uint8_range(r) || !is_uint8_range(g) || !is_uint8_range(b))
-		return (FALSE);
 	info->floor_color = r;
 	info->floor_color <<= 8;
 	info->floor_color |= g;
 	info->floor_color <<= 8;
 	info->floor_color |= b;
-	return (TRUE);
 }
 
-t_bool	set_ceilling_color(t_info *info, int r, int g, int b)
+void	set_ceilling_color(t_info *info, int r, int g, int b)
 {
-	if (!is_uint8_range(r) || !is_uint8_range(g) || !is_uint8_range(b))
-		return (FALSE);
 	info->ceilling_color = r;
 	info->ceilling_color <<= 8;
 	info->ceilling_color |= g;
 	info->ceilling_color <<= 8;
 	info->ceilling_color |= b;
-	return (TRUE);
 }
 
 t_bool	get_color(t_info *info, char **split, int flg)
@@ -557,21 +551,23 @@ t_bool	get_color(t_info *info, char **split, int flg)
 	ret = TRUE;
 	if (!split[1] || split[2])
 		return (FALSE);
+	if (chrcount(split[1], ',') != 2)
+		return (FALSE);
 	colors = ft_split(split[1], ',');
 	if (!colors[0] || !colors[1] || !colors[2] || colors[3]
 	|| !str_isdigit(colors[0])
 	|| !str_isdigit(colors[1])
-	|| !str_isdigit(colors[2]))
+	|| !str_isdigit(colors[2])
+	|| !is_uint8_range(ft_atoi(colors[0]))
+	|| !is_uint8_range(ft_atoi(colors[1]))
+	|| !is_uint8_range(ft_atoi(colors[2])))
 		ret = FALSE;
-	if (ret == TRUE)
-	{
-		if (flg == SETTING_F && set_floor_color(info, ft_atoi(colors[0]),
-							ft_atoi(colors[1]), ft_atoi(colors[2])) == FALSE)
-			ret = FALSE;
-		if (flg == SETTING_C && set_ceilling_color(info, ft_atoi(colors[0]),
-							ft_atoi(colors[1]), ft_atoi(colors[2])) == FALSE)
-			ret = FALSE;
-	}
+	if (ret == TRUE && flg == SETTING_F)
+		set_floor_color(info, ft_atoi(colors[0]),
+							ft_atoi(colors[1]), ft_atoi(colors[2]));
+	if (ret == TRUE && flg == SETTING_C)
+		set_ceilling_color(info, ft_atoi(colors[0]),
+							ft_atoi(colors[1]), ft_atoi(colors[2]));
 	clear_split(&colors);
 	return (ret);
 }

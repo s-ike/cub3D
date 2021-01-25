@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/24 02:21:49 by sikeda            #+#    #+#             */
-/*   Updated: 2021/01/25 11:31:22 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/01/25 21:34:57 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,4 +25,17 @@ int		str_isdigit(const char *s)
 		if (!ft_isdigit(*s++))
 			return (0);
 	return (1);
+}
+
+int		chrcount(const char *s, char c)
+{
+	int				ret;
+	unsigned char	uc;
+
+	ret = 0;
+	uc = (unsigned)c;
+	while (*s)
+		if (*s++ == c)
+			ret++;
+	return (ret);
 }

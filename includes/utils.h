@@ -19,6 +19,7 @@
 */
 void	safe_free(char **ptr);
 int		str_isdigit(const char *s);
+int		chrcount(const char *s, char c);
 /*
 ** get_line.c
 */
