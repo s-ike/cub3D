@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/24 00:39:58 by sikeda            #+#    #+#             */
-/*   Updated: 2021/01/25 10:22:27 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/01/25 17:34:26 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,12 @@
 # define MAP_H 33
 # define TEX_W 64
 # define TEX_H 64
+# ifdef LINUX
+#  define MOVE_SPEED 0.01
+# else
+#  define MOVE_SPEED 0.05
+# endif
+# define ROT_SPEED MOVE_SPEED
 
 enum			e_settings
 {
@@ -110,8 +116,6 @@ typedef struct	s_info
 	int			**texture;
 	uint32_t	floor_color;
 	uint32_t	ceilling_color;
-	double		move_speed;
-	double		rot_speed;
 	int			fd;
 }				t_info;
 

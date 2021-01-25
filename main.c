@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 23:40:15 by sikeda            #+#    #+#             */
-/*   Updated: 2021/01/25 16:25:00 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/01/25 17:34:46 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -379,8 +379,6 @@ void	set_info(t_info *info)
 	info->plane_x = 0.0;
 	info->plane_y = 0.66;
 	ft_bzero(&info->keys, sizeof(t_keys));
-	info->move_speed = 0.01;
-	info->rot_speed = 0.01;
 	info->splist = NULL;
 	if (!(info->z_buffer = (double *)malloc(info->screen_w * sizeof(double))))
 		return (exit_with_errmsg(strerror(errno)));

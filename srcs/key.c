@@ -14,51 +14,51 @@ int			key_update(t_info *info)
 {
 	if (info->keys.w)
 	{
-		if (g_map[(int)(info->pos_x + info->dir_x * info->move_speed)][(int)info->pos_y] != 1)
-			info->pos_x += info->dir_x * info->move_speed;
-		if (g_map[(int)info->pos_x][(int)(info->pos_y + info->dir_y * info->move_speed)] != 1)
-			info->pos_y += info->dir_y * info->move_speed;
+		if (g_map[(int)(info->pos_x + info->dir_x * MOVE_SPEED)][(int)info->pos_y] != 1)
+			info->pos_x += info->dir_x * MOVE_SPEED;
+		if (g_map[(int)info->pos_x][(int)(info->pos_y + info->dir_y * MOVE_SPEED)] != 1)
+			info->pos_y += info->dir_y * MOVE_SPEED;
 	}
 	if (info->keys.s)
 	{
-		if (g_map[(int)(info->pos_x - info->dir_x * info->move_speed)][(int)info->pos_y] != 1)
-			info->pos_x -= info->dir_x * info->move_speed;
-		if (g_map[(int)info->pos_x][(int)(info->pos_y - info->dir_y * info->move_speed)] != 1)
-			info->pos_y -= info->dir_y * info->move_speed;
+		if (g_map[(int)(info->pos_x - info->dir_x * MOVE_SPEED)][(int)info->pos_y] != 1)
+			info->pos_x -= info->dir_x * MOVE_SPEED;
+		if (g_map[(int)info->pos_x][(int)(info->pos_y - info->dir_y * MOVE_SPEED)] != 1)
+			info->pos_y -= info->dir_y * MOVE_SPEED;
 	}
 	if (info->keys.d)
 	{
-		if (g_map[(int)(info->pos_x + info->plane_x * info->move_speed)][(int)info->pos_y] != 1)
-			info->pos_x += info->plane_x * info->move_speed;
-		if (g_map[(int)info->pos_x][(int)(info->pos_y + info->plane_y * info->move_speed)] != 1)
-			info->pos_y += info->plane_y * info->move_speed;
+		if (g_map[(int)(info->pos_x + info->plane_x * MOVE_SPEED)][(int)info->pos_y] != 1)
+			info->pos_x += info->plane_x * MOVE_SPEED;
+		if (g_map[(int)info->pos_x][(int)(info->pos_y + info->plane_y * MOVE_SPEED)] != 1)
+			info->pos_y += info->plane_y * MOVE_SPEED;
 	}
 	if (info->keys.a)
 	{
-		if (g_map[(int)(info->pos_x - info->plane_x * info->move_speed)][(int)info->pos_y] != 1)
-			info->pos_x -= info->plane_x * info->move_speed;
-		if (g_map[(int)info->pos_x][(int)(info->pos_y - info->plane_y * info->move_speed)] != 1)
-			info->pos_y -= info->plane_y * info->move_speed;
+		if (g_map[(int)(info->pos_x - info->plane_x * MOVE_SPEED)][(int)info->pos_y] != 1)
+			info->pos_x -= info->plane_x * MOVE_SPEED;
+		if (g_map[(int)info->pos_x][(int)(info->pos_y - info->plane_y * MOVE_SPEED)] != 1)
+			info->pos_y -= info->plane_y * MOVE_SPEED;
 	}
 	if (info->keys.right)
 	{
 		//both camera direction and camera plane must be rotated
 		double oldDirX = info->dir_x;
-		info->dir_x = info->dir_x * cos(-info->rot_speed) - info->dir_y * sin(-info->rot_speed);
-		info->dir_y = oldDirX * sin(-info->rot_speed) + info->dir_y * cos(-info->rot_speed);
+		info->dir_x = info->dir_x * cos(-ROT_SPEED) - info->dir_y * sin(-ROT_SPEED);
+		info->dir_y = oldDirX * sin(-ROT_SPEED) + info->dir_y * cos(-ROT_SPEED);
 		double oldPlaneX = info->plane_x;
-		info->plane_x = info->plane_x * cos(-info->rot_speed) - info->plane_y * sin(-info->rot_speed);
-		info->plane_y = oldPlaneX * sin(-info->rot_speed) + info->plane_y * cos(-info->rot_speed);
+		info->plane_x = info->plane_x * cos(-ROT_SPEED) - info->plane_y * sin(-ROT_SPEED);
+		info->plane_y = oldPlaneX * sin(-ROT_SPEED) + info->plane_y * cos(-ROT_SPEED);
 	}
 	if (info->keys.left)
 	{
 		//both camera direction and camera plane must be rotated
 		double oldDirX = info->dir_x;
-		info->dir_x = info->dir_x * cos(info->rot_speed) - info->dir_y * sin(info->rot_speed);
-		info->dir_y = oldDirX * sin(info->rot_speed) + info->dir_y * cos(info->rot_speed);
+		info->dir_x = info->dir_x * cos(ROT_SPEED) - info->dir_y * sin(ROT_SPEED);
+		info->dir_y = oldDirX * sin(ROT_SPEED) + info->dir_y * cos(ROT_SPEED);
 		double oldPlaneX = info->plane_x;
-		info->plane_x = info->plane_x * cos(info->rot_speed) - info->plane_y * sin(info->rot_speed);
-		info->plane_y = oldPlaneX * sin(info->rot_speed) + info->plane_y * cos(info->rot_speed);
+		info->plane_x = info->plane_x * cos(ROT_SPEED) - info->plane_y * sin(ROT_SPEED);
+		info->plane_y = oldPlaneX * sin(ROT_SPEED) + info->plane_y * cos(ROT_SPEED);
 	}
 	return (0);
 }
