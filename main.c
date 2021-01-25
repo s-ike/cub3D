@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 23:40:15 by sikeda            #+#    #+#             */
-/*   Updated: 2021/01/25 21:37:22 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/01/25 21:56:15 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -522,7 +522,7 @@ void	clear_split(char ***split)
 
 int	is_uint8_range(int n)
 {
-	return (0 <= n && n <= 0xff);
+	return (0 <= n && n <= EIGHT_BIT_MAX);
 }
 
 void	set_floor_color(t_info *info, int r, int g, int b)
@@ -624,13 +624,13 @@ t_errmsg	parse_line(t_info *info, int *settings, char *line)
 	if (!*line)
 		return (NULL);
 	msg = NULL;
-	if (*settings == 0xff && ft_strchr(" 012", *line))
+	if (*settings == EIGHT_BIT_MAX && ft_strchr(" 012NSEW", *line))
 	{
 		// TODO;
 		// map読み取り
 		return (msg);
 	}
-	else if (*settings != 0xff)
+	else if (*settings != EIGHT_BIT_MAX)
 	{
 		split = ft_split(line, ' ');
 		msg = get_setting_val(info, settings, split);

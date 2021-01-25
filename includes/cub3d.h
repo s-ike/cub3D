@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/24 00:39:58 by sikeda            #+#    #+#             */
-/*   Updated: 2021/01/25 18:08:38 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/01/25 21:53:33 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@
 #  define MOVE_SPEED 0.05
 # endif
 # define ROT_SPEED MOVE_SPEED
+# define EIGHT_BIT_MAX 0xff
 
 enum			e_settings
 {
