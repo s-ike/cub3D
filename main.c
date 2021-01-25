@@ -6,13 +6,15 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 23:40:15 by sikeda            #+#    #+#             */
-/*   Updated: 2021/01/25 21:56:15 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/01/25 23:22:09 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	g_map[MAP_W][MAP_H] =
+// TODO: 画面サイズ
+
+int	g_map[MAP_H][MAP_W] =
 {
 	{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0},	//0
 	{1,0,0,0,0,0,2,2,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0},	//1
@@ -40,16 +42,7 @@ int	g_map[MAP_W][MAP_H] =
 	{1,1,1,1,1,1,1,1,' ',1,1,1,1,1,1,1,' ',1,1,1,1,1,1,1,1,1,1,1,1,0,0}
 };
 
-int	g_spmap[MAP_W][MAP_H] = {0};
-
-void	exit_with_errmsg(t_errmsg msg)
-{
-	ft_putstr_fd(C_RED, STDERR_FILENO);
-	ft_putendl_fd(ERR_MSG, STDERR_FILENO);
-	ft_putstr_fd(C_DEF, STDERR_FILENO);
-	ft_putendl_fd(msg, STDERR_FILENO);
-	exit(EXIT_FAILURE);
-}
+int	g_spmap[MAP_H][MAP_W] = {0};
 
 void	draw(t_info *info)
 {
@@ -345,62 +338,6 @@ void	load_texture(t_info *info, int num, char *filename)
 	load_image(info, info->texture[num], filename, &img);
 }
 
-void	allocate_textures_buf(t_info *info)
-{
-	int	i;
-	int	j;
-
-	if (!(info->texture = (int **)malloc(sizeof(int *) * TEX_END)))
-		return (exit_with_errmsg(strerror(errno)));
-	i = -1;
-	while (++i < TEX_END)
-		if (!(info->texture[i] = (int *)malloc(sizeof(int) * (TEX_H * TEX_W))))
-			return (exit_with_errmsg(strerror(errno)));
-	i = -1;
-	while (++i < TEX_END)
-	{
-		j = -1;
-		while (++j < TEX_H * TEX_W)
-			info->texture[i][j] = 0;
-	}
-}
-
-void	set_info(t_info *info)
-{
-	int	i;
-	int	j;
-
-	// TODO: 画面サイズ
-	// info->mlx = mlx_init();
-	info->pos_x = 22.0;
-	info->pos_y = 5.5;
-	info->dir_x = -1.0;
-	info->dir_y = 0.0;
-	info->plane_x = 0.0;
-	info->plane_y = 0.66;
-	ft_bzero(&info->keys, sizeof(t_keys));
-	info->splist = NULL;
-	if (!(info->z_buffer = (double *)malloc(info->screen_w * sizeof(double))))
-		return (exit_with_errmsg(strerror(errno)));
-	if (!(info->buf = (int **)malloc(info->screen_h * sizeof(int *))))
-		return (exit_with_errmsg(strerror(errno)));
-	i = -1;
-	while (++i < info->screen_h)
-		if (!(info->buf[i] = (int *)malloc(info->screen_w * sizeof(int))))
-			return (exit_with_errmsg(strerror(errno)));
-	i = -1;
-	while (++i < info->screen_h)
-	{
-		j = -1;
-		while (++j < info->screen_w)
-			info->buf[i][j] = 0;
-	}
-	// load_texture(info);
-	info->win = mlx_new_window(info->mlx, info->screen_w, info->screen_h, PRG_NAME);
-	info->img.img = mlx_new_image(info->mlx, info->screen_w, info->screen_h);
-	info->img.data = (int *)mlx_get_data_addr(info->img.img, &info->img.bpp, &info->img.size_l, &info->img.endian);
-}
-
 t_errmsg	validate_filename(char *filename, char *type)
 {
 	char	*extension;
@@ -614,21 +551,42 @@ t_errmsg	get_setting_val(t_info *info, int *settings, char **split)
 	return (ERR_CUBFILE);
 }
 
+t_bool		is_map_too_big(size_t len, int line_num)
+{
+	if (MAP_W < len || MAP_H < line_num)
+		return (TRUE);
+	return (FALSE);
+}
+
+t_errmsg	get_map(t_info *info, char *line)
+{
+	if (is_map_too_big(ft_strlen(line), info->map_line_num) == TRUE)
+		return (ERR_BIG_MAP);
+	return (NULL);
+}
+
 t_errmsg	parse_line(t_info *info, int *settings, char *line)
 {
-	char	**split;
-	char	*msg;
+	static t_bool	has_started_reading_map;
+	static t_bool	has_finished_reading_map;
+	char			**split;
+	char			*msg;
 
 	if (!line)
 		return (ERR_GNL);
 	if (!*line)
+	{
+		if (has_started_reading_map == TRUE)
+			has_finished_reading_map = TRUE;
 		return (NULL);
+	}
 	msg = NULL;
 	if (*settings == EIGHT_BIT_MAX && ft_strchr(" 012NSEW", *line))
 	{
-		// TODO;
-		// map読み取り
-		return (msg);
+		if (has_finished_reading_map == TRUE)
+			return (ERR_MAP);
+		has_started_reading_map = TRUE;
+		return (get_map(info, line));
 	}
 	else if (*settings != EIGHT_BIT_MAX)
 	{
@@ -705,11 +663,11 @@ int	main(int argc, char **argv)
 	t_info	info;
 	char	*msg;
 
-	info.mlx = mlx_init();
-	allocate_textures_buf(&info);
+	set_info(&info);
 	if ((msg = parse_arg(argc, argv, &info)))
 		exit_with_errmsg(msg);
-	set_info(&info);
+	set_buffer(&info);
+	set_window(&info);
 	mlx_loop_hook(info.mlx, main_loop, &info);
 	mlx_hook(info.win, KEY_PRESS, 1L << KEY_PRESS_MASK, key_press, &info);
 	mlx_hook(info.win, KEY_RELEASE, 1L << KEY_RELEASE_MASK, key_release, &info);

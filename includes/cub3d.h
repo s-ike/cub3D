@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/24 00:39:58 by sikeda            #+#    #+#             */
-/*   Updated: 2021/01/25 21:53:33 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/01/25 23:21:33 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@
 # endif
 # define GAMEMODE 2
 # define SAVEMODE 3
-# define MAP_W 24
-# define MAP_H 33
+# define MAP_W 33
+# define MAP_H 24
 # define TEX_W 64
 # define TEX_H 64
 # ifdef LINUX
@@ -73,7 +73,7 @@ enum			e_texdir
 	TEX_END,
 };
 
-typedef enum	s_bool
+typedef enum	e_bool
 {
 	FALSE,
 	TRUE,
@@ -124,8 +124,19 @@ typedef struct	s_info
 	uint32_t	floor_color;
 	uint32_t	ceilling_color;
 	int			fd;
+	int			map_line_num;
 }				t_info;
 
+/*
+** info.c
+*/
+void			set_info(t_info *info);
+void			set_buffer(t_info *info);
+void			set_window(t_info *info);
+/*
+** exit.c
+*/
+void			exit_with_errmsg(t_errmsg msg);
 /*
 ** key.c
 */

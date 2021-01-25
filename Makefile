@@ -2,6 +2,8 @@ NAME		= cub3D
 
 SRCDIR		= ./srcs/
 SRC			= main.c \
+				$(SRCDIR)info.c \
+				$(SRCDIR)exit.c \
 				$(SRCDIR)key.c \
 				$(SRCDIR)sprite_list.c \
 				$(SRCDIR)utils/get_line.c \

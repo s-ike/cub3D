@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cub3d_error.h                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/01/25 23:17:34 by sikeda            #+#    #+#             */
+/*   Updated: 2021/01/25 23:17:35 by sikeda           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef CUB3D_ERROR_H
 # define CUB3D_ERROR_H
 
@@ -12,6 +24,8 @@
 # define ERR_CUBFILE_S		"Invalid sprite texture"
 # define ERR_CUBFILE_F		"Invalid floor color"
 # define ERR_CUBFILE_C		"Invalid ceilling color"
+# define ERR_MAP			"Invalid map"
+# define ERR_BIG_MAP		"Invalid map (too big)"
 # define ERR_GNL			"An error occurred while running gnl"
 
 #endif
