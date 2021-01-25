@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/24 00:39:58 by sikeda            #+#    #+#             */
-/*   Updated: 2021/01/25 17:34:26 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/01/25 17:55:10 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,6 @@
 # endif
 # define GAMEMODE 2
 # define SAVEMODE 3
-# define TRUE 1
-# define FALSE 0
 # define MAP_W 24
 # define MAP_H 33
 # define TEX_W 64
@@ -73,6 +71,12 @@ enum			e_texdir
 	TEX_SPRITE,
 	TEX_END,
 };
+
+typedef enum	s_bool
+{
+	FALSE,
+	TRUE,
+}				t_bool;
 
 typedef struct	s_img
 {
