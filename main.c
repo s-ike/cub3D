@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 23:40:15 by sikeda            #+#    #+#             */
-/*   Updated: 2021/01/25 18:20:15 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/01/25 18:34:56 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,7 +187,7 @@ void	calc(t_info *info)
 
 		int	texNum;
 		if (side)
-			texNum = rayDirY < 0 ? TEX_EAST : TEX_WEST;
+			texNum = rayDirY < 0 ? TEX_WEST : TEX_EAST;
 		else
 			texNum = rayDirX < 0 ? TEX_NORTH : TEX_SOUTH;
 
