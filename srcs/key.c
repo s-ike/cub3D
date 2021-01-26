@@ -1,6 +1,6 @@
 #include "cub3d.h"
 
-extern int	g_map[MAP_W][MAP_H];
+extern int	g_map[ROW][COL];
 
 int			x_close(t_info *info)
 {

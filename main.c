@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 23:40:15 by sikeda            #+#    #+#             */
-/*   Updated: 2021/01/26 10:09:24 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/01/26 10:23:14 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -483,7 +483,7 @@ void	set_ceilling_color(t_info *info, int r, int g, int b)
 t_bool	get_color(t_info *info, char **split, int flg)
 {
 	char	**colors;
-	int		ret;
+	t_bool	ret;
 
 	ret = TRUE;
 	if (!split[1] || split[2])
@@ -570,7 +570,7 @@ t_errmsg	parse_line(t_info *info, int *settings, char *line)
 	static t_bool	has_started_reading_map;
 	static t_bool	has_finished_reading_map;
 	char			**split;
-	char			*msg;
+	t_errmsg		msg;
 
 	if (!line)
 		return (ERR_GNL);
@@ -602,17 +602,16 @@ t_errmsg	parse_line(t_info *info, int *settings, char *line)
 
 t_errmsg	parse_file(t_info *info)
 {
-	char	*msg;
-	char	*line;
-	int		exists;
-	int		setting_flg;
+	t_errmsg	msg;
+	char		*line;
+	int			exists;
+	int			setting_flg;
 
 	msg = NULL;
 	setting_flg = 0;
 	exists = 1;
 	while (GNL_EOF <= (exists = get_next_line(info->fd, &line)) && !msg)
 	{
-		//TODO: map読み込み中にempty line があるとエラー
 		msg = parse_line(info, &setting_flg, line);
 		safe_free(&line);
 		if (exists == GNL_EOF)
@@ -628,8 +627,8 @@ t_errmsg	parse_file(t_info *info)
 
 t_errmsg	parse_arg(int argc, char **argv, t_info *info)
 {
-	char	*msg;
-	int		mode;
+	t_errmsg	msg;
+	int			mode;
 
 	if (argc == GAMEMODE || argc == SAVEMODE)
 		mode = argc == GAMEMODE ? GAMEMODE : SAVEMODE;
@@ -660,8 +659,8 @@ t_errmsg	parse_arg(int argc, char **argv, t_info *info)
 
 int	main(int argc, char **argv)
 {
-	t_info	info;
-	char	*msg;
+	t_info		info;
+	t_errmsg	msg;
 
 	set_info(&info);
 	if ((msg = parse_arg(argc, argv, &info)))
