@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 23:40:15 by sikeda            #+#    #+#             */
-/*   Updated: 2021/01/26 16:54:50 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/01/27 00:17:42 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -588,7 +588,7 @@ t_bool		check_chars_in_map(t_info *info, char *line)
 			{
 				if (info->pos_x == 0.0 && info->pos_y == 0.0)
 				{
-					info->pos_x = (double)info->map_line_num;
+					info->pos_x = (double)info->map_line_num + 1.0;
 					info->pos_y = i + 0.51;
 					info->map_start = line[i];
 				}
@@ -603,11 +603,15 @@ t_bool		check_chars_in_map(t_info *info, char *line)
 
 t_errmsg	get_map(t_info *info, char *line)
 {
-	info->map_line_num++;
-	if (check_map_size(ft_strlen(line), info->map_line_num) == FALSE)
+	size_t	len;
+
+	len = ft_strlen(line);
+	if (check_map_size(len, info->map_line_num + 1) == FALSE)
 		return (ERR_BIG_MAP);
 	if (check_chars_in_map(info, line) == FALSE)
 		return (ERR_CHR_MAP);
+	ft_strlcpy(info->map[info->map_line_num], line, len + 1);
+	info->map_line_num++;
 	return (NULL);
 }
 
@@ -687,8 +691,8 @@ t_errmsg	parse_arg(int argc, char **argv, t_info *info)
 		msg = validate_readable_file(argv[1], info);
 	if (!msg)
 		msg = parse_file(info);
-	// if (!msg)
-	// 	msg = validate_map();
+	if (!msg)
+		ft_bzero(info->map[info->map_line_num], COL + 1);
 	if (!msg && mode == GAMEMODE)
 	{
 		return (NULL);
