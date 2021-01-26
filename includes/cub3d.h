@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/24 00:39:58 by sikeda            #+#    #+#             */
-/*   Updated: 2021/01/26 10:08:02 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/01/26 16:12:00 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,7 @@ typedef struct	s_info
 	uint32_t	ceilling_color;
 	int			fd;
 	int			map_line_num;
+	char		map_start;
 }				t_info;
 
 /*

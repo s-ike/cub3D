@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 23:14:08 by sikeda            #+#    #+#             */
-/*   Updated: 2021/01/26 00:28:35 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/01/26 16:50:29 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,20 +35,43 @@ static void	allocate_textures_buf(t_info *info)
 void		set_info(t_info *info)
 {
 	info->mlx = mlx_init();
-	info->pos_x = 22.0;
-	info->pos_y = 5.5;
-	info->dir_x = -1.0;
+	info->pos_x = 0.0;
+	info->pos_y = 0.0;
+	info->dir_x = 0.0;
 	info->dir_y = 0.0;
+	info->plane_x = 0.0;
+	info->plane_y = 0.0;
 	ft_bzero(&info->keys, sizeof(t_keys));
 	info->splist = NULL;
 	info->map_line_num = 0;
+	info->map_start = 0;
 	allocate_textures_buf(info);
 }
 
 void		set_camera(t_info *info)
 {
-	info->plane_x = 0.0;
-	info->plane_y = (double)info->screen_w / (double)info->screen_h / 2.0;
+	if (info->map_start == 'N' || info->map_start == 'S')
+	{
+		info->plane_y = (double)info->screen_w / (double)info->screen_h / 2.0;
+		if (info->map_start == 'N')
+			info->dir_x = -1.0;
+		if (info->map_start == 'S')
+		{
+			info->dir_x = 1.0;
+			info->plane_y = 0 - info->plane_y;
+		}
+	}
+	if (info->map_start == 'E' || info->map_start == 'W')
+	{
+		info->plane_x = (double)info->screen_w / (double)info->screen_h / 2.0;
+		if (info->map_start == 'E')
+			info->dir_y = 1.0;
+		if (info->map_start == 'W')
+		{
+			info->dir_y = -1.0;
+			info->plane_x = 0 - info->plane_x;
+		}
+	}
 }
 
 void		set_buffer(t_info *info)
