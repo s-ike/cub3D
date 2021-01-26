@@ -1,7 +1,5 @@
 #include "cub3d.h"
 
-extern int	g_map[ROW][COL];
-
 int			x_close(t_info *info)
 {
 	(void)info;
@@ -14,30 +12,30 @@ int			key_update(t_info *info)
 {
 	if (info->keys.w)
 	{
-		if (g_map[(int)(info->pos_x + info->dir_x * MOVE_SPEED)][(int)info->pos_y] != 1)
+		if (info->map[(int)(info->pos_x + info->dir_x * MOVE_SPEED)][(int)info->pos_y] != '1')
 			info->pos_x += info->dir_x * MOVE_SPEED;
-		if (g_map[(int)info->pos_x][(int)(info->pos_y + info->dir_y * MOVE_SPEED)] != 1)
+		if (info->map[(int)info->pos_x][(int)(info->pos_y + info->dir_y * MOVE_SPEED)] != '1')
 			info->pos_y += info->dir_y * MOVE_SPEED;
 	}
 	if (info->keys.s)
 	{
-		if (g_map[(int)(info->pos_x - info->dir_x * MOVE_SPEED)][(int)info->pos_y] != 1)
+		if (info->map[(int)(info->pos_x - info->dir_x * MOVE_SPEED)][(int)info->pos_y] != '1')
 			info->pos_x -= info->dir_x * MOVE_SPEED;
-		if (g_map[(int)info->pos_x][(int)(info->pos_y - info->dir_y * MOVE_SPEED)] != 1)
+		if (info->map[(int)info->pos_x][(int)(info->pos_y - info->dir_y * MOVE_SPEED)] != '1')
 			info->pos_y -= info->dir_y * MOVE_SPEED;
 	}
 	if (info->keys.d)
 	{
-		if (g_map[(int)(info->pos_x + info->plane_x * MOVE_SPEED)][(int)info->pos_y] != 1)
+		if (info->map[(int)(info->pos_x + info->plane_x * MOVE_SPEED)][(int)info->pos_y] != '1')
 			info->pos_x += info->plane_x * MOVE_SPEED;
-		if (g_map[(int)info->pos_x][(int)(info->pos_y + info->plane_y * MOVE_SPEED)] != 1)
+		if (info->map[(int)info->pos_x][(int)(info->pos_y + info->plane_y * MOVE_SPEED)] != '1')
 			info->pos_y += info->plane_y * MOVE_SPEED;
 	}
 	if (info->keys.a)
 	{
-		if (g_map[(int)(info->pos_x - info->plane_x * MOVE_SPEED)][(int)info->pos_y] != 1)
+		if (info->map[(int)(info->pos_x - info->plane_x * MOVE_SPEED)][(int)info->pos_y] != '1')
 			info->pos_x -= info->plane_x * MOVE_SPEED;
-		if (g_map[(int)info->pos_x][(int)(info->pos_y - info->plane_y * MOVE_SPEED)] != 1)
+		if (info->map[(int)info->pos_x][(int)(info->pos_y - info->plane_y * MOVE_SPEED)] != '1')
 			info->pos_y -= info->plane_y * MOVE_SPEED;
 	}
 	if (info->keys.right)
