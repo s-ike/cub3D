@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/24 00:39:58 by sikeda            #+#    #+#             */
-/*   Updated: 2021/01/27 00:18:19 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/01/27 01:18:29 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@
 # endif
 # define ROT_SPEED MOVE_SPEED
 # define EIGHT_BIT_MAX 0xff
+# define WALL '1'
+# define SPRITE '2'
 
 enum			e_settings
 {

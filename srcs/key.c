@@ -12,30 +12,30 @@ int			key_update(t_info *info)
 {
 	if (info->keys.w)
 	{
-		if (info->map[(int)(info->pos_x + info->dir_x * MOVE_SPEED)][(int)info->pos_y] != '1')
+		if (info->map[(int)(info->pos_x + info->dir_x * MOVE_SPEED)][(int)info->pos_y] != WALL)
 			info->pos_x += info->dir_x * MOVE_SPEED;
-		if (info->map[(int)info->pos_x][(int)(info->pos_y + info->dir_y * MOVE_SPEED)] != '1')
+		if (info->map[(int)info->pos_x][(int)(info->pos_y + info->dir_y * MOVE_SPEED)] != WALL)
 			info->pos_y += info->dir_y * MOVE_SPEED;
 	}
 	if (info->keys.s)
 	{
-		if (info->map[(int)(info->pos_x - info->dir_x * MOVE_SPEED)][(int)info->pos_y] != '1')
+		if (info->map[(int)(info->pos_x - info->dir_x * MOVE_SPEED)][(int)info->pos_y] != WALL)
 			info->pos_x -= info->dir_x * MOVE_SPEED;
-		if (info->map[(int)info->pos_x][(int)(info->pos_y - info->dir_y * MOVE_SPEED)] != '1')
+		if (info->map[(int)info->pos_x][(int)(info->pos_y - info->dir_y * MOVE_SPEED)] != WALL)
 			info->pos_y -= info->dir_y * MOVE_SPEED;
 	}
 	if (info->keys.d)
 	{
-		if (info->map[(int)(info->pos_x + info->plane_x * MOVE_SPEED)][(int)info->pos_y] != '1')
+		if (info->map[(int)(info->pos_x + info->plane_x * MOVE_SPEED)][(int)info->pos_y] != WALL)
 			info->pos_x += info->plane_x * MOVE_SPEED;
-		if (info->map[(int)info->pos_x][(int)(info->pos_y + info->plane_y * MOVE_SPEED)] != '1')
+		if (info->map[(int)info->pos_x][(int)(info->pos_y + info->plane_y * MOVE_SPEED)] != WALL)
 			info->pos_y += info->plane_y * MOVE_SPEED;
 	}
 	if (info->keys.a)
 	{
-		if (info->map[(int)(info->pos_x - info->plane_x * MOVE_SPEED)][(int)info->pos_y] != '1')
+		if (info->map[(int)(info->pos_x - info->plane_x * MOVE_SPEED)][(int)info->pos_y] != WALL)
 			info->pos_x -= info->plane_x * MOVE_SPEED;
-		if (info->map[(int)info->pos_x][(int)(info->pos_y - info->plane_y * MOVE_SPEED)] != '1')
+		if (info->map[(int)info->pos_x][(int)(info->pos_y - info->plane_y * MOVE_SPEED)] != WALL)
 			info->pos_y -= info->plane_y * MOVE_SPEED;
 	}
 	if (info->keys.right)

@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 23:40:15 by sikeda            #+#    #+#             */
-/*   Updated: 2021/01/27 01:09:01 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/01/27 01:18:47 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ void	calc(t_info *info)
 				side = 1;
 			}
 			//Check if ray has hit a wall
-			if (info->map[mapX][mapY] == '2' && !g_spmap[mapX][mapY])
+			if (info->map[mapX][mapY] == SPRITE && !g_spmap[mapX][mapY])
 			{
 				g_spmap[mapX][mapY] = 1;
 				if (!(new = splst_new(mapX, mapY)))
@@ -126,7 +126,7 @@ void	calc(t_info *info)
 				}
 				splist_add_front(&info->splist, new);
 			}
-			if (info->map[mapX][mapY] == '1')	//初期[21][11]
+			if (info->map[mapX][mapY] == WALL)	//初期[21][11]
 				hit = 1;
 		}
 
