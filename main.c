@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 23:40:15 by sikeda            #+#    #+#             */
-/*   Updated: 2021/01/27 01:18:47 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/01/27 01:50:02 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@ int	g_spmap[ROW][COL] = {0};
 
 void	draw(t_info *info)
 {
-	for (int y = 0; y < info->screen_h; y++)
+	for (int y = 0; y < info->screen.h; y++)
 	{
-		for (int x = 0; x < info->screen_w; x++)
+		for (int x = 0; x < info->screen.w; x++)
 		{
-			info->img.data[y * info->screen_w + x] = info->buf[y][x];
+			info->img.data[y * info->screen.w + x] = info->buf[y][x];
 		}
 	}
 	mlx_put_image_to_window(info->mlx, info->win, info->img.img, 0, 0);
@@ -31,23 +31,23 @@ void	draw(t_info *info)
 void	calc(t_info *info)
 {
 	//FLOOR CASTING
-	int	y = info->screen_h / 2 + 1;
-	while (y < info->screen_h)
+	int	y = info->screen.h / 2 + 1;
+	while (y < info->screen.h)
 	{
 		int	x = -1;
-		while (++x < info->screen_w)
+		while (++x < info->screen.w)
 		{
 			info->buf[y][x] = info->floor_color;
-			info->buf[info->screen_h - y - 1][x] = info->ceilling_color;
+			info->buf[info->screen.h - y - 1][x] = info->ceilling_color;
 		}
 		y++;
 	}
 	// WALL CASTING
-	for (int x = 0; x < info->screen_w; x++)
+	for (int x = 0; x < info->screen.w; x++)
 	{
 		//calculate ray position and direction
 		//光線の位置と方向を計算します
-		double	cameraX	= 2 * x / (double)info->screen_w - 1;	//カメラ空間のx座標	//初期-1
+		double	cameraX	= 2 * x / (double)info->screen.w - 1;	//カメラ空間のx座標	//初期-1
 		double	rayDirX = info->dir_x + info->plane_x * cameraX;	//初期-1
 		double	rayDirY = info->dir_y + info->plane_y * cameraX;	//初期-0.66000
 
@@ -139,16 +139,16 @@ void	calc(t_info *info)
 
 		//Calculate height of line to draw on screen
 		//画面に描画する線の高さを計算します
-		int	lineHeight = (int)(info->screen_h / perpWallDist);	//初期160
+		int	lineHeight = (int)(info->screen.h / perpWallDist);	//初期160
 
 		//calculate lowest and highest pixel to fill in current stripe
 		//現在のストライプを埋めるために最低ピクセルと最高ピクセルを計算します
-		int drawStart = -lineHeight / 2 + info->screen_h / 2;	//初期160
+		int drawStart = -lineHeight / 2 + info->screen.h / 2;	//初期160
 		if (drawStart < 0)
 			drawStart = 0;
-		int drawEnd = lineHeight / 2 + info->screen_h / 2;	//初期320
-		if (drawEnd >= info->screen_h)
-			drawEnd = info->screen_h - 1;
+		int drawEnd = lineHeight / 2 + info->screen.h / 2;	//初期320
+		if (drawEnd >= info->screen.h)
+			drawEnd = info->screen.h - 1;
 
 		int	texNum;
 		if (side)
@@ -177,7 +177,7 @@ void	calc(t_info *info)
 		double step = 1.0 * TEX_H / lineHeight;	//初期0.4
 		// Starting texture coordinate
 		// テクスチャ座標の開始
-		double texPos = (drawStart - info->screen_h / 2 + lineHeight / 2) * step;	//初期0
+		double texPos = (drawStart - info->screen.h / 2 + lineHeight / 2) * step;	//初期0
 		for (int y = drawStart; y < drawEnd; y++)
 		{
 			// Cast the texture coordinate to integer, and mask with (texHeight - 1) in case of overflow
@@ -232,7 +232,7 @@ void	calc(t_info *info)
 		double transformX = invDet * (info->dir_y * spriteX - info->dir_x * spriteY);
 		double transformY = invDet * (-info->plane_y * spriteX + info->plane_x * spriteY); //this is actually the depth inside the screen, that what Z is in 3D, the distance of sprite to player, matching sqrt(g_spriteDistance[i])
 
-		int spriteScreenX = (int)((info->screen_w / 2) * (1 + transformX / transformY));
+		int spriteScreenX = (int)((info->screen.w / 2) * (1 + transformX / transformY));
 
 		//parameters for scaling and moving the sprites
 		#define uDiv 1
@@ -242,24 +242,24 @@ void	calc(t_info *info)
 
 		//calculate height of the sprite on screen
 		//画面上のスプライトの高さを計算します
-		int spriteHeight = (int)fabs((info->screen_h / transformY) / vDiv); //using "transformY" instead of the real distance prevents fisheye //実際の距離の代わりに「transformY」を使用すると、魚眼レンズが防止されます
+		int spriteHeight = (int)fabs((info->screen.h / transformY) / vDiv); //using "transformY" instead of the real distance prevents fisheye //実際の距離の代わりに「transformY」を使用すると、魚眼レンズが防止されます
 		//calculate lowest and highest pixel to fill in current stripe
 		//現在のストライプを埋めるために最低ピクセルと最高ピクセルを計算します
-		int drawStartY = -spriteHeight / 2 + info->screen_h / 2 + vMoveScreen;
+		int drawStartY = -spriteHeight / 2 + info->screen.h / 2 + vMoveScreen;
 		if (drawStartY < 0)
 			drawStartY = 0;
-		int drawEndY = spriteHeight / 2 + info->screen_h / 2 + vMoveScreen;
-		if (drawEndY >= info->screen_h)
-			drawEndY = info->screen_h;
+		int drawEndY = spriteHeight / 2 + info->screen.h / 2 + vMoveScreen;
+		if (drawEndY >= info->screen.h)
+			drawEndY = info->screen.h;
 
 		//calculate width of the sprite
-		int spriteWidth = (int)fabs(info->screen_h / transformY / uDiv);
+		int spriteWidth = (int)fabs(info->screen.h / transformY / uDiv);
 		int drawStartX = -spriteWidth / 2 + spriteScreenX;
 		if (drawStartX < 0)
 			drawStartX = 0;
 		int drawEndX = spriteWidth / 2 + spriteScreenX;
-		if (drawEndX >= info->screen_w)
-			drawEndX = info->screen_w;
+		if (drawEndX >= info->screen.w)
+			drawEndX = info->screen.w;
 
 		//loop through every vertical stripe of the sprite on screen
 		//画面上のスプライトのすべての垂直ストライプをループします
@@ -271,10 +271,10 @@ void	calc(t_info *info)
 			//2) it's on the screen (left)
 			//3) it's on the screen (right)
 			//4) ZBuffer, with perpendicular distance
-			if (0 < transformY && 0 <= stripe && stripe <= info->screen_w && transformY < info->z_buffer[stripe])
+			if (0 < transformY && 0 <= stripe && stripe <= info->screen.w && transformY < info->z_buffer[stripe])
 				for (int y = drawStartY; y < drawEndY; y++) //for every pixel of the current stripe 現在のストライプのすべてのピクセルに対して
 				{
-					int d = (y-vMoveScreen) * 256 - info->screen_h * 128 + spriteHeight * 128; //256 and 128 factors to avoid floats 浮動小数点数を回避するための256および128の係数
+					int d = (y-vMoveScreen) * 256 - info->screen.h * 128 + spriteHeight * 128; //256 and 128 factors to avoid floats 浮動小数点数を回避するための256および128の係数
 					int texY = ((d * TEX_H) / spriteHeight) / 256;
 					int color = info->texture[TEX_SPRITE][TEX_W * texY + texX]; //get current color from the texture
 					if ((color & 0x00FFFFFF) != 0)
@@ -342,9 +342,9 @@ t_errmsg	get_resolution(t_info *info, int *settings, char **split)
 	if (!str_isdigit(split[1]) || !str_isdigit(split[2]))
 		return (ERR_CUBFILE_R);
 	// TODO: 大きすぎる解像度調整
-	info->screen_w = ft_atoi(split[1]);
-	info->screen_h = ft_atoi(split[2]);
-	if (info->screen_w <= 0 || info->screen_h <= 0)
+	info->screen.w = ft_atoi(split[1]);
+	info->screen.h = ft_atoi(split[2]);
+	if (info->screen.w <= 0 || info->screen.h <= 0)
 		return (ERR_CUBFILE_R);
 	*settings |= (1 << SETTING_R);
 	return (NULL);

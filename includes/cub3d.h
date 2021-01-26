@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/24 00:39:58 by sikeda            #+#    #+#             */
-/*   Updated: 2021/01/27 01:18:29 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/01/27 01:44:20 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,12 @@ typedef struct	s_img
 	int		img_height;
 }				t_img;
 
+typedef struct	s_screen
+{
+	int	w;
+	int	h;
+}				t_screen;
+
 typedef struct	s_keys
 {
 	int	w;
@@ -107,8 +113,7 @@ typedef struct	s_keys
 
 typedef struct	s_info
 {
-	int			screen_w;
-	int			screen_h;
+	t_screen	screen;
 	double		pos_x;
 	double		pos_y;
 	double		dir_x;
