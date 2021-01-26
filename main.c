@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 23:40:15 by sikeda            #+#    #+#             */
-/*   Updated: 2021/01/26 00:12:19 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/01/26 10:09:24 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 // TODO: 画面サイズ
 
-int	g_map[MAP_H][MAP_W] =
+int	g_map[ROW][COL] =
 {
 	{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0},	//0
 	{1,0,0,0,0,0,2,2,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0},	//1
@@ -42,7 +42,7 @@ int	g_map[MAP_H][MAP_W] =
 	{1,1,1,1,1,1,1,1,' ',1,1,1,1,1,1,1,' ',1,1,1,1,1,1,1,1,1,1,1,1,0,0}
 };
 
-int	g_spmap[MAP_H][MAP_W] = {0};
+int	g_spmap[ROW][COL] = {0};
 
 void	draw(t_info *info)
 {
@@ -553,7 +553,7 @@ t_errmsg	get_setting_val(t_info *info, int *settings, char **split)
 
 t_bool		is_map_too_big(size_t len, int line_num)
 {
-	if (MAP_W < len || MAP_H < line_num)
+	if (COL < len || ROW < line_num)
 		return (TRUE);
 	return (FALSE);
 }

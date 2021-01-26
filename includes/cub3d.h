@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/24 00:39:58 by sikeda            #+#    #+#             */
-/*   Updated: 2021/01/26 00:14:04 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/01/26 10:08:02 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@
 # endif
 # define GAMEMODE 2
 # define SAVEMODE 3
-# define MAP_W 33
-# define MAP_H 24
+# define ROW 24
+# define COL 33
 # define TEX_W 64
 # define TEX_H 64
 # ifdef LINUX
