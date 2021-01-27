@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/24 00:39:58 by sikeda            #+#    #+#             */
-/*   Updated: 2021/01/27 22:26:35 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/01/28 00:11:56 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@
 # define SAVEMODE 3
 # define ROW 24
 # define COL 33
-# define TEX_W 64
-# define TEX_H 64
+// # define TEX_W 64
+// # define TEX_H 64
 # ifdef LINUX
 #  define MOVE_SPEED 0.01
 # else

@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 23:40:15 by sikeda            #+#    #+#             */
-/*   Updated: 2021/01/27 23:04:58 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/01/28 00:04:04 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,15 +166,15 @@ void	calc(t_info *info)
 
 		//x coordinate on the texture
 		//テクスチャのx座標
-		int texX = (int)(wallX * (double)TEX_W);
+		int texX = (int)(wallX * (double)info->texture[texNum].w);
 		if (side == 0 && rayDirX > 0)
-			texX = TEX_W - texX - 1;
+			texX = info->texture[texNum].w - texX - 1;
 		if (side == 1 && rayDirY < 0)
-			texX = TEX_W - texX - 1;
+			texX = info->texture[texNum].w - texX - 1;
 
 		// How much to increase the texture coordinate per screen pixel
 		// 画面ピクセルあたりのテクスチャ座標をどれだけ増やすか
-		double step = 1.0 * TEX_H / lineHeight;	//初期0.4
+		double step = 1.0 * info->texture[texNum].h / lineHeight;	//初期0.4
 		// Starting texture coordinate
 		// テクスチャ座標の開始
 		double texPos = (drawStart - info->screen.h / 2 + lineHeight / 2) * step;	//初期0
@@ -182,9 +182,9 @@ void	calc(t_info *info)
 		{
 			// Cast the texture coordinate to integer, and mask with (texHeight - 1) in case of overflow
 			//テクスチャ座標を整数にキャストし、オーバーフローの場合は（texHeight-1）でマスクします
-			int	texY = (int)texPos & (TEX_H - 1);
+			int	texY = (int)texPos & (info->texture[texNum].h - 1);
 			texPos += step;
-			int	color = info->texture[texNum].data[TEX_H * texY + texX];
+			int	color = info->texture[texNum].data[info->texture[texNum].h * texY + texX];
 			info->buf[y][x] = color;
 		}
 
@@ -265,7 +265,7 @@ void	calc(t_info *info)
 		//画面上のスプライトのすべての垂直ストライプをループします
 		for (int stripe =  drawStartX; stripe < drawEndX; stripe++)
 		{
-			int texX = (int)(256 * (stripe - (-spriteWidth / 2 + spriteScreenX)) * TEX_W / spriteWidth) / 256;
+			int texX = (int)(256 * (stripe - (-spriteWidth / 2 + spriteScreenX)) * info->texture[TEX_SPRITE].w / spriteWidth) / 256;
 			//the conditions in the if are:
 			//1) it's in front of camera plane so you don't see things behind you
 			//2) it's on the screen (left)
@@ -275,8 +275,8 @@ void	calc(t_info *info)
 				for (int y = drawStartY; y < drawEndY; y++) //for every pixel of the current stripe 現在のストライプのすべてのピクセルに対して
 				{
 					int d = (y-vMoveScreen) * 256 - info->screen.h * 128 + spriteHeight * 128; //256 and 128 factors to avoid floats 浮動小数点数を回避するための256および128の係数
-					int texY = ((d * TEX_H) / spriteHeight) / 256;
-					int color = info->texture[TEX_SPRITE].data[TEX_W * texY + texX]; //get current color from the texture
+					int texY = ((d * info->texture[TEX_SPRITE].h) / spriteHeight) / 256;
+					int color = info->texture[TEX_SPRITE].data[info->texture[TEX_SPRITE].h * texY + texX]; //get current color from the texture
 					if ((color & 0x00FFFFFF) != 0)
 						info->buf[y][stripe] = color; //paint pixel if it isn't black, black is the invisible color ピクセルが黒でない場合はペイントし、黒は非表示の色です
 				}
@@ -568,6 +568,7 @@ t_errmsg	get_map(t_info *info, char *line)
 	size_t	len;
 
 	len = ft_strlen(line);
+	// TODO:maxlenを記録
 	if (check_map_size(len, info->map_line_num + 1) == FALSE)
 		return (ERR_BIG_MAP);
 	if (check_chars_in_map(info, line) == FALSE)
