@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/24 00:39:58 by sikeda            #+#    #+#             */
-/*   Updated: 2021/01/27 01:44:20 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/01/27 22:26:35 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,12 +87,11 @@ typedef struct	s_img
 {
 	void	*img;
 	int		*data;
-
 	int		size_l;
 	int		bpp;
 	int		endian;
-	int		img_width;
-	int		img_height;
+	int		w;
+	int		h;
 }				t_img;
 
 typedef struct	s_screen
@@ -127,7 +126,7 @@ typedef struct	s_info
 	int			**buf;
 	double		*z_buffer;
 	t_splist	*splist;
-	int			**texture;
+	t_img		texture[TEX_END];
 	uint32_t	floor_color;
 	uint32_t	ceilling_color;
 	int			fd;

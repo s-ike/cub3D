@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 23:40:15 by sikeda            #+#    #+#             */
-/*   Updated: 2021/01/27 12:24:52 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/01/27 23:04:58 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,7 +184,7 @@ void	calc(t_info *info)
 			//テクスチャ座標を整数にキャストし、オーバーフローの場合は（texHeight-1）でマスクします
 			int	texY = (int)texPos & (TEX_H - 1);
 			texPos += step;
-			int	color = info->texture[texNum][TEX_H * texY + texX];
+			int	color = info->texture[texNum].data[TEX_H * texY + texX];
 			info->buf[y][x] = color;
 		}
 
@@ -276,7 +276,7 @@ void	calc(t_info *info)
 				{
 					int d = (y-vMoveScreen) * 256 - info->screen.h * 128 + spriteHeight * 128; //256 and 128 factors to avoid floats 浮動小数点数を回避するための256および128の係数
 					int texY = ((d * TEX_H) / spriteHeight) / 256;
-					int color = info->texture[TEX_SPRITE][TEX_W * texY + texX]; //get current color from the texture
+					int color = info->texture[TEX_SPRITE].data[TEX_W * texY + texX]; //get current color from the texture
 					if ((color & 0x00FFFFFF) != 0)
 						info->buf[y][stripe] = color; //paint pixel if it isn't black, black is the invisible color ピクセルが黒でない場合はペイントし、黒は非表示の色です
 				}
@@ -293,21 +293,17 @@ int		main_loop(t_info *info)
 	return (0);
 }
 
-void	load_image(t_info *info, int *texture, char *path, t_img *img)
+t_bool	load_image(t_info *info, t_img *texture, char *filename)
 {
-	img->img = mlx_xpm_file_to_image(info->mlx, path, &img->img_width, &img->img_height);
-	img->data = (int *)mlx_get_data_addr(img->img, &img->bpp, &img->size_l, &img->endian);
-	for (int y = 0; y < img->img_height; y++)
-		for (int x = 0; x < img->img_width; x++)
-			texture[img->img_width * y + x] = img->data[img->img_width * y + x];
-	mlx_destroy_image(info->mlx, img->img);
+	if (!(texture->img = mlx_xpm_file_to_image(info->mlx, filename, &texture->w, &texture->h)))
+		return (FALSE);
+	texture->data = (int *)mlx_get_data_addr(texture->img, &texture->bpp, &texture->size_l, &texture->endian);
+	return (TRUE);
 }
 
-void	load_texture(t_info *info, int num, char *filename)
+t_bool	load_texture(t_info *info, int tex_num, char *filename)
 {
-	t_img	img;
-
-	load_image(info, info->texture[num], filename, &img);
+	return (load_image(info, &info->texture[tex_num], filename));
 }
 
 t_errmsg	validate_filename(char *filename, char *type)
@@ -375,7 +371,8 @@ t_errmsg	get_no_texture(t_info *info, int *settings, char **split)
 {
 	if (validate_texture(settings, split, SETTING_NO) == FALSE)
 		return (ERR_CUBFILE_NO);
-	load_texture(info, TEX_NORTH, split[1]);
+	if (load_texture(info, TEX_NORTH, split[1]) == FALSE)
+		return (ERR_CUBFILE_NO);
 	*settings |= (1 << SETTING_NO);
 	return (NULL);
 }
@@ -384,7 +381,8 @@ t_errmsg	get_so_texture(t_info *info, int *settings, char **split)
 {
 	if (validate_texture(settings, split, SETTING_SO) == FALSE)
 		return (ERR_CUBFILE_SO);
-	load_texture(info, TEX_SOUTH, split[1]);
+	if (load_texture(info, TEX_SOUTH, split[1]) == FALSE)
+		return (ERR_CUBFILE_SO);
 	*settings |= (1 << SETTING_SO);
 	return (NULL);
 }
@@ -393,7 +391,8 @@ t_errmsg	get_we_texture(t_info *info, int *settings, char **split)
 {
 	if (validate_texture(settings, split, SETTING_WE) == FALSE)
 		return (ERR_CUBFILE_WE);
-	load_texture(info, TEX_WEST, split[1]);
+	if (load_texture(info, TEX_WEST, split[1]) == FALSE)
+		return (ERR_CUBFILE_WE);
 	*settings |= (1 << SETTING_WE);
 	return (NULL);
 }
@@ -402,7 +401,8 @@ t_errmsg	get_ea_texture(t_info *info, int *settings, char **split)
 {
 	if (validate_texture(settings, split, SETTING_EA) == FALSE)
 		return (ERR_CUBFILE_EA);
-	load_texture(info, TEX_EAST, split[1]);
+	if (load_texture(info, TEX_EAST, split[1]) == FALSE)
+		return (ERR_CUBFILE_EA);
 	*settings |= (1 << SETTING_EA);
 	return (NULL);
 }
@@ -411,7 +411,8 @@ t_errmsg	get_sprite_texture(t_info *info, int *settings, char **split)
 {
 	if (validate_texture(settings, split, SETTING_S) == FALSE)
 		return (ERR_CUBFILE_S);
-	load_texture(info, TEX_SPRITE, split[1]);
+	if (load_texture(info, TEX_SPRITE, split[1]) == FALSE)
+		return (ERR_CUBFILE_S);
 	*settings |= (1 << SETTING_S);
 	return (NULL);
 }

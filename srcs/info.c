@@ -6,31 +6,31 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 23:14:08 by sikeda            #+#    #+#             */
-/*   Updated: 2021/01/27 01:45:02 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/01/27 22:12:45 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static void	allocate_textures_buf(t_info *info)
-{
-	int	i;
-	int	j;
+// static void	allocate_textures_buf(t_info *info)
+// {
+// 	int	i;
+// 	int	j;
 
-	if (!(info->texture = (int **)malloc(sizeof(int *) * TEX_END)))
-		return (exit_with_errmsg(strerror(errno)));
-	i = -1;
-	while (++i < TEX_END)
-		if (!(info->texture[i] = (int *)malloc(sizeof(int) * (TEX_H * TEX_W))))
-			return (exit_with_errmsg(strerror(errno)));
-	i = -1;
-	while (++i < TEX_END)
-	{
-		j = -1;
-		while (++j < TEX_H * TEX_W)
-			info->texture[i][j] = 0;
-	}
-}
+// 	if (!(info->texture = (int **)malloc(sizeof(int *) * TEX_END)))
+// 		return (exit_with_errmsg(strerror(errno)));
+// 	i = -1;
+// 	while (++i < TEX_END)
+// 		if (!(info->texture[i] = (int *)malloc(sizeof(int) * (TEX_H * TEX_W))))
+// 			return (exit_with_errmsg(strerror(errno)));
+// 	i = -1;
+// 	while (++i < TEX_END)
+// 	{
+// 		j = -1;
+// 		while (++j < TEX_H * TEX_W)
+// 			info->texture[i][j] = 0;
+// 	}
+// }
 
 void		set_info(t_info *info)
 {
@@ -45,7 +45,7 @@ void		set_info(t_info *info)
 	info->splist = NULL;
 	info->map_line_num = 0;
 	info->map_start = 0;
-	allocate_textures_buf(info);
+	// allocate_textures_buf(info);
 }
 
 void		set_camera(t_info *info)
