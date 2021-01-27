@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 23:40:15 by sikeda            #+#    #+#             */
-/*   Updated: 2021/01/27 01:50:02 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/01/27 02:02:36 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -337,15 +337,21 @@ t_errmsg	validate_readable_file(char *filename, t_info *info)
 
 t_errmsg	get_resolution(t_info *info, int *settings, char **split)
 {
+	t_screen	current;
+
 	if (!split[1] || !split[2] || split[3] || *settings & (1 << SETTING_R))
 		return (ERR_CUBFILE_R);
 	if (!str_isdigit(split[1]) || !str_isdigit(split[2]))
 		return (ERR_CUBFILE_R);
-	// TODO: 大きすぎる解像度調整
 	info->screen.w = ft_atoi(split[1]);
 	info->screen.h = ft_atoi(split[2]);
 	if (info->screen.w <= 0 || info->screen.h <= 0)
 		return (ERR_CUBFILE_R);
+	mlx_get_screen_size(info->mlx, &current.w, &current.h);
+	if (current.w < info->screen.w)
+		info->screen.w = current.w;
+	if (current.h < info->screen.h)
+		info->screen.h = current.h;
 	*settings |= (1 << SETTING_R);
 	return (NULL);
 }
