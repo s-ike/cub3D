@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/24 00:39:58 by sikeda            #+#    #+#             */
-/*   Updated: 2021/01/29 19:43:51 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/01/29 23:10:16 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,9 @@
 # define EIGHT_BIT_MAX 0xff
 # define WALL '1'
 # define SPRITE '2'
+# define CHECKED_WALL '!'
+# define CHECKED_SPRITE '@'
+# define CHECKED_FLOOR '#'
 
 enum			e_settings
 {

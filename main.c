@@ -6,13 +6,14 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 23:40:15 by sikeda            #+#    #+#             */
-/*   Updated: 2021/01/28 02:06:16 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/01/30 01:19:48 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
 // TODO: 画面サイズ
+// TODO: 初期位置がマップにない場合
 
 int	g_spmap[ROW][COL] = {0};
 
@@ -116,7 +117,7 @@ void	calc(t_info *info)
 				side = 1;
 			}
 			//Check if ray has hit a wall
-			if (info->map[mapX][mapY] == SPRITE && !g_spmap[mapX][mapY])
+			if (info->map[mapX][mapY] == CHECKED_SPRITE && !g_spmap[mapX][mapY])
 			{
 				g_spmap[mapX][mapY] = 1;
 				if (!(new = splst_new(mapX, mapY)))
@@ -126,7 +127,7 @@ void	calc(t_info *info)
 				}
 				splist_add_front(&info->splist, new);
 			}
-			if (info->map[mapX][mapY] == WALL)	//初期[21][11]
+			if (info->map[mapX][mapY] == CHECKED_WALL)	//初期[21][11]
 				hit = 1;
 		}
 
@@ -532,14 +533,14 @@ t_errmsg	get_setting_val(t_info *info, int *settings, char **split)
 	return (ERR_CUBFILE);
 }
 
-t_bool		check_map_size(size_t len, int line_num)
+t_bool		is_map_size_too_large(size_t len, int line_num)
 {
 	if (COL < len || ROW < line_num)
-		return (FALSE);
-	return (TRUE);
+		return (TRUE);
+	return (FALSE);
 }
 
-t_bool		check_chars_in_map(t_info *info, char *line)
+t_bool		is_map_with_only_correct_chr(t_info *info, char *line)
 {
 	int	i;
 
@@ -551,7 +552,8 @@ t_bool		check_chars_in_map(t_info *info, char *line)
 			{
 				if (info->pos_x == 0.0 && info->pos_y == 0.0)
 				{
-					info->pos_x = (double)info->map_line_num + 1.0;
+					info->pos_x = (double)info->map_line_num;
+					// TODO: 初期位置確認
 					info->pos_y = i + 0.51;
 					info->map_start = line[i];
 				}
@@ -564,15 +566,46 @@ t_bool		check_chars_in_map(t_info *info, char *line)
 	return (TRUE);
 }
 
+t_errmsg	is_closed_map(t_info *info, int row, int col)
+{
+	t_errmsg	msg;
+
+	msg = NULL;
+	if (info->map[row][col] == CHECKED_WALL
+	|| info->map[row][col] == CHECKED_SPRITE
+	|| info->map[row][col] == CHECKED_FLOOR)
+		return (NULL);
+	if (info->map[row][col] == WALL)
+	{
+		info->map[row][col] = CHECKED_WALL;
+		return (NULL);
+	}
+	else if (info->map[row][col] == SPRITE)
+		info->map[row][col] = CHECKED_SPRITE;
+	else
+		info->map[row][col] = CHECKED_FLOOR;
+	if (row <= 0 || info->map_line_num <= row || col <= 0 || COL <= col)
+		return (ERR_OPEN_MAP);
+	if ((msg = is_closed_map(info, row + 1, col)))
+		return (msg);
+	if ((msg = is_closed_map(info, row - 1, col)))
+		return (msg);
+	if ((msg = is_closed_map(info, row, col + 1)))
+		return (msg);
+	if ((msg = is_closed_map(info, row, col - 1)))
+		return (msg);
+	return (NULL);
+}
+
 t_errmsg	get_map(t_info *info, char *line)
 {
 	size_t	len;
 
 	len = ft_strlen(line);
 	// TODO:maxlenを記録
-	if (check_map_size(len, info->map_line_num + 1) == FALSE)
+	if (is_map_size_too_large(len, info->map_line_num + 1) == TRUE)
 		return (ERR_BIG_MAP);
-	if (check_chars_in_map(info, line) == FALSE)
+	if (is_map_with_only_correct_chr(info, line) == FALSE)
 		return (ERR_CHR_MAP);
 	ft_strlcpy(info->map[info->map_line_num], line, len + 1);
 	info->map_line_num++;
@@ -657,6 +690,8 @@ t_errmsg	parse_arg(int argc, char **argv, t_info *info)
 		msg = parse_file(info);
 	if (!msg)
 		ft_bzero(info->map[info->map_line_num], COL + 1);
+	if (!msg)
+		msg = is_closed_map(info, (int)info->pos_x, (int)info->pos_y);
 	if (!msg && mode == GAMEMODE)
 	{
 		return (NULL);
