@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 23:40:15 by sikeda            #+#    #+#             */
-/*   Updated: 2021/01/28 00:04:04 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/01/28 02:06:16 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,7 +182,8 @@ void	calc(t_info *info)
 		{
 			// Cast the texture coordinate to integer, and mask with (texHeight - 1) in case of overflow
 			//テクスチャ座標を整数にキャストし、オーバーフローの場合は（texHeight-1）でマスクします
-			int	texY = (int)texPos & (info->texture[texNum].h - 1);
+			// int	texY = (int)texPos & (info->texture[texNum].h - 1);
+			int	texY = (int)texPos;
 			texPos += step;
 			int	color = info->texture[texNum].data[info->texture[texNum].h * texY + texX];
 			info->buf[y][x] = color;
@@ -276,7 +277,7 @@ void	calc(t_info *info)
 				{
 					int d = (y-vMoveScreen) * 256 - info->screen.h * 128 + spriteHeight * 128; //256 and 128 factors to avoid floats 浮動小数点数を回避するための256および128の係数
 					int texY = ((d * info->texture[TEX_SPRITE].h) / spriteHeight) / 256;
-					int color = info->texture[TEX_SPRITE].data[info->texture[TEX_SPRITE].h * texY + texX]; //get current color from the texture
+					int color = info->texture[TEX_SPRITE].data[info->texture[TEX_SPRITE].w * texY + texX]; //get current color from the texture
 					if ((color & 0x00FFFFFF) != 0)
 						info->buf[y][stripe] = color; //paint pixel if it isn't black, black is the invisible color ピクセルが黒でない場合はペイントし、黒は非表示の色です
 				}
