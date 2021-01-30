@@ -6,14 +6,13 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 23:40:15 by sikeda            #+#    #+#             */
-/*   Updated: 2021/01/30 11:11:38 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/01/30 11:51:20 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
 // TODO: 画面サイズ
-// TODO: 初期位置がマップにない場合
 
 int	g_spmap[ROW][COL] = {0};
 
@@ -553,7 +552,6 @@ t_bool		is_map_with_only_correct_chr(t_info *info, char *line)
 				if (info->pos_x == 0.0 && info->pos_y == 0.0)
 				{
 					info->pos_x = (double)info->map_line_num + 0.49;
-					// TODO: 初期位置確認
 					info->pos_y = i + 0.49;
 					info->map_start = line[i];
 				}
@@ -563,6 +561,13 @@ t_bool		is_map_with_only_correct_chr(t_info *info, char *line)
 		}
 		else
 			return (FALSE);
+	return (TRUE);
+}
+
+t_bool		has_start_position(int x, int y)
+{
+	if (x == 0 && y == 0)
+		return (FALSE);
 	return (TRUE);
 }
 
@@ -595,6 +600,13 @@ t_errmsg	is_closed_map(t_info *info, int row, int col)
 	if ((msg = is_closed_map(info, row, col - 1)))
 		return (msg);
 	return (NULL);
+}
+
+t_errmsg	validate_map(t_info *info)
+{
+	if (has_start_position((int)info->pos_x, (int)info->pos_y) == FALSE)
+		return (ERR_NO_POS);
+	return (is_closed_map(info, (int)info->pos_x, (int)info->pos_y));
 }
 
 t_errmsg	get_map(t_info *info, char *line)
@@ -691,7 +703,7 @@ t_errmsg	parse_arg(int argc, char **argv, t_info *info)
 	if (!msg)
 		ft_bzero(info->map[info->map_line_num], COL + 1);
 	if (!msg)
-		msg = is_closed_map(info, (int)info->pos_x, (int)info->pos_y);
+		msg = validate_map(info);
 	if (!msg && mode == GAMEMODE)
 	{
 		return (NULL);
