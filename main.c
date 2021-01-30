@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 23:40:15 by sikeda            #+#    #+#             */
-/*   Updated: 2021/01/30 01:19:48 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/01/30 11:11:38 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -552,9 +552,9 @@ t_bool		is_map_with_only_correct_chr(t_info *info, char *line)
 			{
 				if (info->pos_x == 0.0 && info->pos_y == 0.0)
 				{
-					info->pos_x = (double)info->map_line_num;
+					info->pos_x = (double)info->map_line_num + 0.49;
 					// TODO: 初期位置確認
-					info->pos_y = i + 0.51;
+					info->pos_y = i + 0.49;
 					info->map_start = line[i];
 				}
 				else
