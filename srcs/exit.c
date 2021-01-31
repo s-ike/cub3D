@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 23:20:06 by sikeda            #+#    #+#             */
-/*   Updated: 2021/02/01 00:20:36 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/02/01 00:38:20 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ static void	free_info(t_info *info)
 	i = -1;
 	while (++i < info->screen.h)
 		free(info->buf[i]);
+	splist_clear(&info->splist);
 	free(info->buf);
 }
 

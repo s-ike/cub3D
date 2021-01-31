@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 23:40:15 by sikeda            #+#    #+#             */
-/*   Updated: 2021/02/01 00:13:05 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/02/01 00:37:12 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,10 +118,7 @@ void	calc(t_info *info)
 			{
 				info->spmap[mapX][mapY] = 1;
 				if (!(new = splst_new(mapX, mapY)))
-				{
-					splist_clear(&info->splist);
-					exit(EXIT_FAILURE);
-				}
+					exit_with_errmsg_and_free(ERR_CUB, info);
 				splist_add_front(&info->splist, new);
 			}
 			if (info->map[mapX][mapY] == CHECKED_WALL)	//初期[21][11]
@@ -752,7 +749,7 @@ int	main(int argc, char **argv)
 		calc(&info);
 		if (create_bmp(&info.img, info.buf, &info.screen) < 0)
 			exit_with_errmsg_and_free(ERR_BMP, &info);
-		exit(EXIT_SUCCESS);
+		exit_with_free(&info);
 	}
 	return (0);
 }

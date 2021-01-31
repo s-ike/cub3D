@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 23:17:34 by sikeda            #+#    #+#             */
-/*   Updated: 2021/01/31 15:06:15 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/02/01 00:38:01 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,6 @@
 # define ERR_OPEN_MAP		"Invalid map (unclosed)"
 # define ERR_GNL			"An error occurred while running gnl"
 # define ERR_BMP			"An error occurred while creating the bitmap"
+# define ERR_CUB			"An error occurred while running cub3D"
 
 #endif
