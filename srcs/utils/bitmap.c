@@ -6,29 +6,35 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/31 15:01:57 by sikeda            #+#    #+#             */
-/*   Updated: 2021/01/31 15:02:27 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/01/31 15:20:27 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utils.h"
 
-static void	write_image_data(int fd, int **buf, t_screen *screen)
+static int	write_image_data(int fd, int **buf, t_screen *screen)
 {
+	int	*line;
 	int	i;
 	int	j;
 
-	// TODO: fast
+	if (!(line = (int *)malloc(screen->w * sizeof(int))))
+		return (ERR);
 	i = screen->h - 1;
 	while (0 <= i)
 	{
 		j = 0;
 		while (j < screen->w)
 		{
-			write(fd, &buf[i][j], ARGB_SIZE);
+			line[j] = buf[i][j];
 			j++;
 		}
+		write(fd, line, screen->w);
 		i--;
 	}
+	free(line);
+	line = NULL;
+	return (SUCCESS);
 }
 
 static void	write_info_header(int fd, t_screen *screen, int bpp, int image_size)
@@ -82,7 +88,11 @@ int			create_bmp(t_mlximg *img, int **buf, t_screen *screen)
 	file_size = header_size + image_size;
 	write_file_header(fd, file_size, header_size);
 	write_info_header(fd, screen, img->bpp, image_size);
-	write_image_data(fd, buf, screen);
+	if (write_image_data(fd, buf, screen) < 0)
+	{
+		close(fd);
+		return (ERR);
+	}
 	close(fd);
 	return (SUCCESS);
 }
