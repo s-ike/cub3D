@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 23:14:08 by sikeda            #+#    #+#             */
-/*   Updated: 2021/01/31 23:40:30 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/01/31 23:48:29 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,29 +24,29 @@ void		set_info(t_info *info)
 	ft_bzero(&info->keys, sizeof(t_keys));
 	info->splist = NULL;
 	info->map_line_num = 0;
-	info->map_start = 0;
+	info->map_start_dir = 0;
 	info->mode = 0;
 }
 
 void		set_camera(t_info *info)
 {
-	if (info->map_start == 'N' || info->map_start == 'S')
+	if (info->map_start_dir == 'N' || info->map_start_dir == 'S')
 	{
 		info->plane_y = (double)info->screen.w / (double)info->screen.h / 2.0;
-		if (info->map_start == 'N')
+		if (info->map_start_dir == 'N')
 			info->dir_x = -1.0;
-		if (info->map_start == 'S')
+		if (info->map_start_dir == 'S')
 		{
 			info->dir_x = 1.0;
 			info->plane_y = 0 - info->plane_y;
 		}
 	}
-	if (info->map_start == 'E' || info->map_start == 'W')
+	if (info->map_start_dir == 'E' || info->map_start_dir == 'W')
 	{
 		info->plane_x = (double)info->screen.w / (double)info->screen.h / 2.0;
-		if (info->map_start == 'E')
+		if (info->map_start_dir == 'E')
 			info->dir_y = 1.0;
-		if (info->map_start == 'W')
+		if (info->map_start_dir == 'W')
 		{
 			info->dir_y = -1.0;
 			info->plane_x = 0 - info->plane_x;
