@@ -22,7 +22,15 @@ static void	free_info(t_info *info)
 	while (++i < info->screen.h)
 		free(info->buf[i]);
 	splist_clear(&info->splist);
+	// TODO: do not use when savemode
+	mlx_destroy_window(info->mlx, info->win);
+	mlx_destroy_image(info->mlx, info->img.img);
+	i = -1;
+	while (++i < TEX_END)
+		mlx_destroy_image(info->mlx, info->texture[i].img);
+	mlx_destroy_display(info->mlx);
 	free(info->buf);
+	free(info->mlx);
 }
 
 static void	put_errmsg(t_errmsg msg)
