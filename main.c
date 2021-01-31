@@ -216,6 +216,11 @@ void	calc(t_info *info)
 	sp_head = info->splist;
 	while (sp_head)
 	{
+		if (sp_head->distance < 0.03)
+		{
+			sp_head = sp_head->next;
+			continue ;
+		}
 		//translate sprite position to relative to camera
 		//スプライトの位置をカメラの相対位置に変換します
 		// double spriteX = g_sprite[g_spriteOrder[i]].x + 0.5 - info->pos_x;
@@ -266,6 +271,13 @@ void	calc(t_info *info)
 		//画面上のスプライトのすべての垂直ストライプをループします
 		for (int stripe =  drawStartX; stripe < drawEndX; stripe++)
 		{
+			// debug
+			if (sp_head != NULL && sp_head->next == NULL)
+			{
+				double dis;
+
+				dis = sp_head->distance;
+			}
 			int texX = (int)(256 * (stripe - (-spriteWidth / 2 + spriteScreenX)) * info->texture[TEX_SPRITE].w / spriteWidth) / 256;
 			//the conditions in the if are:
 			//1) it's in front of camera plane so you don't see things behind you
