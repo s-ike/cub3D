@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/24 00:39:58 by sikeda            #+#    #+#             */
-/*   Updated: 2021/02/01 01:45:09 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/02/01 02:37:12 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,9 +143,11 @@ void			set_window(t_info *info);
 /*
 ** exit.c
 */
-void			exit_with_free(t_info *info);
+void			exitsave(t_info *info);
+void			exitsave_with_errmsg(t_errmsg msg, t_info *info);
+void			exitgame(t_info *info);
+void			exitgame_with_errmsg(t_errmsg msg, t_info *info);
 void			exit_with_errmsg(t_errmsg msg);
-void			exit_with_errmsg_and_free(t_errmsg msg, t_info *info);
 /*
 ** key.c
 */

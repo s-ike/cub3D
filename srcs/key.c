@@ -3,7 +3,7 @@
 int			x_close(t_info *info)
 {
 
-	exit_with_free(info);
+	exitgame(info);
 	return (0);
 }
 
