@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/31 15:01:57 by sikeda            #+#    #+#             */
-/*   Updated: 2021/01/31 15:20:27 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/01/31 18:38:27 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static int	write_image_data(int fd, int **buf, t_screen *screen)
 			line[j] = buf[i][j];
 			j++;
 		}
-		write(fd, line, screen->w);
+		write(fd, line, screen->w * sizeof(int));
 		i--;
 	}
 	free(line);
