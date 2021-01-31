@@ -6,6 +6,7 @@ SRC			= main.c \
 				$(SRCDIR)exit.c \
 				$(SRCDIR)key.c \
 				$(SRCDIR)sprite_list.c \
+				$(SRCDIR)utils/bitmap.c \
 				$(SRCDIR)utils/get_line.c \
 				$(SRCDIR)utils/util.c
 OBJ			= $(SRC:.c=.o)

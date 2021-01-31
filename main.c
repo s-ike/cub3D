@@ -6,13 +6,14 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 23:40:15 by sikeda            #+#    #+#             */
-/*   Updated: 2021/01/30 11:51:20 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/01/31 15:04:14 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
 // TODO: 画面サイズ
+// TODO: 前進しながら後進を押下すると後進、横も同様
 
 int	g_spmap[ROW][COL] = {0};
 
@@ -294,7 +295,7 @@ int		main_loop(t_info *info)
 	return (0);
 }
 
-t_bool	load_image(t_info *info, t_img *texture, char *filename)
+t_bool	load_image(t_info *info, t_mlximg *texture, char *filename)
 {
 	if (!(texture->img = mlx_xpm_file_to_image(info->mlx, filename, &texture->w, &texture->h)))
 		return (FALSE);
@@ -683,14 +684,15 @@ t_errmsg	parse_file(t_info *info)
 	}
 	return (msg);
 }
-
+#include <stdio.h>	// debug
 t_errmsg	parse_arg(int argc, char **argv, t_info *info)
 {
 	t_errmsg	msg;
-	int			mode;
 
-	if (argc == GAMEMODE || argc == SAVEMODE)
-		mode = argc == GAMEMODE ? GAMEMODE : SAVEMODE;
+	if (argc == GAMEMODE)
+		info->mode = GAMEMODE;
+	else if (argc == SAVEMODE && ft_strcmp(argv[SAVEMODE - 1], "--save") == 0)
+		info->mode = SAVEMODE;
 	else
 		return (strerror(EINVAL));
 	info->fd = -1;
@@ -704,14 +706,14 @@ t_errmsg	parse_arg(int argc, char **argv, t_info *info)
 		ft_bzero(info->map[info->map_line_num], COL + 1);
 	if (!msg)
 		msg = validate_map(info);
-	if (!msg && mode == GAMEMODE)
+	// debug
+	for (int y = 0; y < info->map_line_num; y++)
 	{
-		return (NULL);
-	}
-	else if (!msg)
-	{
-		// --save
-		return (NULL);
+		for (int x = 0; info->map[y][x] != '\0'; x++)
+		{
+			printf("%c", info->map[y][x]);
+		}
+		printf("\n");
 	}
 	if (info->fd != -1)
 		close(info->fd);
@@ -728,11 +730,22 @@ int	main(int argc, char **argv)
 		exit_with_errmsg(msg);
 	set_camera(&info);
 	set_buffer(&info);
-	set_window(&info);
-	mlx_loop_hook(info.mlx, main_loop, &info);
-	mlx_hook(info.win, KEY_PRESS, 1L << KEY_PRESS_MASK, key_press, &info);
-	mlx_hook(info.win, KEY_RELEASE, 1L << KEY_RELEASE_MASK, key_release, &info);
-	mlx_hook(info.win, BTN_X, 1L << STRUCTURE_NOTIFY_MASK, x_close, &info);
-	mlx_loop(info.mlx);
+	set_mlximg(&info);
+	if (info.mode == GAMEMODE)
+	{
+		set_window(&info);
+		mlx_loop_hook(info.mlx, main_loop, &info);
+		mlx_hook(info.win, KEY_PRESS, 1L << KEY_PRESS_MASK, key_press, &info);
+		mlx_hook(info.win, KEY_RELEASE, 1L << KEY_RELEASE_MASK, key_release, &info);
+		mlx_hook(info.win, BTN_X, 1L << STRUCTURE_NOTIFY_MASK, x_close, &info);
+		mlx_loop(info.mlx);
+	}
+	else if (info.mode == SAVEMODE)
+	{
+		calc(&info);
+		if (create_bmp(&info.img, info.buf, &info.screen) < 0)
+			exit_with_errmsg(ERR_BMP);
+		exit(EXIT_SUCCESS);
+	}
 	return (0);
 }

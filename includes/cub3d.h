@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/24 00:39:58 by sikeda            #+#    #+#             */
-/*   Updated: 2021/01/29 23:10:16 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/01/31 00:33:19 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@
 # include "sprite_list.h"
 # include "utils.h"
 # include "cub3d_error.h"
+# include "struct_mlximg.h"
+# include "struct_screen.h"
 # include "mlx.h"
 
 # define PRG_NAME "cub3D"
@@ -84,23 +86,6 @@ typedef enum	e_bool
 
 typedef	char*	t_errmsg;
 
-typedef struct	s_img
-{
-	void	*img;
-	int		*data;
-	int		size_l;
-	int		bpp;
-	int		endian;
-	int		w;
-	int		h;
-}				t_img;
-
-typedef struct	s_screen
-{
-	int	w;
-	int	h;
-}				t_screen;
-
 typedef struct	s_keys
 {
 	int	w;
@@ -123,17 +108,18 @@ typedef struct	s_info
 	void		*mlx;
 	void		*win;
 	t_keys		keys;
-	t_img		img;
+	t_mlximg	img;
 	int			**buf;
 	double		*z_buffer;
 	t_splist	*splist;
-	t_img		texture[TEX_END];
+	t_mlximg	texture[TEX_END];
 	uint32_t	floor_color;
 	uint32_t	ceilling_color;
 	int			fd;
 	char		map[ROW + 1][COL + 1];
 	int			map_line_num;
 	char		map_start;
+	int			mode;
 }				t_info;
 
 /*
@@ -142,6 +128,7 @@ typedef struct	s_info
 void			set_info(t_info *info);
 void			set_camera(t_info *info);
 void			set_buffer(t_info *info);
+void			set_mlximg(t_info *info);
 void			set_window(t_info *info);
 /*
 ** exit.c
