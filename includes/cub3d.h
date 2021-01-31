@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/24 00:39:58 by sikeda            #+#    #+#             */
-/*   Updated: 2021/01/31 00:33:19 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/01/31 19:38:19 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@
 # endif
 # define GAMEMODE 2
 # define SAVEMODE 3
-# define ROW 24
-# define COL 33
+# define ROW 64
+# define COL 64
 # ifdef LINUX
 #  define MOVE_SPEED 0.01
 # else
