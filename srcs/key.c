@@ -66,17 +66,35 @@ int			key_press(int key, t_info *info)
 	if (key == KEY_ESC)
 		x_close(info);
 	else if (key == KEY_W)
+	{
 		info->keys.w = 1;
+		info->keys.s = 0;
+	}
 	else if (key == KEY_S)
+	{
 		info->keys.s = 1;
+		info->keys.w = 0;
+	}
 	else if (key == KEY_A)
+	{
 		info->keys.a = 1;
+		info->keys.d = 0;
+	}
 	else if (key == KEY_D)
+	{
 		info->keys.d = 1;
+		info->keys.a = 0;
+	}
 	else if (key == KEY_LEFT)
+	{
 		info->keys.left = 1;
+		info->keys.right = 0;
+	}
 	else if (key == KEY_RIGHT)
+	{
 		info->keys.right = 1;
+		info->keys.left = 0;
+	}
 	return (0);
 }
 
