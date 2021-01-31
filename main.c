@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 23:40:15 by sikeda            #+#    #+#             */
-/*   Updated: 2021/01/31 23:47:22 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/02/01 00:13:05 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -751,7 +751,7 @@ int	main(int argc, char **argv)
 	{
 		calc(&info);
 		if (create_bmp(&info.img, info.buf, &info.screen) < 0)
-			exit_with_errmsg(ERR_BMP);
+			exit_with_errmsg_and_free(ERR_BMP, &info);
 		exit(EXIT_SUCCESS);
 	}
 	return (0);

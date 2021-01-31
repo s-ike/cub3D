@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 23:14:08 by sikeda            #+#    #+#             */
-/*   Updated: 2021/01/31 23:48:29 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/02/01 00:00:32 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,7 @@ void		set_buffer(t_info *info)
 			return (exit_with_errmsg(strerror(errno)));
 	i = -1;
 	while (++i < info->screen.h)
-	{
 		ft_bzero(info->buf[i], info->screen.w * sizeof(int));
-	}
 	ft_bzero(info->spmap, ROW * COL * sizeof(int));
 }
 

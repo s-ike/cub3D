@@ -2,9 +2,8 @@
 
 int			x_close(t_info *info)
 {
-	(void)info;
-	// TODO; free() if want
-	exit(EXIT_SUCCESS);
+
+	exit_with_free(info);
 	return (0);
 }
 
