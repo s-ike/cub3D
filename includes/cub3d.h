@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/24 00:39:58 by sikeda            #+#    #+#             */
-/*   Updated: 2021/02/01 00:17:12 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/02/01 01:45:09 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,11 @@
 # include "cub3d_error.h"
 # include "struct_mlximg.h"
 # include "struct_screen.h"
-# include "mlx.h"
+# ifdef LINUX
+#  include "../minilibx-linux/mlx.h"
+# else
+#  include "../mlx/mlx.h"
+# endif
 
 # define PRG_NAME "cub3D"
 # define CUBFILE_EXT ".cub"
@@ -55,6 +59,11 @@
 # define CHECKED_WALL '!'
 # define CHECKED_SPRITE '@'
 # define CHECKED_FLOOR '#'
+# ifdef LINUX
+#  define MLX_DESTROY_DISPLAY(mlx) (mlx_destroy_display(mlx))
+# else
+#  define MLX_DESTROY_DISPLAY(mlx) ((void)(mlx))
+# endif
 
 enum			e_settings
 {
