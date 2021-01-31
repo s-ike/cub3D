@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/24 00:39:58 by sikeda            #+#    #+#             */
-/*   Updated: 2021/01/31 19:38:19 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/01/31 20:53:09 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,7 @@ typedef struct	s_info
 	uint32_t	ceilling_color;
 	int			fd;
 	char		map[ROW + 1][COL + 1];
+	int			spmap[ROW][COL];
 	int			map_line_num;
 	char		map_start;
 	int			mode;

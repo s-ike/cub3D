@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 23:14:08 by sikeda            #+#    #+#             */
-/*   Updated: 2021/01/30 21:51:27 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/01/31 23:40:30 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ void		set_camera(t_info *info)
 void		set_buffer(t_info *info)
 {
 	int	i;
-	int	j;
 
 	if (!(info->z_buffer = (double *)malloc(info->screen.w * sizeof(double))))
 		return (exit_with_errmsg(strerror(errno)));
@@ -70,10 +69,9 @@ void		set_buffer(t_info *info)
 	i = -1;
 	while (++i < info->screen.h)
 	{
-		j = -1;
-		while (++j < info->screen.w)
-			info->buf[i][j] = 0;
+		ft_bzero(info->buf[i], info->screen.w * sizeof(int));
 	}
+	ft_bzero(info->spmap, ROW * COL * sizeof(int));
 }
 
 void		set_mlximg(t_info *info)

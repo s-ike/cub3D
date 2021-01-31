@@ -6,15 +6,13 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 23:40:15 by sikeda            #+#    #+#             */
-/*   Updated: 2021/01/31 18:45:11 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/01/31 23:39:59 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
 // TODO: 画面サイズ
-
-int	g_spmap[ROW][COL] = {0};
 
 void	draw(t_info *info)
 {
@@ -116,9 +114,9 @@ void	calc(t_info *info)
 				side = 1;
 			}
 			//Check if ray has hit a wall
-			if (info->map[mapX][mapY] == CHECKED_SPRITE && !g_spmap[mapX][mapY])
+			if (info->map[mapX][mapY] == CHECKED_SPRITE && !info->spmap[mapX][mapY])
 			{
-				g_spmap[mapX][mapY] = 1;
+				info->spmap[mapX][mapY] = 1;
 				if (!(new = splst_new(mapX, mapY)))
 				{
 					splist_clear(&info->splist);
@@ -522,7 +520,6 @@ t_errmsg	get_ceilling_color(t_info *info, int *settings, char **split)
 	return (NULL);
 }
 
-// split[0] = "R", split[1] = "1920", split[2] = "1080", split[3] = NULL
 t_errmsg	get_setting_val(t_info *info, int *settings, char **split)
 {
 	if (ft_strcmp(split[0], "R") == 0)
@@ -626,7 +623,6 @@ t_errmsg	get_map(t_info *info, char *line)
 	size_t	len;
 
 	len = ft_strlen(line);
-	// TODO:maxlenを記録
 	if (is_map_size_too_large(len, info->map_line_num + 1) == TRUE)
 		return (ERR_BIG_MAP);
 	if (is_map_with_only_correct_chr(info, line) == FALSE)
