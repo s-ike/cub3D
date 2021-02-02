@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/24 00:39:58 by sikeda            #+#    #+#             */
-/*   Updated: 2021/02/03 01:52:13 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/02/03 02:17:12 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,5 +175,9 @@ int				x_close(t_info *info);
 int				key_update(t_info *info);
 int				key_press(int key, t_info *info);
 int				key_release(int key, t_info *info);
+/*
+** cubfile.c
+*/
+t_errmsg		parse_arg(int argc, char **argv, t_info *info);
 
 #endif
