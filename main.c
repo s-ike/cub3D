@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 23:40:15 by sikeda            #+#    #+#             */
-/*   Updated: 2021/02/01 02:32:32 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/02/03 02:09:25 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,8 +177,7 @@ void	calc(t_info *info)
 		{
 			// Cast the texture coordinate to integer, and mask with (texHeight - 1) in case of overflow
 			//テクスチャ座標を整数にキャストし、オーバーフローの場合は（texHeight-1）でマスクします
-			// int	texY = (int)texPos & (info->texture[texNum].h - 1);
-			int	texY = (int)texPos;
+			int	texY = (int)fmin((int)texPos, (info->texture[texNum].h - 1));
 			texPos += step;
 			int	color = info->texture[texNum].data[info->texture[texNum].h * texY + texX];
 			info->buf[y][x] = color;
