@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/24 00:39:58 by sikeda            #+#    #+#             */
-/*   Updated: 2021/02/01 02:46:59 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/02/03 01:52:13 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@
 #  define MLX_DESTROY_DISPLAY(mlx) ((void)(mlx))
 # endif
 
+# define SET_A1_B0(a, b) ((a) = 1, (b) = 0)
+
 enum			e_settings
 {
 	SETTING_R,
@@ -86,6 +88,14 @@ enum			e_texdir
 	TEX_SPRITE,
 	TEX_END,
 };
+
+typedef enum	e_direction
+{
+	NORTH,
+	SOUTH,
+	EAST,
+	WEST,
+}				t_direction;
 
 typedef enum	e_bool
 {
@@ -140,6 +150,10 @@ void			set_camera(t_info *info);
 void			set_buffer(t_info *info);
 void			set_mlximg(t_info *info);
 void			set_window(t_info *info);
+/*
+** close.c
+*/
+int				x_close(t_info *info);
 /*
 ** exit.c
 */
