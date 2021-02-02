@@ -398,18 +398,16 @@ t_errmsg	parse_arg(int argc, char **argv, t_info *info)
 		info->mode = SAVEMODE;
 	else
 		return (strerror(EINVAL));
-	info->fd = -1;
 	msg = NULL;
-	msg = validate_filename(argv[1], CUBFILE_EXT);
-	if (!msg)
-		msg = validate_readable_file(argv[1], info);
+	if ((msg = validate_filename(argv[1], CUBFILE_EXT)))
+		return (msg);
+	msg = validate_readable_file(argv[1], info);
 	if (!msg)
 		msg = parse_file(info);
 	if (!msg)
 		ft_bzero(info->map[info->map_line_num], COL + 1);
 	if (!msg)
 		msg = validate_map(info);
-	if (info->fd != -1)
-		close(info->fd);
+	close(info->fd);
 	return (msg);
 }
