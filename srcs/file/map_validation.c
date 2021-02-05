@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 01:26:08 by sikeda            #+#    #+#             */
-/*   Updated: 2021/02/06 01:26:09 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/02/06 02:05:22 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,8 @@ static t_errmsg	is_closed_map(t_info *info, int row, int col)
 	|| info->map[row][col] == CHECKED_SPRITE
 	|| info->map[row][col] == CHECKED_FLOOR)
 		return (NULL);
-	if (info->map[row][col] == WALL)
-	{
-		info->map[row][col] = CHECKED_WALL;
+	if (info->map[row][col] == WALL && (info->map[row][col] = CHECKED_WALL))
 		return (NULL);
-	}
 	else if (info->map[row][col] == SPRITE)
 		info->map[row][col] = CHECKED_SPRITE;
 	else

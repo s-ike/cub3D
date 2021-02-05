@@ -6,16 +6,11 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 01:34:16 by sikeda            #+#    #+#             */
-/*   Updated: 2021/02/06 01:34:18 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/02/06 01:57:25 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-static int		is_uint8_range(int n)
-{
-	return (0 <= n && n <= EIGHT_BIT_MAX);
-}
 
 static void		set_floor_color(t_info *info, int r, int g, int b)
 {

@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 01:43:51 by sikeda            #+#    #+#             */
-/*   Updated: 2021/02/06 01:43:52 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/02/06 02:06:36 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ static t_errmsg	parse_line(t_info *info, int *settings, char *line)
 {
 	static t_bool	has_started_reading_map;
 	static t_bool	has_finished_reading_map;
-	char			**split;
 	t_errmsg		msg;
 
 	if (!line)
@@ -36,12 +35,7 @@ static t_errmsg	parse_line(t_info *info, int *settings, char *line)
 		return (get_map(info, line));
 	}
 	else if (*settings != EIGHT_BIT_MAX)
-	{
-		split = ft_split(line, ' ');
-		msg = get_setting_val(info, settings, split);
-		clear_split(&split);
-		return (msg);
-	}
+		return (get_settings(info, settings, line));
 	else
 		return (ERR_CUBFILE);
 	return (msg);

@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/24 00:39:58 by sikeda            #+#    #+#             */
-/*   Updated: 2021/02/06 01:41:51 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/02/06 02:02:59 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,10 +185,11 @@ t_errmsg		parse_arg(int argc, char **argv, t_info *info);
 t_errmsg		validate_filename(char *filename, char *type);
 t_errmsg		validate_readable_file(char *filename, int *fd);
 void			clear_split(char ***split);
+int				is_uint8_range(int n);
 /*
 ** get_settings.c
 */
-t_errmsg		get_setting_val(t_info *info, int *settings, char **split);
+t_errmsg		get_settings(t_info *info, int *settings, char *line);
 /*
 ** get_resolution.c
 */
@@ -201,6 +202,11 @@ t_errmsg		get_so_texture(t_info *info, int *settings, char **split);
 t_errmsg		get_we_texture(t_info *info, int *settings, char **split);
 t_errmsg		get_ea_texture(t_info *info, int *settings, char **split);
 t_errmsg		get_sprite_texture(t_info *info, int *settings, char **split);
+/*
+** get_textures_sub.c
+*/
+t_bool			load_texture(t_info *info, int tex_num, char *filename);
+t_bool			validate_texture(int *settings, char **split, int flg);
 /*
 ** get_colors.c
 */

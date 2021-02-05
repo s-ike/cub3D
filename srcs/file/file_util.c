@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 01:26:34 by sikeda            #+#    #+#             */
-/*   Updated: 2021/02/06 01:31:42 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/02/06 01:57:39 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,4 +55,9 @@ void		clear_split(char ***split)
 	}
 	free(*split);
 	*split = NULL;
+}
+
+int			is_uint8_range(int n)
+{
+	return (0 <= n && n <= EIGHT_BIT_MAX);
 }
