@@ -8,7 +8,14 @@ SRC			= main.c \
 				$(SRCDIR)exit_sub.c \
 				$(SRCDIR)key.c \
 				$(SRCDIR)sprite_list.c \
-				$(SRCDIR)cubfile.c \
+				$(SRCDIR)file/cubfile.c \
+				$(SRCDIR)file/file_util.c \
+				$(SRCDIR)file/get_settings.c \
+				$(SRCDIR)file/get_colors.c \
+				$(SRCDIR)file/get_textures.c \
+				$(SRCDIR)file/get_resolution.c \
+				$(SRCDIR)file/map.c \
+				$(SRCDIR)file/map_validation.c \
 				$(SRCDIR)utils/bitmap.c \
 				$(SRCDIR)utils/get_line.c \
 				$(SRCDIR)utils/util.c

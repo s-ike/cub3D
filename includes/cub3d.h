@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/24 00:39:58 by sikeda            #+#    #+#             */
-/*   Updated: 2021/02/03 02:17:12 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/02/06 01:41:51 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,5 +179,40 @@ int				key_release(int key, t_info *info);
 ** cubfile.c
 */
 t_errmsg		parse_arg(int argc, char **argv, t_info *info);
+/*
+** file_util.c
+*/
+t_errmsg		validate_filename(char *filename, char *type);
+t_errmsg		validate_readable_file(char *filename, int *fd);
+void			clear_split(char ***split);
+/*
+** get_settings.c
+*/
+t_errmsg		get_setting_val(t_info *info, int *settings, char **split);
+/*
+** get_resolution.c
+*/
+t_errmsg		get_resolution(t_info *info, int *settings, char **split);
+/*
+** get_textures.c
+*/
+t_errmsg		get_no_texture(t_info *info, int *settings, char **split);
+t_errmsg		get_so_texture(t_info *info, int *settings, char **split);
+t_errmsg		get_we_texture(t_info *info, int *settings, char **split);
+t_errmsg		get_ea_texture(t_info *info, int *settings, char **split);
+t_errmsg		get_sprite_texture(t_info *info, int *settings, char **split);
+/*
+** get_colors.c
+*/
+t_errmsg		get_ceilling_color(t_info *info, int *settings, char **split);
+t_errmsg		get_floor_color(t_info *info, int *settings, char **split);
+/*
+** map.c
+*/
+t_errmsg		get_map(t_info *info, char *line);
+/*
+** map_validation.c
+*/
+t_errmsg		validate_map(t_info *info);
 
 #endif
