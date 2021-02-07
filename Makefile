@@ -17,6 +17,10 @@ SRC			= main.c \
 				$(SRCDIR)file/get_resolution.c \
 				$(SRCDIR)file/map.c \
 				$(SRCDIR)file/map_validation.c \
+				$(SRCDIR)calc/calc.c \
+				$(SRCDIR)calc/floor_casting.c \
+				$(SRCDIR)calc/wall_casting.c \
+				$(SRCDIR)calc/sprite_casting.c \
 				$(SRCDIR)utils/bitmap.c \
 				$(SRCDIR)utils/get_line.c \
 				$(SRCDIR)utils/util.c

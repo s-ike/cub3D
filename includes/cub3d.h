@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/24 00:39:58 by sikeda            #+#    #+#             */
-/*   Updated: 2021/02/06 02:02:59 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/02/07 23:08:05 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -220,5 +220,21 @@ t_errmsg		get_map(t_info *info, char *line);
 ** map_validation.c
 */
 t_errmsg		validate_map(t_info *info);
+/*
+** calc.c
+*/
+void			calc(t_info *info);
+/*
+** floor_casting.c
+*/
+void			floor_casting(t_info *info);
+/*
+** wall_casting.c
+*/
+void			wall_casting(t_info *info);
+/*
+** sprite_casting.c
+*/
+void			sprite_casting(t_info *info);
 
 #endif
