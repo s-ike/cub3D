@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/24 00:39:58 by sikeda            #+#    #+#             */
-/*   Updated: 2021/02/07 23:08:05 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/02/10 10:30:14 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,12 @@ typedef struct	s_keys
 	int	left;
 }				t_keys;
 
+typedef struct	s_coordinate
+{
+	double	x;
+	double	y;
+}				t_coordinate;
+
 typedef struct	s_info
 {
 	t_screen	screen;
@@ -141,6 +147,35 @@ typedef struct	s_info
 	char		map_start_dir;
 	int			mode;
 }				t_info;
+
+typedef struct	s_step
+{
+	int	x;
+	int	y;
+}				t_step;
+
+typedef struct	s_wallcalc
+{
+	double			camera_x;
+	int				map_x;
+	int				map_y;
+	t_coordinate	ray_dir;
+	t_coordinate	side_dist;
+	t_coordinate	delta_dist;
+	double			wall_dist;
+}				t_wallcalc;
+
+typedef struct	s_walltex
+{
+	int		line_height;
+	int 	draw_start;
+	int		draw_end;
+	int		tex_num;
+	double	wall_x;
+	int		tex_x;
+	double	tex_step;
+	double	tex_pos;
+}				t_walltex;
 
 /*
 ** info.c
