@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/10 16:57:31 by sikeda            #+#    #+#             */
-/*   Updated: 2021/02/10 16:57:39 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/02/10 17:03:16 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,7 @@ void		draw_sprite_stripe(t_info *info, t_spcalc *spcalc, int stripe)
 		y = spcalc->draw_start_y;
 		while (y < spcalc->draw_end_y)
 		{
-			d = (y - spcalc->v_move_screen) * 256
-				- info->screen.h * 128 + spcalc->sprite_height * 128;
+			d = y * 256 - info->screen.h * 128 + spcalc->sprite_height * 128;
 			tex_y = ((d * info->texture[TEX_SPRITE].h)
 				/ spcalc->sprite_height) / 256;
 			color = get_color(info, tex_x, tex_y);

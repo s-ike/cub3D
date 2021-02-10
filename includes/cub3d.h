@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/24 00:39:58 by sikeda            #+#    #+#             */
-/*   Updated: 2021/02/10 16:58:02 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/02/10 17:02:20 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,7 +182,6 @@ typedef struct	s_spcalc
 	t_coordinate	sprite;
 	t_coordinate	transform;
 	int				sprite_screen_x;
-	int				v_move_screen;
 	int				sprite_height;
 	int				sprite_width;
 	int				draw_start_x;
@@ -190,9 +189,6 @@ typedef struct	s_spcalc
 	int				draw_end_x;
 	int				draw_end_y;
 }				t_spcalc;
-# define U_DIV 1
-# define V_DIV 1
-# define V_MOVE 0.0
 
 /*
 ** info.c

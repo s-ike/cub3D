@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/10 16:54:10 by sikeda            #+#    #+#             */
-/*   Updated: 2021/02/10 16:57:10 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/02/10 17:02:04 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,21 +27,18 @@ static void	init_calc(t_info *info, t_spcalc *spcalc,
 	spcalc->sprite_screen_x =
 		(int)((info->screen.w / 2)
 			* (1 + spcalc->transform.x / spcalc->transform.y));
-	spcalc->v_move_screen = 0;
 }
 
 static void	calc_for_drawing(t_info *info, t_spcalc *spcalc)
 {
-	spcalc->sprite_height = (int)fabs((info->screen.h / spcalc->transform.y) / V_DIV);
-	spcalc->draw_start_y = -spcalc->sprite_height / 2
-		+ info->screen.h / 2 + spcalc->v_move_screen;
+	spcalc->sprite_height = (int)fabs((info->screen.h / spcalc->transform.y));
+	spcalc->draw_start_y = -spcalc->sprite_height / 2 + info->screen.h / 2;
 	if (spcalc->draw_start_y < 0)
 		spcalc->draw_start_y = 0;
-	spcalc->draw_end_y = spcalc->sprite_height / 2
-		+ info->screen.h / 2 + spcalc->v_move_screen;
+	spcalc->draw_end_y = spcalc->sprite_height / 2 + info->screen.h / 2;
 	if (spcalc->draw_end_y >= info->screen.h)
 		spcalc->draw_end_y = info->screen.h;
-	spcalc->sprite_width = (int)fabs(info->screen.h / spcalc->transform.y / U_DIV);
+	spcalc->sprite_width = (int)fabs(info->screen.h / spcalc->transform.y);
 	spcalc->draw_start_x = -spcalc->sprite_width / 2 + spcalc->sprite_screen_x;
 	if (spcalc->draw_start_x < 0)
 		spcalc->draw_start_x = 0;
