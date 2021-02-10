@@ -20,6 +20,7 @@ SRC			= main.c \
 				$(SRCDIR)calc/calc.c \
 				$(SRCDIR)calc/floor_casting.c \
 				$(SRCDIR)calc/wall_casting.c \
+				$(SRCDIR)calc/wall_casting_sub.c \
 				$(SRCDIR)calc/sprite_casting.c \
 				$(SRCDIR)utils/bitmap.c \
 				$(SRCDIR)utils/get_line.c \

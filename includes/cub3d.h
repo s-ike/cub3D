@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/24 00:39:58 by sikeda            #+#    #+#             */
-/*   Updated: 2021/02/10 10:30:14 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/02/10 10:52:39 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -267,6 +267,10 @@ void			floor_casting(t_info *info);
 ** wall_casting.c
 */
 void			wall_casting(t_info *info);
+/*
+** wall_casting_sub.c
+*/
+void			draw_stripe(t_info *info, t_wallcalc *wallcalc, int side, int x);
 /*
 ** sprite_casting.c
 */
