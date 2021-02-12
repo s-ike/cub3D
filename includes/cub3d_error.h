@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 23:17:34 by sikeda            #+#    #+#             */
-/*   Updated: 2021/02/01 00:38:01 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/02/12 19:30:16 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 # define ERR_MAP			"Invalid map"
 # define ERR_BIG_MAP		"Invalid map (too big)"
 # define ERR_CHR_MAP		"Invalid map (invalid characters)"
-# define ERR_NO_POS			"Invalid map (no start position)"
+# define ERR_NO_POS			"Invalid map (start position error)"
 # define ERR_OPEN_MAP		"Invalid map (unclosed)"
 # define ERR_GNL			"An error occurred while running gnl"
 # define ERR_BMP			"An error occurred while creating the bitmap"
