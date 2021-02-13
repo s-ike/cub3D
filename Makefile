@@ -1,7 +1,7 @@
 NAME		= cub3D
 
 SRCDIR		= ./srcs/
-SRC			= main.c \
+SRC			= $(SRCDIR)main.c \
 				$(SRCDIR)info.c \
 				$(SRCDIR)close.c \
 				$(SRCDIR)draw.c \

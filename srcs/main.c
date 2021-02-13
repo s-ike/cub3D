@@ -6,11 +6,13 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 23:40:15 by sikeda            #+#    #+#             */
-/*   Updated: 2021/02/13 10:53:21 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/02/13 22:13:57 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+// TODO: bmp 32bit
 
 static int	main_loop(t_info *info)
 {
