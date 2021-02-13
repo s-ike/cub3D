@@ -6,15 +6,13 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 23:40:15 by sikeda            #+#    #+#             */
-/*   Updated: 2021/02/07 23:11:15 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/02/13 10:01:35 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
 // TODO: 画面サイズ
-// TODO: cubfileの初期位置が0,0だと、(0,0)だと初期位置がない、と判断しているので、no start positionエラーが出る
-// エラー文を変えるか、フラグを作ってその値をみる
 
 void	draw(t_info *info)
 {
@@ -22,7 +20,7 @@ void	draw(t_info *info)
 	{
 		for (int x = 0; x < info->screen.w; x++)
 		{
-			info->img.data[y * info->screen.w + x] = info->buf[y][x];
+			info->img.data[y * (info->img.size_l / 4) + x] = info->buf[y][x];
 		}
 	}
 	mlx_put_image_to_window(info->mlx, info->win, info->img.img, 0, 0);
