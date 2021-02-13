@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/03 01:50:38 by sikeda            #+#    #+#             */
-/*   Updated: 2021/02/13 23:16:01 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/02/14 02:12:51 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,22 +16,23 @@ static void	move(t_info *info, t_direction dir)
 {
 	double	x;
 	double	y;
+	char	map;
 
 	x = 0.0;
 	if (dir == SOUTH || dir == NORTH)
 		x = dir == SOUTH ? -info->dir_x : info->dir_x;
 	else if (dir == WEST || dir == EAST)
 		x = dir == WEST ? -info->plane_x : info->plane_x;
-	if (info->map[(int)(info->pos_x + x * MOVE_SPEED)][(int)info->pos_y]
-			!= CHECKED_WALL)
+	map = info->map[(int)(info->pos_x + x * MOVE_SPEED)][(int)info->pos_y];
+	if (map != CHECKED_WALL && map != CHECKED_SPRITE)
 		info->pos_x += x * MOVE_SPEED;
 	y = 0.0;
 	if (dir == SOUTH || dir == NORTH)
 		y = dir == SOUTH ? -info->dir_y : info->dir_y;
 	else if (dir == WEST || dir == EAST)
 		y = dir == WEST ? -info->plane_y : info->plane_y;
-	if (info->map[(int)info->pos_x][(int)(info->pos_y + y * MOVE_SPEED)]
-			!= CHECKED_WALL)
+	map = info->map[(int)info->pos_x][(int)(info->pos_y + y * MOVE_SPEED)];
+	if (map != CHECKED_WALL && map != CHECKED_SPRITE)
 		info->pos_y += y * MOVE_SPEED;
 }
 
