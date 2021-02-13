@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 01:26:08 by sikeda            #+#    #+#             */
-/*   Updated: 2021/02/06 02:05:22 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/02/13 14:19:12 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ static t_errmsg	is_closed_map(t_info *info, int row, int col)
 
 t_errmsg		validate_map(t_info *info)
 {
+	if (!info->map_line_num)
+		return (ERR_MAP);
 	if (has_start_position((int)info->pos_x, (int)info->pos_y) == FALSE)
 		return (ERR_NO_POS);
 	return (is_closed_map(info, (int)info->pos_x, (int)info->pos_y));
