@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 23:20:06 by sikeda            #+#    #+#             */
-/*   Updated: 2021/02/13 12:14:49 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/02/14 02:25:58 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,14 @@ void		exitsave_with_errmsg(t_errmsg msg, t_info *info)
 
 void		exitgame(t_info *info)
 {
-	// mlx_loop_end(info->mlx);
+	mlx_loop_end(info->mlx);
 	freegame(info);
 	exit(EXIT_SUCCESS);
 }
 
 void		exitgame_with_errmsg(t_errmsg msg, t_info *info)
 {
-	// mlx_loop_end(info->mlx);
+	mlx_loop_end(info->mlx);
 	put_errmsg(msg);
 	freegame(info);
 	exit(EXIT_FAILURE);
