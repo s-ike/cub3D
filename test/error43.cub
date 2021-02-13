@@ -1,0 +1,14 @@
+R  820 600
+
+NO ./textures/eagle.xpm
+SO ./textures/eagle.xpm
+WE ./textures/eagle.xpm
+EA ./textures/eagle.xpm
+
+S  ./textures/barrel.xpm
+F  240,240,240
+C  30,30,30
+
+111111111111111111111111111111111
+1221
+1S1
