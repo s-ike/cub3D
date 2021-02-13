@@ -59,13 +59,16 @@ CC			= gcc
 
 all:		$(NAME)
 
-$(NAME):	$(OBJ) $(LIBPATH)
+$(NAME):	$(OBJ) $(LIBPATH) $(MLX_PATH)
 			cp $(MLX_PATH) .
 			$(CC) $(CFLAGS) $(OBJ) $(DEBUG) -L. $(MLX_FLAGS) $(LIBPATH) -o $(NAME)
 			@echo $(C_GREEN)"=== Make Done ==="
 
 $(LIBPATH):
 			$(MAKE) -C $(LIBDIR)
+
+$(MLX_PATH):
+			$(MAKE) -C $(MLX_DIR)
 
 clean:
 			$(MAKE) clean -C $(LIBDIR)
@@ -78,4 +81,9 @@ fclean:		clean
 
 re:			fclean $(NAME)
 
-.PHONY:		all clean fclean re
+mlx:
+			git clone https://github.com/42Paris/minilibx-linux.git
+			cd minilibx-linux
+			git checkout db799639c0ede85470691d837fdaf1cb5a375eba
+
+.PHONY:		all clean fclean re mlx
