@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 20:55:31 by sikeda            #+#    #+#             */
-/*   Updated: 2021/02/13 23:24:05 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/02/14 02:15:30 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@
 # include <fcntl.h>
 # include <stdint.h>
 # include "libft.h"
-# include "struct_mlximg.h"
-# include "struct_screen.h"
+# include "struct_mlximg_bonus.h"
+# include "struct_screen_bonus.h"
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 2048

@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/24 00:39:58 by sikeda            #+#    #+#             */
-/*   Updated: 2021/02/14 01:20:40 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/02/14 02:15:09 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,12 @@
 # include <string.h>
 # include <errno.h>
 # include "libft.h"
-# include "key_map.h"
-# include "sprite_list.h"
-# include "utils.h"
-# include "cub3d_error.h"
-# include "struct_mlximg.h"
-# include "struct_screen.h"
+# include "key_map_bonus.h"
+# include "sprite_list_bonus.h"
+# include "utils_bonus.h"
+# include "cub3d_error_bonus.h"
+# include "struct_mlximg_bonus.h"
+# include "struct_screen_bonus.h"
 # ifdef LINUX
 #  include "../minilibx-linux/mlx.h"
 # else
