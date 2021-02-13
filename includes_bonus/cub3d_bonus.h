@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/24 00:39:58 by sikeda            #+#    #+#             */
-/*   Updated: 2021/02/14 00:12:46 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/02/14 01:20:40 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,6 +182,18 @@ typedef struct	s_spcalc
 	int				draw_end_x;
 	int				draw_end_y;
 }				t_spcalc;
+
+typedef struct	s_floorcalc
+{
+	float	ray_dir_x0;
+	float	ray_dir_x1;
+	float	ray_dir_y0;
+	float	ray_dir_y1;
+	float	floor_step_x;
+	float	floor_step_y;
+	float	floor_x;
+	float	floor_y;
+}				t_floorcalc;
 
 /*
 ** info_bonus.c
