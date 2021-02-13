@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/31 15:01:57 by sikeda            #+#    #+#             */
-/*   Updated: 2021/01/31 18:38:27 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/02/13 22:22:24 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ static void	write_info_header(int fd, t_screen *screen, int bpp, int image_size)
 	write(fd, &screen->h, 4);
 	plane = BMP_PLANES;
 	write(fd, &plane, 2);
-	if (32 < bpp)
-		bpp = 32;
+	if (BMP_SIZE < bpp)
+		bpp = BMP_SIZE;
 	write(fd, &bpp, 2);
 	compression = BMP_COMPRESSION;
 	write(fd, &compression, 4);

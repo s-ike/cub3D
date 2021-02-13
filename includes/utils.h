@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 20:55:31 by sikeda            #+#    #+#             */
-/*   Updated: 2021/02/13 10:26:47 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/02/13 22:22:15 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@
 # define BMP_MAGIC "BM"
 # define BMP_PLANES 1
 # define BMP_COMPRESSION 0
+# define BMP_SIZE 32
 
 /*
 ** util.c
