@@ -4,6 +4,7 @@ SRCDIR		= ./srcs/
 SRC			= main.c \
 				$(SRCDIR)info.c \
 				$(SRCDIR)close.c \
+				$(SRCDIR)draw.c \
 				$(SRCDIR)exit.c \
 				$(SRCDIR)exit_sub.c \
 				$(SRCDIR)key.c \

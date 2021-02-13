@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/24 02:21:49 by sikeda            #+#    #+#             */
-/*   Updated: 2021/01/25 21:34:57 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/02/13 10:35:12 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,12 @@ int		chrcount(const char *s, char c)
 		if (*s++ == uc)
 			ret++;
 	return (ret);
+}
+
+void	set_vals_for_2intvars(int *v1, int *v2, int n1, int n2)
+{
+	if (v1)
+		*v1 = n1;
+	if (v2)
+		*v2 = n2;
 }

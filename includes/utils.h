@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 20:55:31 by sikeda            #+#    #+#             */
-/*   Updated: 2021/01/31 12:15:53 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/02/13 10:26:47 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@
 # define BMP_NAME "cub3D.bmp"
 # define BMP_HEADER_SIZE 14
 # define BMP_INFOHEADER_SIZE 40
-# define HEADERSIZE (BMP_HEADER_SIZE + BMP_INFOHEADER_SIZE)
 # define BMP_OFFSET 4
 # define ARGB_SIZE 4
 # define BMP_MAGIC "BM"
@@ -49,6 +48,7 @@
 void	safe_free(char **ptr);
 int		str_isdigit(const char *s);
 int		chrcount(const char *s, char c);
+void	set_vals_for_2intvars(int *v1, int *v2, int n1, int n2);
 /*
 ** get_line.c
 */

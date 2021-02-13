@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/03 01:50:38 by sikeda            #+#    #+#             */
-/*   Updated: 2021/02/03 01:51:20 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/02/13 09:47:12 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,17 +74,17 @@ int			key_press(int key, t_info *info)
 	if (key == KEY_ESC)
 		x_close(info);
 	else if (key == KEY_W)
-		SET_A1_B0(info->keys.w, info->keys.s);
+		set_vals_for_2intvars(&info->keys.w, &info->keys.s, 1, 0);
 	else if (key == KEY_S)
-		SET_A1_B0(info->keys.s, info->keys.w);
+		set_vals_for_2intvars(&info->keys.s, &info->keys.w, 1, 0);
 	else if (key == KEY_A)
-		SET_A1_B0(info->keys.a, info->keys.d);
+		set_vals_for_2intvars(&info->keys.a, &info->keys.d, 1, 0);
 	else if (key == KEY_D)
-		SET_A1_B0(info->keys.d, info->keys.a);
+		set_vals_for_2intvars(&info->keys.d, &info->keys.a, 1, 0);
 	else if (key == KEY_LEFT)
-		SET_A1_B0(info->keys.left, info->keys.right);
+		set_vals_for_2intvars(&info->keys.left, &info->keys.right, 1, 0);
 	else if (key == KEY_RIGHT)
-		SET_A1_B0(info->keys.right, info->keys.left);
+		set_vals_for_2intvars(&info->keys.right, &info->keys.left, 1, 0);
 	return (0);
 }
 

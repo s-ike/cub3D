@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/24 00:39:58 by sikeda            #+#    #+#             */
-/*   Updated: 2021/02/10 17:02:20 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/02/13 10:51:37 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,13 +59,6 @@
 # define CHECKED_WALL '!'
 # define CHECKED_SPRITE '@'
 # define CHECKED_FLOOR '#'
-# ifdef LINUX
-#  define MLX_DESTROY_DISPLAY(mlx) (mlx_destroy_display(mlx))
-# else
-#  define MLX_DESTROY_DISPLAY(mlx) ((void)(mlx))
-# endif
-
-# define SET_A1_B0(a, b) ((a) = 1, (b) = 0)
 
 enum			e_settings
 {
@@ -168,7 +161,7 @@ typedef struct	s_wallcalc
 typedef struct	s_walltex
 {
 	int		line_height;
-	int 	draw_start;
+	int		draw_start;
 	int		draw_end;
 	int		tex_num;
 	double	wall_x;
@@ -283,7 +276,8 @@ void			wall_casting(t_info *info);
 /*
 ** wall_casting_sub.c
 */
-void			draw_stripe(t_info *info, t_wallcalc *wallcalc, int side, int x);
+void			draw_stripe(t_info *info, t_wallcalc *wallcalc,
+								int side, int x);
 /*
 ** sprite_casting.c
 */
@@ -292,5 +286,9 @@ void			sprite_casting(t_info *info);
 ** sprite_casting_sub.c
 */
 void			draw_sprite_stripe(t_info *info, t_spcalc *spcalc, int stripe);
+/*
+** draw.c
+*/
+void			draw(t_info *info);
 
 #endif
