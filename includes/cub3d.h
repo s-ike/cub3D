@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/24 00:39:58 by sikeda            #+#    #+#             */
-/*   Updated: 2021/02/13 10:51:37 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/02/13 22:41:21 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 # ifdef LINUX
 #  include "../minilibx-linux/mlx.h"
 # else
-#  include "../newmlx/mlx.h"
+#  include "../minilibx_mms_20200219/mlx.h"
 # endif
 
 # define PRG_NAME "cub3D"

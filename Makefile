@@ -42,7 +42,7 @@ MLX_FLAGS	= -lmlx -lXext -lX11 -lm
 CFLAGS		= -Wall -Wextra -Werror -D LINUX
 C_GREEN		= "\e[32m"
 else
-MLX_DIR		= ./newmlx
+MLX_DIR		= ./minilibx_mms_20200219
 MLX_NAME	= libmlx.dylib
 MLX_FLAGS	= -lmlx -framework OpenGL -framework AppKit -lz
 CFLAGS		= -Wall -Wextra -Werror
@@ -72,6 +72,7 @@ $(MLX_PATH):
 
 clean:
 			$(MAKE) clean -C $(LIBDIR)
+			$(MAKE) clean -C $(MLX_DIR)
 			$(RM) $(OBJ)
 
 fclean:		clean
@@ -82,8 +83,16 @@ fclean:		clean
 re:			fclean $(NAME)
 
 mlx:
+ifeq ($(shell uname),Linux)
 			git clone https://github.com/42Paris/minilibx-linux.git
 			cd minilibx-linux
 			git checkout db799639c0ede85470691d837fdaf1cb5a375eba
+else
+			curl -O https://projects.intra.42.fr/uploads/document/document/2717/minilibx_mms_20200219_beta.tgz
+			tar -xvf minilibx_mms_20200219_beta.tgz
+endif
 
-.PHONY:		all clean fclean re mlx
+delmlx:
+			rm -rf $(MLX_DIR)
+
+.PHONY:		all clean fclean re mlx delmlx
