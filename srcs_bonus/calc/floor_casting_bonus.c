@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/07 22:58:09 by sikeda            #+#    #+#             */
-/*   Updated: 2021/02/14 01:20:33 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/02/14 02:04:45 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,10 @@ static void	set_floor_color(t_info *info, t_floorcalc *calc, int y, int x)
 
 	cell_x = (int)calc->floor_x;
 	cell_y = (int)calc->floor_y;
-	tx = (int)(info->texture[TEX_FLOOR].w * (calc->floor_x - cell_x))
-		& (info->texture[TEX_FLOOR].w - 1);
-	ty = (int)(info->texture[TEX_FLOOR].h * (calc->floor_y - cell_y))
-		& (info->texture[TEX_FLOOR].h - 1);
+	tx = (int)fmin((int)(info->texture[TEX_FLOOR].w * (calc->floor_x - cell_x)),
+		(info->texture[TEX_FLOOR].w - 1));
+	ty = (int)fmin((int)(info->texture[TEX_FLOOR].h * (calc->floor_y - cell_y)),
+		(info->texture[TEX_FLOOR].h - 1));
 	color = info->texture[TEX_FLOOR].data[info->texture[TEX_FLOOR].w * ty + tx];
 	info->buf[y][x] = color;
 }
@@ -61,10 +61,10 @@ static void	set_ceilling_color(t_info *info, t_floorcalc *calc, int y, int x)
 
 	cell_x = (int)calc->floor_x;
 	cell_y = (int)calc->floor_y;
-	tx = (int)(info->texture[TEX_CEILLING].w * (calc->floor_x - cell_x))
-		& (info->texture[TEX_FLOOR].w - 1);
-	ty = (int)(info->texture[TEX_CEILLING].h * (calc->floor_y - cell_y))
-		& (info->texture[TEX_FLOOR].h - 1);
+	tx = (int)fmin((int)(info->texture[TEX_CEILLING].w
+		* (calc->floor_x - cell_x)), (info->texture[TEX_FLOOR].w - 1));
+	ty = (int)fmin((int)(info->texture[TEX_CEILLING].h
+		* (calc->floor_y - cell_y)), (info->texture[TEX_FLOOR].h - 1));
 	color = info->texture[TEX_CEILLING].data[
 		info->texture[TEX_CEILLING].w * ty + tx];
 	info->buf[info->screen.h - y - 1][x] = color;
