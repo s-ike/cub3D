@@ -12,8 +12,6 @@
 
 #include "cub3d.h"
 
-// TODO: 画面サイズ
-
 static int	main_loop(t_info *info)
 {
 	calc(info);

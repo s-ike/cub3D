@@ -27,12 +27,14 @@ void		exitsave_with_errmsg(t_errmsg msg, t_info *info)
 
 void		exitgame(t_info *info)
 {
+	mlx_loop_end(info->mlx);
 	freegame(info);
 	exit(EXIT_SUCCESS);
 }
 
 void		exitgame_with_errmsg(t_errmsg msg, t_info *info)
 {
+	mlx_loop_end(info->mlx);
 	put_errmsg(msg);
 	freegame(info);
 	exit(EXIT_FAILURE);

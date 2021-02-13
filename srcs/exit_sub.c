@@ -26,14 +26,14 @@ static void	free_info(t_info *info)
 	i = -1;
 	while (++i < TEX_END)
 		mlx_destroy_image(info->mlx, info->texture[i].img);
-	// TODO: enable
-	// mlx_destroy_display(info->mlx);
+	mlx_destroy_display(info->mlx);
 	free(info->buf);
 }
 
 void		freegame(t_info *info)
 {
 	mlx_destroy_window(info->mlx, info->win);
+	free_info(info);
 	free(info->mlx);
 }
 

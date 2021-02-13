@@ -30,7 +30,7 @@
 # ifdef LINUX
 #  include "../minilibx-linux/mlx.h"
 # else
-#  include "../mlx/mlx.h"
+#  include "../newmlx/mlx.h"
 # endif
 
 # define PRG_NAME "cub3D"
