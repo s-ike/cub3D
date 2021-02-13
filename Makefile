@@ -29,8 +29,38 @@ SRC			= $(SRCDIR)main.c \
 				$(SRCDIR)utils/util.c
 OBJ			= $(SRC:.c=.o)
 
+BNSDIR		= ./srcs_bonus/
+BNS_SRC		= $(BNSDIR)main_bonus.c \
+				$(BNSDIR)info_bonus.c \
+				$(BNSDIR)close_bonus.c \
+				$(BNSDIR)draw_bonus.c \
+				$(BNSDIR)exit_bonus.c \
+				$(BNSDIR)exit_sub_bonus.c \
+				$(BNSDIR)key_bonus.c \
+				$(BNSDIR)sprite_list_bonus.c \
+				$(BNSDIR)file/cubfile_bonus.c \
+				$(BNSDIR)file/file_util_bonus.c \
+				$(BNSDIR)file/get_settings_bonus.c \
+				$(BNSDIR)file/get_colors_bonus.c \
+				$(BNSDIR)file/get_textures_bonus.c \
+				$(BNSDIR)file/get_textures_sub_bonus.c \
+				$(BNSDIR)file/get_resolution_bonus.c \
+				$(BNSDIR)file/map_bonus.c \
+				$(BNSDIR)file/map_validation_bonus.c \
+				$(BNSDIR)calc/calc_bonus.c \
+				$(BNSDIR)calc/floor_casting_bonus.c \
+				$(BNSDIR)calc/wall_casting_bonus.c \
+				$(BNSDIR)calc/wall_casting_sub_bonus.c \
+				$(BNSDIR)calc/sprite_casting_bonus.c \
+				$(BNSDIR)calc/sprite_casting_sub_bonus.c \
+				$(BNSDIR)utils/bitmap_bonus.c \
+				$(BNSDIR)utils/get_line_bonus.c \
+				$(BNSDIR)utils/util_bonus.c
+BNS_OBJ		= $(BNS_SRC:.c=.o)
+
 INCLUDE 	= -I./includes/ \
-				-I./libft/
+				-I./libft/ \
+				-I./includes_bonus/
 
 LIBDIR		= ./libft
 LIBPATH		= $(LIBDIR)/libft.a
@@ -64,6 +94,11 @@ $(NAME):	$(OBJ) $(LIBPATH) $(MLX_PATH)
 			$(CC) $(CFLAGS) $(OBJ) $(DEBUG) -L. $(MLX_FLAGS) $(LIBPATH) -o $(NAME)
 			@echo $(C_GREEN)"=== Make Done ==="
 
+bonus:		$(BNS_OBJ) $(LIBPATH) $(MLX_PATH)
+			cp $(MLX_PATH) .
+			$(CC) $(CFLAGS) $(BNS_OBJ) $(DEBUG) -L. $(MLX_FLAGS) $(LIBPATH) -o $(NAME)
+			@echo $(C_GREEN)"=== Make Done ==="
+
 $(LIBPATH):
 			$(MAKE) -C $(LIBDIR)
 
@@ -74,6 +109,7 @@ clean:
 			$(MAKE) clean -C $(LIBDIR)
 			$(MAKE) clean -C $(MLX_DIR)
 			$(RM) $(OBJ)
+			$(RM) $(BNS_OBJ)
 
 fclean:		clean
 			$(MAKE) fclean -C $(LIBDIR)
@@ -95,4 +131,4 @@ endif
 delmlx:
 			rm -rf $(MLX_DIR)
 
-.PHONY:		all clean fclean re mlx delmlx
+.PHONY:		all clean fclean re bonus mlx delmlx
