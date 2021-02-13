@@ -41,8 +41,8 @@ BNS_SRC		= $(BNSDIR)main_bonus.c \
 				$(BNSDIR)file/cubfile_bonus.c \
 				$(BNSDIR)file/file_util_bonus.c \
 				$(BNSDIR)file/get_settings_bonus.c \
-				$(BNSDIR)file/get_colors_bonus.c \
 				$(BNSDIR)file/get_textures_bonus.c \
+				$(BNSDIR)file/get_textures_bonus2.c \
 				$(BNSDIR)file/get_textures_sub_bonus.c \
 				$(BNSDIR)file/get_resolution_bonus.c \
 				$(BNSDIR)file/map_bonus.c \

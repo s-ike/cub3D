@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 23:17:34 by sikeda            #+#    #+#             */
-/*   Updated: 2021/02/13 23:23:39 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/02/14 00:15:20 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@
 # define ERR_CUBFILE_WE		"Invalid west texture"
 # define ERR_CUBFILE_EA		"Invalid east texture"
 # define ERR_CUBFILE_S		"Invalid sprite texture"
-# define ERR_CUBFILE_F		"Invalid floor color"
-# define ERR_CUBFILE_C		"Invalid ceilling color"
+# define ERR_CUBFILE_F		"Invalid floor texture"
+# define ERR_CUBFILE_C		"Invalid ceilling texture"
 # define ERR_MAP			"Invalid map"
 # define ERR_BIG_MAP		"Invalid map (too big)"
 # define ERR_CHR_MAP		"Invalid map (invalid characters)"

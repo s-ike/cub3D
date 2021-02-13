@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/24 00:39:58 by sikeda            #+#    #+#             */
-/*   Updated: 2021/02/13 23:23:32 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/02/14 00:12:46 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,8 @@ enum			e_texdir
 	TEX_EAST,
 	TEX_WEST,
 	TEX_SPRITE,
+	TEX_FLOOR,
+	TEX_CEILLING,
 	TEX_END,
 };
 
@@ -131,8 +133,6 @@ typedef struct	s_info
 	double		*z_buffer;
 	t_splist	*splist;
 	t_mlximg	texture[TEX_END];
-	uint32_t	floor_color;
-	uint32_t	ceilling_color;
 	int			fd;
 	char		map[ROW + 1][COL + 1];
 	int			spmap[ROW][COL];
@@ -184,7 +184,7 @@ typedef struct	s_spcalc
 }				t_spcalc;
 
 /*
-** info.c
+** info_bonus.c
 */
 void			set_info(t_info *info);
 void			set_camera(t_info *info);
@@ -192,11 +192,11 @@ void			set_buffer(t_info *info);
 void			set_mlximg(t_info *info);
 void			set_window(t_info *info);
 /*
-** close.c
+** close_bonus.c
 */
 int				x_close(t_info *info);
 /*
-** exit.c
+** exit_bonus.c
 */
 void			exitsave(t_info *info);
 void			exitsave_with_errmsg(t_errmsg msg, t_info *info);
@@ -204,39 +204,39 @@ void			exitgame(t_info *info);
 void			exitgame_with_errmsg(t_errmsg msg, t_info *info);
 void			exit_with_errmsg(t_errmsg msg);
 /*
-** exit_sub.c
+** exit_sub_bonus.c
 */
 void			freegame(t_info *info);
 void			freesave(t_info *info);
 void			put_errmsg(t_errmsg msg);
 /*
-** key.c
+** key_bonus.c
 */
 int				x_close(t_info *info);
 int				key_update(t_info *info);
 int				key_press(int key, t_info *info);
 int				key_release(int key, t_info *info);
 /*
-** cubfile.c
+** cubfile_bonus.c
 */
 t_errmsg		parse_arg(int argc, char **argv, t_info *info);
 /*
-** file_util.c
+** file_util_bonus.c
 */
 t_errmsg		validate_filename(char *filename, char *type);
 t_errmsg		validate_readable_file(char *filename, int *fd);
 void			clear_split(char ***split);
 int				is_uint8_range(int n);
 /*
-** get_settings.c
+** get_settings_bonus.c
 */
 t_errmsg		get_settings(t_info *info, int *settings, char *line);
 /*
-** get_resolution.c
+** get_resolution_bonus.c
 */
 t_errmsg		get_resolution(t_info *info, int *settings, char **split);
 /*
-** get_textures.c
+** get_textures_bonus.c
 */
 t_errmsg		get_no_texture(t_info *info, int *settings, char **split);
 t_errmsg		get_so_texture(t_info *info, int *settings, char **split);
@@ -244,50 +244,50 @@ t_errmsg		get_we_texture(t_info *info, int *settings, char **split);
 t_errmsg		get_ea_texture(t_info *info, int *settings, char **split);
 t_errmsg		get_sprite_texture(t_info *info, int *settings, char **split);
 /*
-** get_textures_sub.c
+** get_textures_bonus2.c
+*/
+t_errmsg		get_floor_texture(t_info *info, int *settings, char **split);
+t_errmsg		get_ceilling_texture(t_info *info, int *settings, char **split);
+/*
+** get_textures_sub_bonus.c
 */
 t_bool			load_texture(t_info *info, int tex_num, char *filename);
 t_bool			validate_texture(int *settings, char **split, int flg);
 /*
-** get_colors.c
-*/
-t_errmsg		get_ceilling_color(t_info *info, int *settings, char **split);
-t_errmsg		get_floor_color(t_info *info, int *settings, char **split);
-/*
-** map.c
+** map_bonus.c
 */
 t_errmsg		get_map(t_info *info, char *line);
 /*
-** map_validation.c
+** map_validation_bonus.c
 */
 t_errmsg		validate_map(t_info *info);
 /*
-** calc.c
+** calc_bonus.c
 */
 void			calc(t_info *info);
 /*
-** floor_casting.c
+** floor_casting_bonus.c
 */
 void			floor_casting(t_info *info);
 /*
-** wall_casting.c
+** wall_casting_bonus.c
 */
 void			wall_casting(t_info *info);
 /*
-** wall_casting_sub.c
+** wall_casting_sub_bonus.c
 */
 void			draw_stripe(t_info *info, t_wallcalc *wallcalc,
 								int side, int x);
 /*
-** sprite_casting.c
+** sprite_casting_bonus.c
 */
 void			sprite_casting(t_info *info);
 /*
-** sprite_casting_sub.c
+** sprite_casting_sub_bonus.c
 */
 void			draw_sprite_stripe(t_info *info, t_spcalc *spcalc, int stripe);
 /*
-** draw.c
+** draw_bonus.c
 */
 void			draw(t_info *info);
 

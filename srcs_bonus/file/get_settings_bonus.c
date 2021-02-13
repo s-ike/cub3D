@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 01:56:09 by sikeda            #+#    #+#             */
-/*   Updated: 2021/02/13 23:19:07 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/02/14 00:09:41 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ static t_errmsg	get_setting_val(t_info *info, int *settings, char **split)
 	if (ft_strcmp(split[0], "S") == 0)
 		return (get_sprite_texture(info, settings, split));
 	if (ft_strcmp(split[0], "F") == 0)
-		return (get_floor_color(info, settings, split));
+		return (get_floor_texture(info, settings, split));
 	if (ft_strcmp(split[0], "C") == 0)
-		return (get_ceilling_color(info, settings, split));
+		return (get_ceilling_texture(info, settings, split));
 	return (ERR_CUBFILE);
 }
 
