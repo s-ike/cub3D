@@ -5,7 +5,7 @@ SO ./textures/redbrick.xpm
 WE ./textures/greystone.xpm
 EA ./textures/purplestone.xpm
 
-S  ./textures/sp_wall100.xpm
+S  ./textures/barrel.xpm
 F  220,100,0
 C  225,30,0
 

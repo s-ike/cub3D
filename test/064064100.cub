@@ -1,4 +1,4 @@
-R 1920 1080
+R 520 480
 NO ./textures/eagle.xpm
 SO ./textures/redbrick.xpm
 WE ./textures/greystone.xpm
