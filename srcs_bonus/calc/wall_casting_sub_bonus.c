@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/10 10:49:24 by sikeda            #+#    #+#             */
-/*   Updated: 2021/02/13 23:22:49 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/02/15 09:52:45 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static void	init_tex_calc1(t_info *info, t_wallcalc *wallcalc,
 		walltex->draw_start = 0;
 	walltex->draw_end = walltex->line_height / 2 + info->screen.h / 2;
 	if (walltex->draw_end >= info->screen.h)
-		walltex->draw_end = info->screen.h - 1;
+		walltex->draw_end = info->screen.h;
 	if (side)
 		walltex->tex_num = wallcalc->ray_dir.y < 0 ? TEX_WEST : TEX_EAST;
 	else
