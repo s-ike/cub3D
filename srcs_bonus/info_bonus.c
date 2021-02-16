@@ -6,13 +6,13 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 23:14:08 by sikeda            #+#    #+#             */
-/*   Updated: 2021/02/13 23:15:48 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/02/16 18:16:40 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d_bonus.h"
 
-void		set_info(t_info *info)
+void	init_info(t_info *info)
 {
 	info->mlx = mlx_init();
 	info->pos_x = 0.0;
@@ -28,7 +28,7 @@ void		set_info(t_info *info)
 	info->mode = 0;
 }
 
-void		set_camera(t_info *info)
+void	set_camera(t_info *info)
 {
 	if (info->map_start_dir == 'N' || info->map_start_dir == 'S')
 	{
@@ -54,7 +54,7 @@ void		set_camera(t_info *info)
 	}
 }
 
-void		set_buffer(t_info *info)
+void	set_buffer(t_info *info)
 {
 	int	i;
 
@@ -72,14 +72,14 @@ void		set_buffer(t_info *info)
 	ft_bzero(info->spmap, ROW * COL * sizeof(int));
 }
 
-void		set_mlximg(t_info *info)
+void	set_mlximg(t_info *info)
 {
 	info->img.img = mlx_new_image(info->mlx, info->screen.w, info->screen.h);
 	info->img.data = (int *)mlx_get_data_addr(
 		info->img.img, &info->img.bpp, &info->img.size_l, &info->img.endian);
 }
 
-void		set_window(t_info *info)
+void	set_window(t_info *info)
 {
 	info->win = mlx_new_window(
 		info->mlx, info->screen.w, info->screen.h, PRG_NAME);

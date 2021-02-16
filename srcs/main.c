@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 23:40:15 by sikeda            #+#    #+#             */
-/*   Updated: 2021/02/13 22:23:24 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/02/16 18:13:09 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int			main(int argc, char **argv)
 	t_info		info;
 	t_errmsg	msg;
 
-	set_info(&info);
+	init_info(&info);
 	if ((msg = parse_arg(argc, argv, &info)))
 		exit_with_errmsg(msg);
 	set_camera(&info);

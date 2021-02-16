@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/24 00:39:58 by sikeda            #+#    #+#             */
-/*   Updated: 2021/02/16 17:56:26 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/02/16 18:16:12 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,7 +198,7 @@ typedef struct	s_floorcalc
 /*
 ** info_bonus.c
 */
-void			set_info(t_info *info);
+void			init_info(t_info *info);
 void			set_camera(t_info *info);
 void			set_buffer(t_info *info);
 void			set_mlximg(t_info *info);
