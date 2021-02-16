@@ -7,7 +7,8 @@ SRC			= $(SRCDIR)main.c \
 				$(SRCDIR)draw.c \
 				$(SRCDIR)exit.c \
 				$(SRCDIR)exit_sub.c \
-				$(SRCDIR)key.c \
+				$(SRCDIR)key_press.c \
+				$(SRCDIR)key_update.c \
 				$(SRCDIR)sprite_list.c \
 				$(SRCDIR)file/cubfile.c \
 				$(SRCDIR)file/file_util.c \
@@ -36,7 +37,8 @@ BNS_SRC		= $(BNSDIR)main_bonus.c \
 				$(BNSDIR)draw_bonus.c \
 				$(BNSDIR)exit_bonus.c \
 				$(BNSDIR)exit_sub_bonus.c \
-				$(BNSDIR)key_bonus.c \
+				$(BNSDIR)key_press_bonus.c \
+				$(BNSDIR)key_update_bonus.c \
 				$(BNSDIR)sprite_list_bonus.c \
 				$(BNSDIR)file/cubfile_bonus.c \
 				$(BNSDIR)file/file_util_bonus.c \
@@ -81,7 +83,7 @@ endif
 MLX_PATH	= $(MLX_DIR)/$(MLX_NAME)
 INCLUDE		+= -I$(MLX_DIR)
 
-DEBUG		= -g
+DEBUG		=
 CC			= gcc
 
 .c.o:

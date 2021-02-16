@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/24 00:39:58 by sikeda            #+#    #+#             */
-/*   Updated: 2021/02/14 02:15:09 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/02/16 17:56:26 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -222,12 +222,18 @@ void			freegame(t_info *info);
 void			freesave(t_info *info);
 void			put_errmsg(t_errmsg msg);
 /*
-** key_bonus.c
+** close_bonus.c
 */
 int				x_close(t_info *info);
-int				key_update(t_info *info);
+/*
+** key_press_bonus.c
+*/
 int				key_press(int key, t_info *info);
 int				key_release(int key, t_info *info);
+/*
+** key_update_bonus.c
+*/
+int				key_update(t_info *info);
 /*
 ** cubfile_bonus.c
 */
