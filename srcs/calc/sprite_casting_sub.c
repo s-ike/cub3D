@@ -14,6 +14,8 @@
 
 static int	get_color(t_info *info, int tex_x, int tex_y)
 {
+	tex_x = tex_x < 0 ? 0 : tex_x;
+	tex_y = tex_y < 0 ? 0 : tex_y;
 	return (info->texture[TEX_SPRITE].data[
 				info->texture[TEX_SPRITE].w * tex_y + tex_x]);
 }
@@ -33,7 +35,8 @@ static void	draw_sprite_stripe_imple(t_info *info, t_spcalc *spcalc,
 	{
 		d = y * size_l - info->screen.h * (size_l / 2)
 			+ spcalc->sprite_height * (size_l / 2);
-		tex_y = ((abs(d) * info->texture[TEX_SPRITE].h)
+		d = d < 0 ? 0 : d;
+		tex_y = ((d * info->texture[TEX_SPRITE].h)
 			/ spcalc->sprite_height) / size_l;
 		color = get_color(info, tex_x, tex_y);
 		if ((color & 0x00FFFFFF) != 0)
