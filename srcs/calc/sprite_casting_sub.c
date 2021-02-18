@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/10 16:57:31 by sikeda            #+#    #+#             */
-/*   Updated: 2021/02/14 16:29:52 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/02/18 14:49:39 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ static void	draw_sprite_stripe_imple(t_info *info, t_spcalc *spcalc,
 	while (y < spcalc->draw_end_y)
 	{
 		d = y * size_l - info->screen.h * (size_l / 2)
-			+ spcalc->sprite_height * size_l / 2;
-		tex_y = ((d * info->texture[TEX_SPRITE].h)
+			+ spcalc->sprite_height * (size_l / 2);
+		tex_y = ((abs(d) * info->texture[TEX_SPRITE].h)
 			/ spcalc->sprite_height) / size_l;
 		color = get_color(info, tex_x, tex_y);
 		if ((color & 0x00FFFFFF) != 0)
