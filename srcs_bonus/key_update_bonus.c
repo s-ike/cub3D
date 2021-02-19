@@ -70,6 +70,7 @@ static void
 	double	rot_speed;
 
 	rot_speed = is_left == TRUE ? info->speed : -info->speed;
+	rot_speed /= 2;
 	old_dir_x = info->dir_x;
 	info->dir_x = info->dir_x * cos(rot_speed) - info->dir_y * sin(rot_speed);
 	info->dir_y = old_dir_x * sin(rot_speed) + info->dir_y * cos(rot_speed);

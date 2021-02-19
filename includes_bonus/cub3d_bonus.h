@@ -48,7 +48,7 @@
 # define ROW 64
 # define COL 64
 # ifdef LINUX
-#  define MOVE_SPEED 0.01
+#  define MOVE_SPEED 0.00002
 # else
 #  define MOVE_SPEED 0.05
 # endif

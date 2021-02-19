@@ -17,17 +17,15 @@ static void
 {
 	size_t	screen_size;
 	double	square;
-	int		rate;
 
-	screen_size = info->screen.w * info->screen.h;
-	square = sqrt(screen_size);
-	rate = 7;
-	if (square < 150)
-		rate = 15;
-	if (square < 500)
-		info->speed = square / ((MOVE_SPEED) * 10000) * rate / 100;
+	if (__SIZE_MAX__ / info->screen.w < (size_t)info->screen.h)
+		square = sqrt(__SIZE_MAX__);
 	else
-		info->speed = MOVE_SPEED;
+	{
+		screen_size = (size_t)info->screen.w * (size_t)info->screen.h;
+		square = sqrt(screen_size);
+	}
+	info->speed = square * MOVE_SPEED;
 }
 
 t_errmsg
