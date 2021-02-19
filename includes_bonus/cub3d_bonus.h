@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/24 00:39:58 by sikeda            #+#    #+#             */
-/*   Updated: 2021/02/19 15:51:24 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/02/20 00:12:46 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@
 # ifdef LINUX
 #  define MOVE_SPEED 0.00002
 # else
-#  define MOVE_SPEED 0.05
+#  define MOVE_SPEED 0.00007
 # endif
 # define EIGHT_BIT_MAX 0xff
 # define WALL '1'
