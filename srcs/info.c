@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 23:14:08 by sikeda            #+#    #+#             */
-/*   Updated: 2021/02/16 18:13:35 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/02/18 21:44:02 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	init_info(t_info *info)
 	info->dir_y = 0.0;
 	info->plane_x = 0.0;
 	info->plane_y = 0.0;
+	info->speed = MOVE_SPEED;
 	ft_bzero(&info->keys, sizeof(t_keys));
 	info->splist = NULL;
 	info->map_line_num = 0;

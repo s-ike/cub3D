@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/16 17:51:33 by sikeda            #+#    #+#             */
-/*   Updated: 2021/02/16 17:54:45 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/02/19 15:53:44 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ static t_bool
 	double x2;
 
 	x2 = 2 * x;
-	if (info->map[(int)(info->pos_x + x * MOVE_SPEED)][(int)info->pos_y]
+	if (info->map[(int)(info->pos_x + x * info->speed)][(int)info->pos_y]
 		!= CHECKED_WALL
-	&& info->map[(int)(info->pos_x + x2 * MOVE_SPEED)][(int)info->pos_y]
+	&& info->map[(int)(info->pos_x + x2 * info->speed)][(int)info->pos_y]
 		!= CHECKED_WALL)
 		return (TRUE);
 	return (FALSE);
@@ -32,9 +32,9 @@ static t_bool
 	double	y2;
 
 	y2 = 2 * y;
-	if (info->map[(int)info->pos_x][(int)(info->pos_y + y * MOVE_SPEED)]
+	if (info->map[(int)info->pos_x][(int)(info->pos_y + y * info->speed)]
 		!= CHECKED_WALL
-	&& info->map[(int)info->pos_x][(int)(info->pos_y + y2 * MOVE_SPEED)]
+	&& info->map[(int)info->pos_x][(int)(info->pos_y + y2 * info->speed)]
 		!= CHECKED_WALL)
 		return (TRUE);
 	return (FALSE);
@@ -52,14 +52,14 @@ static void
 	else if (dir == WEST || dir == EAST)
 		x = dir == WEST ? -info->plane_x : info->plane_x;
 	if (can_move_x(info, x) == TRUE)
-		info->pos_x += x * MOVE_SPEED;
+		info->pos_x += x * info->speed;
 	y = 0.0;
 	if (dir == SOUTH || dir == NORTH)
 		y = dir == SOUTH ? -info->dir_y : info->dir_y;
 	else if (dir == WEST || dir == EAST)
 		y = dir == WEST ? -info->plane_y : info->plane_y;
 	if (can_move_y(info, y) == TRUE)
-		info->pos_y += y * MOVE_SPEED;
+		info->pos_y += y * info->speed;
 }
 
 static void
@@ -69,7 +69,7 @@ static void
 	double	old_plane_x;
 	double	rot_speed;
 
-	rot_speed = is_left == TRUE ? ROT_SPEED : -ROT_SPEED;
+	rot_speed = is_left == TRUE ? info->speed : -info->speed;
 	old_dir_x = info->dir_x;
 	info->dir_x = info->dir_x * cos(rot_speed) - info->dir_y * sin(rot_speed);
 	info->dir_y = old_dir_x * sin(rot_speed) + info->dir_y * cos(rot_speed);

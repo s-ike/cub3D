@@ -6,13 +6,32 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 01:39:34 by sikeda            #+#    #+#             */
-/*   Updated: 2021/02/06 01:39:35 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/02/19 16:13:34 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-t_errmsg	get_resolution(t_info *info, int *settings, char **split)
+static void
+	set_speed(t_info *info)
+{
+	size_t	screen_size;
+	double	square;
+	int		rate;
+
+	screen_size = info->screen.w * info->screen.h;
+	square = sqrt(screen_size);
+	rate = 7;
+	if (square < 150)
+		rate = 15;
+	if (square < 500)
+		info->speed = square / ((MOVE_SPEED) * 10000) * rate / 100;
+	else
+		info->speed = MOVE_SPEED;
+}
+
+t_errmsg
+	get_resolution(t_info *info, int *settings, char **split)
 {
 	t_screen	current;
 
@@ -30,5 +49,6 @@ t_errmsg	get_resolution(t_info *info, int *settings, char **split)
 	if (current.h < info->screen.h)
 		info->screen.h = current.h;
 	*settings |= (1 << SETTING_R);
+	set_speed(info);
 	return (NULL);
 }

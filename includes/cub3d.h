@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/24 00:39:58 by sikeda            #+#    #+#             */
-/*   Updated: 2021/02/16 18:14:40 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/02/18 21:43:42 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@
 # else
 #  define MOVE_SPEED 0.05
 # endif
-# define ROT_SPEED MOVE_SPEED
 # define EIGHT_BIT_MAX 0xff
 # define WALL '1'
 # define SPRITE '2'
@@ -123,6 +122,7 @@ typedef struct	s_info
 	double		dir_y;
 	double		plane_x;
 	double		plane_y;
+	double		speed;
 	void		*mlx;
 	void		*win;
 	t_keys		keys;
