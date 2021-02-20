@@ -6,11 +6,29 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 01:39:34 by sikeda            #+#    #+#             */
-/*   Updated: 2021/02/20 00:35:03 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/02/20 19:44:24 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+static int
+	is_invalid_format(char **split)
+{
+	int	w;
+	int	h;
+
+	w = ft_atoi(split[1]);
+	h = ft_atoi(split[2]);
+	return (
+		!split[1] || !split[2] || split[3]
+		|| !str_isdigit(split[1])
+		|| !str_isdigit(split[2])
+		|| w <= 0
+		|| h <= 0
+		|| split[1][0] == '0'
+		|| split[2][0] == '0');
+}
 
 static void
 	set_speed(t_info *info)
@@ -33,14 +51,12 @@ t_errmsg
 {
 	t_screen	current;
 
-	if (!split[1] || !split[2] || split[3] || *settings & (1 << SETTING_R))
+	if (*settings & (1 << SETTING_R))
 		return (ERR_CUBFILE_R);
-	if (!str_isdigit(split[1]) || !str_isdigit(split[2]))
+	if (is_invalid_format(split))
 		return (ERR_CUBFILE_R);
 	info->screen.w = ft_atoi(split[1]);
 	info->screen.h = ft_atoi(split[2]);
-	if (info->screen.w <= 0 || info->screen.h <= 0)
-		return (ERR_CUBFILE_R);
 	if (info->mode == GAMEMODE)
 	{
 		mlx_get_screen_size(info->mlx, &current.w, &current.h);
