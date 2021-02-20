@@ -63,6 +63,11 @@ static t_errmsg	parse_file(t_info *info)
 		safe_free(&line);
 		return (ERR_GNL);
 	}
+	if (msg)
+	{
+		safe_free(&line);
+		get_next_line(info->fd, NULL);
+	}
 	return (msg);
 }
 

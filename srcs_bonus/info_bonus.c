@@ -14,6 +14,8 @@
 
 void	init_info(t_info *info)
 {
+	int	i;
+
 	info->mlx = mlx_init();
 	info->pos_x = 0.0;
 	info->pos_y = 0.0;
@@ -30,6 +32,10 @@ void	init_info(t_info *info)
 	info->mode = 0;
 	info->z_buffer = NULL;
 	info->buf = NULL;
+	info->img.img = NULL;
+	i = -1;
+	while (++i < TEX_END)
+		ft_bzero(&info->texture[i], sizeof(t_mlximg));
 }
 
 void	set_camera(t_info *info)

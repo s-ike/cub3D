@@ -23,10 +23,12 @@ static void	free_info(t_info *info)
 		if (info->buf && info->buf[i])
 			free(info->buf[i]);
 	splist_clear(&info->splist);
-	mlx_destroy_image(info->mlx, info->img.img);
+	if (info->img.img)
+		mlx_destroy_image(info->mlx, info->img.img);
 	i = -1;
 	while (++i < TEX_END)
-		mlx_destroy_image(info->mlx, info->texture[i].img);
+		if (info->texture[i].img)
+			mlx_destroy_image(info->mlx, info->texture[i].img);
 	mlx_destroy_display(info->mlx);
 	if (info->buf)
 		free(info->buf);
