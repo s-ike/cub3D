@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 01:34:16 by sikeda            #+#    #+#             */
-/*   Updated: 2021/02/20 19:21:06 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/02/20 22:59:22 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,14 @@ static int
 	int	g;
 	int	b;
 
-	r = ft_atoi(colors[0]);
-	g = ft_atoi(colors[1]);
-	b = ft_atoi(colors[2]);
 	return (
 		!colors[0] || !colors[1] || !colors[2] || colors[3]
 		|| !str_isdigit(colors[0])
 		|| !str_isdigit(colors[1])
 		|| !str_isdigit(colors[2])
-		|| !is_uint8_range(r)
-		|| !is_uint8_range(g)
-		|| !is_uint8_range(b)
+		|| !is_uint8_range(r = ft_atoi(colors[0]))
+		|| !is_uint8_range(g = ft_atoi(colors[1]))
+		|| !is_uint8_range(b = ft_atoi(colors[2]))
 		|| (r && colors[0][0] == '0')
 		|| (g && colors[1][0] == '0')
 		|| (b && colors[2][0] == '0'));
