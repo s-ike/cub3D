@@ -6,38 +6,53 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 01:26:34 by sikeda            #+#    #+#             */
-/*   Updated: 2021/02/06 01:57:39 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/02/20 23:34:28 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-t_errmsg	validate_filename(char *filename, char *type)
+t_errmsg
+	validate_filename(char *filepath, char *type)
 {
-	char	*extension;
+	t_errmsg	msg;
+	char		**split;
+	char		*extension;
+	int			count;
 
-	if (!ft_strcmp(filename, type))
+	split = ft_split(filepath, '/');
+	count = 0;
+	while (split[count])
+		count++;
+	if (!count || !ft_strcmp(split[--count], type))
+	{
+		clear_split(&split);
 		return (ERR_CUBFILE_EXT);
-	if ((extension = ft_strrchr(filename, '.')))
+	}
+	msg = ERR_CUBFILE_EXT;
+	if ((extension = ft_strrchr(split[count], '.')))
 	{
 		if (!ft_strcmp(extension, type))
-			return (NULL);
+			msg = NULL;
 	}
-	return (ERR_CUBFILE_EXT);
+	clear_split(&split);
+	return (msg);
 }
 
-t_errmsg	validate_readable_file(char *filename, int *fd)
+t_errmsg
+	validate_readable_file(char *filepath, int *fd)
 {
 	char	buf;
 
-	if ((*fd = open(filename, O_RDONLY)) < 0)
+	if ((*fd = open(filepath, O_RDONLY)) < 0)
 		return (strerror(errno));
 	if (read(*fd, &buf, 0) < 0)
 		return (strerror(errno));
 	return (NULL);
 }
 
-void		clear_split(char ***split)
+void
+	clear_split(char ***split)
 {
 	int	i;
 
@@ -57,7 +72,8 @@ void		clear_split(char ***split)
 	*split = NULL;
 }
 
-int			is_uint8_range(int n)
+int
+	is_uint8_range(int n)
 {
 	return (0 <= n && n <= EIGHT_BIT_MAX);
 }

@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/24 00:39:58 by sikeda            #+#    #+#             */
-/*   Updated: 2021/02/20 19:22:18 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/02/20 23:34:20 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -229,8 +229,8 @@ t_errmsg		parse_arg(int argc, char **argv, t_info *info);
 /*
 ** file_util.c
 */
-t_errmsg		validate_filename(char *filename, char *type);
-t_errmsg		validate_readable_file(char *filename, int *fd);
+t_errmsg		validate_filename(char *filepath, char *type);
+t_errmsg		validate_readable_file(char *filepath, int *fd);
 void			clear_split(char ***split);
 int				is_uint8_range(int n);
 /*
