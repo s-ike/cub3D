@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 01:39:34 by sikeda            #+#    #+#             */
-/*   Updated: 2021/02/19 16:13:34 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/02/20 00:35:03 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,14 @@ t_errmsg
 	info->screen.h = ft_atoi(split[2]);
 	if (info->screen.w <= 0 || info->screen.h <= 0)
 		return (ERR_CUBFILE_R);
-	mlx_get_screen_size(info->mlx, &current.w, &current.h);
-	if (current.w < info->screen.w)
-		info->screen.w = current.w;
-	if (current.h < info->screen.h)
-		info->screen.h = current.h;
+	if (info->mode == GAMEMODE)
+	{
+		mlx_get_screen_size(info->mlx, &current.w, &current.h);
+		if (current.w < info->screen.w)
+			info->screen.w = current.w;
+		if (current.h < info->screen.h)
+			info->screen.h = current.h;
+	}
 	*settings |= (1 << SETTING_R);
 	set_speed(info);
 	return (NULL);
