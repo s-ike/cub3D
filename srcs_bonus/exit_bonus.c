@@ -40,8 +40,9 @@ void		exitgame_with_errmsg(t_errmsg msg, t_info *info)
 	exit(EXIT_FAILURE);
 }
 
-void		exit_with_errmsg(t_errmsg msg)
+void		exit_with_errmsg(t_errmsg msg, t_info *info)
 {
 	put_errmsg(msg);
+	freesave(info);
 	exit(EXIT_FAILURE);
 }

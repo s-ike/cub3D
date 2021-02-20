@@ -45,7 +45,7 @@ int			main(int argc, char **argv)
 
 	init_info(&info);
 	if ((msg = parse_arg(argc, argv, &info)))
-		exit_with_errmsg(msg);
+		exit_with_errmsg(msg, &info);
 	set_camera(&info);
 	set_buffer(&info);
 	set_mlximg(&info);

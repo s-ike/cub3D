@@ -202,7 +202,7 @@ void			exitsave(t_info *info);
 void			exitsave_with_errmsg(t_errmsg msg, t_info *info);
 void			exitgame(t_info *info);
 void			exitgame_with_errmsg(t_errmsg msg, t_info *info);
-void			exit_with_errmsg(t_errmsg msg);
+void			exit_with_errmsg(t_errmsg msg, t_info *info);
 /*
 ** exit_sub.c
 */

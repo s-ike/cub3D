@@ -23,10 +23,13 @@ void	init_info(t_info *info)
 	info->plane_y = 0.0;
 	info->speed = MOVE_SPEED;
 	ft_bzero(&info->keys, sizeof(t_keys));
+	ft_bzero(&info->screen, sizeof(t_screen));
 	info->splist = NULL;
 	info->map_line_num = 0;
 	info->map_start_dir = 0;
 	info->mode = 0;
+	info->z_buffer = NULL;
+	info->buf = NULL;
 }
 
 void	set_camera(t_info *info)
@@ -60,13 +63,13 @@ void	set_buffer(t_info *info)
 	int	i;
 
 	if (!(info->z_buffer = (double *)malloc(info->screen.w * sizeof(double))))
-		return (exit_with_errmsg(strerror(errno)));
+		return (exit_with_errmsg(strerror(errno), info));
 	if (!(info->buf = (int **)malloc(info->screen.h * sizeof(int *))))
-		return (exit_with_errmsg(strerror(errno)));
+		return (exit_with_errmsg(strerror(errno), info));
 	i = -1;
 	while (++i < info->screen.h)
 		if (!(info->buf[i] = (int *)malloc(info->screen.w * sizeof(int))))
-			return (exit_with_errmsg(strerror(errno)));
+			return (exit_with_errmsg(strerror(errno), info));
 	i = -1;
 	while (++i < info->screen.h)
 		ft_bzero(info->buf[i], info->screen.w * sizeof(int));

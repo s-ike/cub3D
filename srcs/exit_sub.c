@@ -20,14 +20,16 @@ static void	free_info(t_info *info)
 		free(info->z_buffer);
 	i = -1;
 	while (++i < info->screen.h)
-		free(info->buf[i]);
+		if (info->buf && info->buf[i])
+			free(info->buf[i]);
 	splist_clear(&info->splist);
 	mlx_destroy_image(info->mlx, info->img.img);
 	i = -1;
 	while (++i < TEX_END)
 		mlx_destroy_image(info->mlx, info->texture[i].img);
 	mlx_destroy_display(info->mlx);
-	free(info->buf);
+	if (info->buf)
+		free(info->buf);
 }
 
 void		freegame(t_info *info)
