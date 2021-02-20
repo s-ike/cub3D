@@ -14,6 +14,7 @@ SRC			= $(SRCDIR)main.c \
 				$(SRCDIR)file/file_util.c \
 				$(SRCDIR)file/get_settings.c \
 				$(SRCDIR)file/get_colors.c \
+				$(SRCDIR)file/get_colors_sub.c \
 				$(SRCDIR)file/get_textures.c \
 				$(SRCDIR)file/get_textures_sub.c \
 				$(SRCDIR)file/get_resolution.c \

@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/24 00:39:58 by sikeda            #+#    #+#             */
-/*   Updated: 2021/02/20 00:10:22 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/02/20 19:22:18 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -259,6 +259,11 @@ t_bool			validate_texture(int *settings, char **split, int flg);
 */
 t_errmsg		get_ceilling_color(t_info *info, int *settings, char **split);
 t_errmsg		get_floor_color(t_info *info, int *settings, char **split);
+/*
+** get_colors_sub.c
+*/
+void			set_floor_color(t_info *info, int r, int g, int b);
+void			set_ceilling_color(t_info *info, int r, int g, int b);
 /*
 ** map.c
 */
