@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 01:39:34 by sikeda            #+#    #+#             */
-/*   Updated: 2021/02/20 19:54:33 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/02/20 23:09:59 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,12 @@
 static int
 	is_invalid_format(char **split)
 {
-	int	w;
-	int	h;
-
-	w = ft_atoi(split[1]);
-	h = ft_atoi(split[2]);
 	return (
 		!split[1] || !split[2] || split[3]
 		|| !str_isdigit(split[1])
 		|| !str_isdigit(split[2])
-		|| w <= 0
-		|| h <= 0
+		|| ft_atoi(split[1]) <= 0
+		|| ft_atoi(split[2]) <= 0
 		|| split[1][0] == '0'
 		|| split[2][0] == '0');
 }
