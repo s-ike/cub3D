@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 01:43:51 by sikeda            #+#    #+#             */
-/*   Updated: 2021/02/06 02:06:36 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/02/20 17:23:56 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,16 +58,11 @@ static t_errmsg	parse_file(t_info *info)
 		if (exists == GNL_EOF)
 			break ;
 	}
+	safe_free(&line);
 	if (exists == GNL_ERROR)
-	{
-		safe_free(&line);
 		return (ERR_GNL);
-	}
 	if (msg)
-	{
-		safe_free(&line);
 		get_next_line(info->fd, NULL);
-	}
 	return (msg);
 }
 
