@@ -32,8 +32,7 @@ static int
 		|| !is_uint8_range(b)
 		|| (r && colors[0][0] == '0')
 		|| (g && colors[1][0] == '0')
-		|| (b && colors[2][0] == '0')
-	);
+		|| (b && colors[2][0] == '0'));
 }
 
 static t_bool
