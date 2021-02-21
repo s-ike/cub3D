@@ -1,9 +1,9 @@
 R 500 500
 
-NO ./textures/lp1.xpm
-SO ./textures/lp2.xpm
-WE ./textures/lp3.xpm
-EA ./textures/lp4.xpm
+NO ./textures/eagle.xpm
+SO ./textures/colorstone.xpm
+WE ./textures/mossy.xpm
+EA ./textures/redbrick.xpm
 S ./textures/barrel.xpm
 F 225,200,225
 C 20,20,0
