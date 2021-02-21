@@ -12,7 +12,8 @@
 
 #include "cub3d_bonus.h"
 
-t_errmsg	get_no_texture(t_info *info, int *settings, char **split)
+t_errmsg
+	get_no_texture(t_info *info, int *settings, char **split)
 {
 	if (validate_texture(settings, split, SETTING_NO) == FALSE)
 		return (ERR_CUBFILE_NO);
@@ -22,7 +23,8 @@ t_errmsg	get_no_texture(t_info *info, int *settings, char **split)
 	return (NULL);
 }
 
-t_errmsg	get_so_texture(t_info *info, int *settings, char **split)
+t_errmsg
+	get_so_texture(t_info *info, int *settings, char **split)
 {
 	if (validate_texture(settings, split, SETTING_SO) == FALSE)
 		return (ERR_CUBFILE_SO);
@@ -32,7 +34,8 @@ t_errmsg	get_so_texture(t_info *info, int *settings, char **split)
 	return (NULL);
 }
 
-t_errmsg	get_we_texture(t_info *info, int *settings, char **split)
+t_errmsg
+	get_we_texture(t_info *info, int *settings, char **split)
 {
 	if (validate_texture(settings, split, SETTING_WE) == FALSE)
 		return (ERR_CUBFILE_WE);
@@ -42,7 +45,8 @@ t_errmsg	get_we_texture(t_info *info, int *settings, char **split)
 	return (NULL);
 }
 
-t_errmsg	get_ea_texture(t_info *info, int *settings, char **split)
+t_errmsg
+	get_ea_texture(t_info *info, int *settings, char **split)
 {
 	if (validate_texture(settings, split, SETTING_EA) == FALSE)
 		return (ERR_CUBFILE_EA);
@@ -52,7 +56,8 @@ t_errmsg	get_ea_texture(t_info *info, int *settings, char **split)
 	return (NULL);
 }
 
-t_errmsg	get_sprite_texture(t_info *info, int *settings, char **split)
+t_errmsg
+	get_sprite_texture(t_info *info, int *settings, char **split)
 {
 	if (validate_texture(settings, split, SETTING_S) == FALSE)
 		return (ERR_CUBFILE_S);

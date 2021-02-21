@@ -12,14 +12,16 @@
 
 #include "utils.h"
 
-void	safe_free(char **ptr)
+void
+	safe_free(char **ptr)
 {
 	if (*ptr)
 		free(*ptr);
 	*ptr = NULL;
 }
 
-int		str_isdigit(const char *s)
+int
+	str_isdigit(const char *s)
 {
 	while (*s)
 		if (!ft_isdigit(*s++))
@@ -27,7 +29,8 @@ int		str_isdigit(const char *s)
 	return (1);
 }
 
-int		chrcount(const char *s, char c)
+int
+	chrcount(const char *s, char c)
 {
 	int				ret;
 	unsigned char	uc;
@@ -40,7 +43,8 @@ int		chrcount(const char *s, char c)
 	return (ret);
 }
 
-void	set_vals_for_2intvars(int *v1, int *v2, int n1, int n2)
+void
+	set_vals_for_2intvars(int *v1, int *v2, int n1, int n2)
 {
 	if (v1)
 		*v1 = n1;

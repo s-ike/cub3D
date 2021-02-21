@@ -12,7 +12,8 @@
 
 #include "cub3d.h"
 
-static t_errmsg	parse_line(t_info *info, int *settings, char *line)
+static t_errmsg
+	parse_line(t_info *info, int *settings, char *line)
 {
 	static t_bool	has_started_reading_map;
 	static t_bool	has_finished_reading_map;
@@ -41,7 +42,8 @@ static t_errmsg	parse_line(t_info *info, int *settings, char *line)
 	return (msg);
 }
 
-static t_errmsg	parse_file(t_info *info)
+static t_errmsg
+	parse_file(t_info *info)
 {
 	t_errmsg	msg;
 	char		*line;
@@ -66,7 +68,8 @@ static t_errmsg	parse_file(t_info *info)
 	return (msg);
 }
 
-t_errmsg		parse_arg(int argc, char **argv, t_info *info)
+t_errmsg
+	parse_arg(int argc, char **argv, t_info *info)
 {
 	t_errmsg	msg;
 

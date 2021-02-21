@@ -12,7 +12,8 @@
 
 #include "cub3d_bonus.h"
 
-t_errmsg	get_floor_texture(t_info *info, int *settings, char **split)
+t_errmsg
+	get_floor_texture(t_info *info, int *settings, char **split)
 {
 	if (validate_texture(settings, split, SETTING_F) == FALSE)
 		return (ERR_CUBFILE_F);
@@ -22,7 +23,8 @@ t_errmsg	get_floor_texture(t_info *info, int *settings, char **split)
 	return (NULL);
 }
 
-t_errmsg	get_ceilling_texture(t_info *info, int *settings, char **split)
+t_errmsg
+	get_ceilling_texture(t_info *info, int *settings, char **split)
 {
 	if (validate_texture(settings, split, SETTING_C) == FALSE)
 		return (ERR_CUBFILE_C);

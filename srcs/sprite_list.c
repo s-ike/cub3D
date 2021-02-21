@@ -12,7 +12,8 @@
 
 #include "sprite_list.h"
 
-t_splist		*splst_new(int x, int y)
+t_splist
+	*splst_new(int x, int y)
 {
 	t_splist	*list;
 
@@ -25,7 +26,8 @@ t_splist		*splst_new(int x, int y)
 	return (list);
 }
 
-void			splist_add_front(t_splist **list, t_splist *new)
+void
+	splist_add_front(t_splist **list, t_splist *new)
 {
 	if (!list || !new)
 		return ;
@@ -33,7 +35,8 @@ void			splist_add_front(t_splist **list, t_splist *new)
 	*list = new;
 }
 
-static t_splist	*splist_merge(t_splist *list1, t_splist *list2)
+static t_splist
+	*splist_merge(t_splist *list1, t_splist *list2)
 {
 	t_splist	tmp;
 	t_splist	*p;
@@ -62,7 +65,8 @@ static t_splist	*splist_merge(t_splist *list1, t_splist *list2)
 	return (tmp.next);
 }
 
-t_splist		*splist_sort(t_splist *head)
+t_splist
+	*splist_sort(t_splist *head)
 {
 	t_splist	*partition;
 	t_splist	*prev;
@@ -84,7 +88,8 @@ t_splist		*splist_sort(t_splist *head)
 	return (splist_merge(splist_sort(head), splist_sort(partition)));
 }
 
-void			splist_clear(t_splist **list)
+void
+	splist_clear(t_splist **list)
 {
 	t_splist	*tmp;
 

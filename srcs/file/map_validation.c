@@ -12,14 +12,16 @@
 
 #include "cub3d.h"
 
-static t_bool	has_start_position(int x, int y)
+static t_bool
+	has_start_position(int x, int y)
 {
 	if (x == 0 && y == 0)
 		return (FALSE);
 	return (TRUE);
 }
 
-static t_errmsg	is_closed_map(t_info *info, int row, int col)
+static t_errmsg
+	is_closed_map(t_info *info, int row, int col)
 {
 	t_errmsg	msg;
 
@@ -47,7 +49,8 @@ static t_errmsg	is_closed_map(t_info *info, int row, int col)
 	return (NULL);
 }
 
-t_errmsg		validate_map(t_info *info)
+t_errmsg
+	validate_map(t_info *info)
 {
 	if (!info->map_line_num)
 		return (ERR_MAP);

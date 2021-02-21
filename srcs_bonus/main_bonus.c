@@ -12,7 +12,8 @@
 
 #include "cub3d_bonus.h"
 
-static int	main_loop(t_info *info)
+static int
+	main_loop(t_info *info)
 {
 	calc(info);
 	draw(info);
@@ -20,7 +21,8 @@ static int	main_loop(t_info *info)
 	return (0);
 }
 
-static void	game_mode(t_info *info)
+static void
+	game_mode(t_info *info)
 {
 	set_window(info);
 	mlx_loop_hook(info->mlx, main_loop, info);
@@ -30,7 +32,8 @@ static void	game_mode(t_info *info)
 	mlx_loop(info->mlx);
 }
 
-static void	save_mode(t_info *info)
+static void
+	save_mode(t_info *info)
 {
 	calc(info);
 	if (create_bmp(&info->img, info->buf, &info->screen) < 0)
@@ -38,7 +41,8 @@ static void	save_mode(t_info *info)
 	exitsave(info);
 }
 
-int			main(int argc, char **argv)
+int
+	main(int argc, char **argv)
 {
 	t_info		info;
 	t_errmsg	msg;

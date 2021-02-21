@@ -12,14 +12,16 @@
 
 #include "cub3d.h"
 
-static t_bool	is_map_size_too_large(size_t len, int line_num)
+static t_bool
+	is_map_size_too_large(size_t len, int line_num)
 {
 	if (COL < len || ROW < line_num)
 		return (TRUE);
 	return (FALSE);
 }
 
-static t_bool	is_map_with_only_correct_chr(t_info *info, char *line)
+static t_bool
+	is_map_with_only_correct_chr(t_info *info, char *line)
 {
 	int	i;
 
@@ -44,7 +46,8 @@ static t_bool	is_map_with_only_correct_chr(t_info *info, char *line)
 	return (TRUE);
 }
 
-t_errmsg		get_map(t_info *info, char *line)
+t_errmsg
+	get_map(t_info *info, char *line)
 {
 	size_t	len;
 

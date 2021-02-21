@@ -12,7 +12,8 @@
 
 #include "utils_bonus.h"
 
-static ssize_t	read_fd(int fd, char **buff, char **str, char **find)
+static ssize_t
+	read_fd(int fd, char **buff, char **str, char **find)
 {
 	char	*tmp;
 	ssize_t	read_count;
@@ -34,7 +35,8 @@ static ssize_t	read_fd(int fd, char **buff, char **str, char **find)
 	return (read_count);
 }
 
-static int		make_line(char **str, char **find, char **line)
+static int
+	make_line(char **str, char **find, char **line)
 {
 	char	*tmp;
 	int		result;
@@ -63,7 +65,8 @@ static int		make_line(char **str, char **find, char **line)
 	return (result);
 }
 
-int				get_next_line(int fd, char **line)
+int
+	get_next_line(int fd, char **line)
 {
 	static char	*strs[MAX_FD];
 	char		*buff;

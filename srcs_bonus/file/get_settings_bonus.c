@@ -12,7 +12,8 @@
 
 #include "cub3d_bonus.h"
 
-static t_errmsg	get_setting_val(t_info *info, int *settings, char **split)
+static t_errmsg
+	get_setting_val(t_info *info, int *settings, char **split)
 {
 	if (ft_strcmp(split[0], "R") == 0)
 		return (get_resolution(info, settings, split));
@@ -33,7 +34,8 @@ static t_errmsg	get_setting_val(t_info *info, int *settings, char **split)
 	return (ERR_CUBFILE);
 }
 
-t_errmsg		get_settings(t_info *info, int *settings, char *line)
+t_errmsg
+	get_settings(t_info *info, int *settings, char *line)
 {
 	t_errmsg	msg;
 	char		**split;

@@ -12,7 +12,8 @@
 
 #include "utils.h"
 
-static int	write_image_data(int fd, int **buf, t_screen *screen)
+static int
+	write_image_data(int fd, int **buf, t_screen *screen)
 {
 	int	*line;
 	int	i;
@@ -37,7 +38,8 @@ static int	write_image_data(int fd, int **buf, t_screen *screen)
 	return (SUCCESS);
 }
 
-static void	write_info_header(int fd, t_screen *screen, int bpp, int image_size)
+static void
+	write_info_header(int fd, t_screen *screen, int bpp, int image_size)
 {
 	uint32_t	infoheader_size;
 	uint16_t	plane;
@@ -63,7 +65,8 @@ static void	write_info_header(int fd, t_screen *screen, int bpp, int image_size)
 	write(fd, &zero, 4);
 }
 
-static void	write_file_header(int fd, int file_size, int header_size)
+static void
+	write_file_header(int fd, int file_size, int header_size)
 {
 	uint32_t	zero;
 
@@ -74,7 +77,8 @@ static void	write_file_header(int fd, int file_size, int header_size)
 	write(fd, &header_size, 4);
 }
 
-int			create_bmp(t_mlximg *img, int **buf, t_screen *screen)
+int
+	create_bmp(t_mlximg *img, int **buf, t_screen *screen)
 {
 	int	fd;
 	int	header_size;
