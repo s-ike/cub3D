@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/24 00:39:58 by sikeda            #+#    #+#             */
-/*   Updated: 2021/02/20 23:34:20 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/02/21 11:57:59 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -206,6 +206,7 @@ void			exit_with_errmsg(t_errmsg msg, t_info *info);
 /*
 ** exit_sub.c
 */
+void			free_without_textures(t_info *info);
 void			freegame(t_info *info);
 void			freesave(t_info *info);
 void			put_errmsg(t_errmsg msg);
