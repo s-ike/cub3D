@@ -6,7 +6,7 @@
 /*   By: sikeda <sikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 02:47:16 by sikeda            #+#    #+#             */
-/*   Updated: 2021/02/21 12:03:31 by sikeda           ###   ########.fr       */
+/*   Updated: 2021/02/21 12:24:45 by sikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ static void
 	while (without_texs == FALSE && ++i < TEX_END)
 		if (info->texture[i].img)
 			mlx_destroy_image(info->mlx, info->texture[i].img);
-	mlx_destroy_display(info->mlx);
+	if (without_texs == FALSE)
+		mlx_destroy_display(info->mlx);
 	if (info->buf)
 		free(info->buf);
 }
